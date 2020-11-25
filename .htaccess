@@ -1,0 +1,15 @@
+RewriteEngine On
+
+#---- Begin Site Map ---#
+RewriteRule (.*)\.xml(.*) $1.php$2 [nocase]
+#---- End Site Map ----#
+
+#Home
+RewriteRule ^dashboard\.html$ login.php [L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php56” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php56 .php .php5 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

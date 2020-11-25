@@ -1,0 +1,32 @@
+[01-Sep-2020 21:19:35 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/perpusut/public_html/system/koneksi.php:8
+Stack trace:
+#0 /home/perpusut/public_html/cek_login.php(3): include_once()
+#1 {main}
+  thrown in /home/perpusut/public_html/system/koneksi.php on line 8
+[01-Sep-2020 21:19:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/perpusut/public_html/system/koneksi.php:8
+Stack trace:
+#0 /home/perpusut/public_html/cek_login.php(3): include_once()
+#1 {main}
+  thrown in /home/perpusut/public_html/system/koneksi.php on line 8
+[01-Sep-2020 21:19:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/perpusut/public_html/system/koneksi.php:8
+Stack trace:
+#0 /home/perpusut/public_html/cek_login.php(3): include_once()
+#1 {main}
+  thrown in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 03:02:16 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 03:04:33 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 09:29:38 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 15:16:28 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 15:28:11 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 15:28:30 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 16:04:27 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 16:29:05 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 17:40:35 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 19:32:12 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 19:41:07 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 20:36:35 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 20:36:45 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 21:20:56 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[07-Sep-2020 21:25:50 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[08-Sep-2020 15:10:31 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
+[08-Sep-2020 16:30:23 Asia/Jakarta] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/perpusut/public_html/system/koneksi.php on line 8
