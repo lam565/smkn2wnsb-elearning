@@ -35,7 +35,7 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                  <div class="col-md-4 col-sm-4 col-xs-12">
  <div class="panel panel-default">
                         <div class="panel-heading">
-                           Upload Materi
+                           Upload Silabus
                         </div>
                         <div class="panel-body text-center recent-users-sec">
 <form role="form">
@@ -44,7 +44,14 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                                             <label>Waktu Upload</label>
                                             <input class="form-control" type="text" />
                                         </div>
-                               
+                                <div class="form-group">
+                                            <label>Tahun Ajaran</label>
+                                            <input class="form-control" type="text" />
+                                        </div>
+                                 <div class="form-group">
+                                            <label>Semester</label>
+                                            <input class="form-control" type="text" />
+                                        </div>
                                        
                                         <div class="form-group">
                                             <label>Upload File </label>
@@ -52,15 +59,15 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label>Kelas </label>
+                                            <label>Mata Pelajaran </label>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" value="" />VII 
+                                                    <input type="checkbox" value="" />IPA 
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" value="" />VIII
+                                                    <input type="checkbox" value="" />IPS
                                                 </label>
                                             </div>
                                             
@@ -77,7 +84,7 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                   <div class="col-md-8 col-sm-8 col-xs-12">
                       <div class="panel panel-success">
                         <div class="panel-heading">
-                           Hasil Upload Materi
+                           Hasil Upload Silabus
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -85,12 +92,11 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Judul</th>
-											 <th>Kelas</th>
-											 <th>Pelajaran</th>
-											 <th>File</th>
-											 <th>Tanggal Posting</th>
-											 <th>Aksi</th>
+                                            <th>Tanggal Upload</th>
+                                            <th>Tahun Ajaran</th>
+                                            <th>Semester</th>
+                                             <th>Jenis File</th>
+											 <th>Mata Pelajaran</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -98,11 +104,9 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                                             <td>1</td>
                                             <td>Mark</td>
                                             <td>Otto</td>
-											 <td>Otto</td>
-											  <td>Otto</td>
-											 <td>Otto</td>
-											 <td>Otto</td>
-                                           
+                                            <td>@mdo</td>
+                                            <td>100090</td>
+											<td>100090</td>
                                         </tr>
                                         
                                     </tbody>
