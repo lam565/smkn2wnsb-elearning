@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Nov 2020 pada 03.25
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.4.10
+-- Waktu pembuatan: 27 Nov 2020 pada 09.41
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,18 +33,19 @@ CREATE TABLE `detail_kurikulum` (
   `kd_kurikulum` int(11) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
-  `kd_guru` varchar(20) NOT NULL
+  `kd_guru` varchar(20) NOT NULL,
+  `kd_silabus` varchar(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `detail_kurikulum`
 --
 
-INSERT INTO `detail_kurikulum` (`id_detail`, `kd_kurikulum`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
-(1, 1, 'bind', 'xa1', 'GR001'),
-(2, 1, 'mtk', 'xa1', 'GR002'),
-(3, 1, 'bind', 'xa2', 'GR003'),
-(4, 1, 'mtk', 'xa2', 'GR002');
+INSERT INTO `detail_kurikulum` (`id_detail`, `kd_kurikulum`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
+(1, 1, 'bind', 'xa1', 'GR001', '0'),
+(2, 1, 'mtk', 'xa1', 'GR002', '0'),
+(3, 1, 'bind', 'xa2', 'GR003', '0'),
+(4, 1, 'mtk', 'xa2', 'GR002', '0');
 
 -- --------------------------------------------------------
 
@@ -133,7 +135,9 @@ CREATE TABLE `kelas` (
 
 INSERT INTO `kelas` (`kd_kelas`, `nama_kelas`, `tingkat`, `kd_jurusan`) VALUES
 ('xa1', 'X IPA 1', '10', '1'),
-('xa2', 'X IPA 2', '10', '1');
+('xa2', 'X IPA 2', '10', '1'),
+('xs1', 'X IPS 1', '10', '2'),
+('xs2', 'X IPS 2', '10', '2');
 
 -- --------------------------------------------------------
 
@@ -281,12 +285,17 @@ CREATE TABLE `semester` (
 
 CREATE TABLE `silabus` (
   `kd_silabus` varchar(11) NOT NULL,
-  `id_detail` int(11) NOT NULL COMMENT 'Berisi banyak id_detail',
-  `silabusrpp` text NOT NULL,
-  `kompetensi_inti` text NOT NULL,
-  `kompetensi_dasar` text NOT NULL,
-  `indikator` text NOT NULL
+  `judul` varchar(32) NOT NULL,
+  `nama_file` varchar(50) NOT NULL,
+  `tanggal_upload` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `silabus`
+--
+
+INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VALUES
+('0', 'Belum Ada', 'silabus-default.pdf', '2020-11-27 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -371,7 +380,8 @@ ALTER TABLE `detail_kurikulum`
   ADD KEY `kd_guru` (`kd_guru`),
   ADD KEY `kd_kelas` (`kd_kelas`),
   ADD KEY `kd_kurikulum` (`kd_kurikulum`),
-  ADD KEY `kd_mapel` (`kd_mapel`);
+  ADD KEY `kd_mapel` (`kd_mapel`),
+  ADD KEY `kd_silabus` (`kd_silabus`);
 
 --
 -- Indeks untuk tabel `detail_soal`
@@ -537,7 +547,8 @@ ALTER TABLE `detail_kurikulum`
   ADD CONSTRAINT `detail_kurikulum_ibfk_1` FOREIGN KEY (`kd_guru`) REFERENCES `guru` (`kd_guru`),
   ADD CONSTRAINT `detail_kurikulum_ibfk_2` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
   ADD CONSTRAINT `detail_kurikulum_ibfk_3` FOREIGN KEY (`kd_kurikulum`) REFERENCES `kurikulum` (`kd_kurikulum`),
-  ADD CONSTRAINT `detail_kurikulum_ibfk_4` FOREIGN KEY (`kd_mapel`) REFERENCES `mapel` (`kd_mapel`);
+  ADD CONSTRAINT `detail_kurikulum_ibfk_4` FOREIGN KEY (`kd_mapel`) REFERENCES `mapel` (`kd_mapel`),
+  ADD CONSTRAINT `detail_kurikulum_ibfk_5` FOREIGN KEY (`kd_silabus`) REFERENCES `silabus` (`kd_silabus`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `detail_soal`
