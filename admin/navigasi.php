@@ -3,13 +3,13 @@
     switch ($_SESSION['level']) {
         //Navigasi Guru
         case 'guru': ?>
-        <li class="<?php if ($_GET[module] == 'home') {echo "open";} ?>"><a href="media.php?module=home">BERANDA</a></li>                           
-        <li class="<?php if ($_GET[module] == 'silabus') {echo "open";} ?>"><a href="media.php?module=silabus">SILABUS</a></li>
-        <li class="<?php if ($_GET[module] == 'materi') {echo "open";} ?>"><a href="media.php?module=materi">MATERI</a></li>
-        <li class="<?php if ($_GET[module] == 'ujian') {echo "open";} ?>"><a href="media.php?module=ujian">UJIAN</a></li>
-        <li class="<?php if ($_GET[module] == 'komunitas') {echo "open";} ?>"><a href="media.php?module=komunitas">KOMUNITAS</a></li>
-        <li class="<?php if ($_GET[module] == 'tugas') {echo "open";} ?>"><a href="media.php?module=tugas">QUESTION & ANSWER</a></li>
-        <li class="<?php if ($_GET[module] == 'laporan') {echo "open";} ?>"><a href="media.php?module=laporan">LAPORAN</a></li>
+        <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a href="media.php?module=home">BERANDA</a></li>                           
+        <li class="<?php if ($_GET['module'] == 'silabus') {echo "open";} ?>"><a href="media.php?module=silabus">SILABUS</a></li>
+        <li class="<?php if ($_GET['module'] == 'materi') {echo "open";} ?>"><a href="media.php?module=materi">MATERI</a></li>
+        <li class="<?php if ($_GET['module'] == 'ujian') {echo "open";} ?>"><a href="media.php?module=ujian">UJIAN</a></li>
+        <li class="<?php if ($_GET['module'] == 'komunitas') {echo "open";} ?>"><a href="media.php?module=komunitas">KOMUNITAS</a></li>
+        <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a href="media.php?module=tugas">QUESTION & ANSWER</a></li>
+        <li class="<?php if ($_GET['module'] == 'laporan') {echo "open";} ?>"><a href="media.php?module=laporan">LAPORAN</a></li>
         <?php
         break;
 
