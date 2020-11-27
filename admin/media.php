@@ -2,6 +2,7 @@
 session_start();
 //error_reporting(1);
 include "../system/timeout.php";
+include "../system/koneksi.php";
 
 if($_SESSION['login']==1){
   if(!cek_login()){
