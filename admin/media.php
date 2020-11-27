@@ -75,7 +75,7 @@ if($_SESSION['login']==0){
     <!-- MENU SECTION END-->
 
     <div class="content-wrapper">
-       <div class="container">
+     <div class="container">
         <?php include 'content.php'; ?>
     </div>
 </div>
@@ -85,10 +85,10 @@ if($_SESSION['login']==0){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Designed by : - </a> 
-           </div>
-       </div>
-   </div>
+             &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Designed by : - </a> 
+         </div>
+     </div>
+ </div>
 </section>
 <!-- FOOTER SECTION END-->
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
@@ -100,9 +100,8 @@ if($_SESSION['login']==0){
 <script src="assets/js/custom.js"></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/js/malsup-media.js"></script>
-<script>
+<script type="text/javascript" src="http://malsup.github.com/jquery.media.js"></script>
+<script type="text/javascript">
     $(function () {
         $(document).on('click', '.pmateri', function (e) {
             e.preventDefault();

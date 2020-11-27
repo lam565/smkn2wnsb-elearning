@@ -23,7 +23,7 @@ else{
 
 
     <div class="content-wrapper">
-       <div class="container">
+     <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">SELAMAT DATANG DI DASHBOARD GURU</h4>
@@ -32,105 +32,113 @@ else{
 
         </div>
         <div class="row">
-           <div class="col-md-4 col-sm-4 col-xs-12">
-               <div class="panel panel-default">
+         <div class="col-md-4 col-sm-4 col-xs-12">
+             <div class="panel panel-default">
                 <div class="panel-heading">
-                 Upload Silabus
-             </div>
-             <div class="panel-body text-center recent-users-sec">
-                <form role="form">
+                   Upload Silabus
+               </div>
+               <div class="panel-body text-center recent-users-sec">
+                <form role="form" method="POST" enctype="multipart/form-data" action="modul/mod_silabus/update.php">
                     <div class="form-group">
                         <label>Pilih Mata Pelajaran</label>
-                        <select class="form-control">
+                        <select name="mapel" class="form-control" id="cbbmapel">
                             <option selected="selected">Pilih Mata Pelajaran</option>
                             <?php
 
-                            $qmapel="SELECT g.kd_guru,g.nama,m.nama_mapel 
-                            FROM kurikulum as k, detail_kurikulum as dk, guru as g, kelas as kls, mapel as m 
-                            WHERE k.kd_kurikulum=dk.kd_kurikulum AND g.kd_guru=dk.kd_guru AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND g.username='$_SESSION[username]' 
+                            $qmapel="SELECT m.nama_mapel,m.kd_mapel 
+                            FROM kurikulum as k, detail_kurikulum as dk, mapel as m 
+                            WHERE k.kd_kurikulum=dk.kd_kurikulum AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND dk.kd_guru='$_SESSION[kode]' 
                             GROUP BY dk.kd_mapel";
 
                             $datamapel=mysqli_query($connect,$qmapel);
                             while ($mapel=mysqli_fetch_array($datamapel)){
-                                echo "<option value=''>$mapel[nama_mapel]</option>";
+                                echo "<option value='$mapel[kd_mapel]'>$mapel[nama_mapel]</option>";
                             }
 
                             ?>
                         </select>
                     </div>
+
+                    <!-- y
                     <div class="form-group">
                         <label>Kelas</label>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="" />Checkbox Example One
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Semester</label>
-                        <input class="form-control" type="text" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Upload File </label>
-                        <input type="file" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Mata Pelajaran </label>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />IPA 
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />IPS
+                                <input type="checkbox" value="" checked="" />Semua
                             </label>
                         </div>
 
+                        <?php
+                        $qkelas="SELECT kls.kd_kelas,kls.nama_kelas 
+                        FROM kurikulum as k, detail_kurikulum as dk, guru as g, kelas as kls 
+                        WHERE k.kd_kurikulum=dk.kd_kurikulum AND g.kd_guru=dk.kd_guru AND kls.kd_kelas=dk.kd_kelas AND k.Aktif='Y' AND g.username='$_SESSION[username]' ";
+
+                        $datakelas=mysqli_query($connect,$qkelas);
+                        while ($kelas=mysqli_fetch_array($datakelas)){
+                            echo "<div class=\"checkbox\"> <label>
+                            <input type=\"checkbox\" value=\"$kelas[kd_kelas]\" />$kelas[nama_kelas]
+                            </label></div>";
+                        }
+                        ?>
+
                     </div>
+                -->
+                <div class="form-group">
+                    <label>Judul Silabus</label>
+                    <input type="hidden" name="kd_guru" value="<?php echo $_SESSION['kode']; ?>">
+                    <input class="form-control" type="text" name="judul" />
+                </div>
+                <div class="form-group">
+                    <label>FILE Silabus</label>
+                    <input type="file" name="silabusfile" />
+                </div>
 
-
-                    <button type="submit" class="btn btn-success">Simpan </button>
-                    <button type="reset" class="btn btn-primary">Reset</button>
-
-                </form>
-            </div>
+                <button type="submit" class="btn btn-success">Simpan </button>
+            </form>
         </div>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-         Hasil Upload Silabus
-     </div>
-     <div class="panel-body">
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Tanggal Upload</th>
-                        <th>Tahun Ajaran</th>
-                        <th>Semester</th>
-                        <th>Jenis File</th>
-                        <th>Mata Pelajaran</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>100090</td>
-                        <td>100090</td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
+</div>
+<div class="col-md-8 col-sm-8 col-xs-12">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+       SILABUS ANDA
+   </div>
+   <div class="panel-body">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Silabus</th>
+                    <th>Mata Pelajaran</th>
+                    <th>Kelas</th>
+                    <th>File</th>
+                    <th>Tanggal Upload </th>
+                </tr>
+            </thead>
+            <tbody>                
+                <?php
+                $sql="SELECT silabus.judul, silabus.nama_file,kelas.nama_kelas, mapel.nama_mapel, silabus.tanggal_upload 
+                FROM detail_kurikulum as dk, kurikulum, mapel, silabus, kelas 
+                WHERE dk.kd_kurikulum=kurikulum.kd_kurikulum AND dk.kd_silabus=silabus.kd_silabus AND dk.kd_kelas=kelas.kd_kelas AND dk.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND dk.kd_mapel=mapel.kd_mapel AND dk.kd_guru='$_SESSION[kode]'";
+                $silabus=mysqli_query($connect,$sql);
+                $n=1;
+                while ($rsilabus=mysqli_fetch_array($silabus)) {
+                    echo "<tr>";
+                    echo "<td>$n</td>
+                    <td>$rsilabus[judul]</td>
+                    <td>$rsilabus[nama_mapel]</td>
+                    <td>$rsilabus[nama_kelas]</td>
+                    <td>$rsilabus[nama_file]</td>
+                    <td>$rsilabus[tanggal_upload]</td>";
+                    echo "</tr>";
+                    $n++;
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
+</div>
 </div>
 </div>
 
