@@ -26,6 +26,13 @@ if (!ctype_alnum($username) OR ! ctype_alnum($pass)) {
         $_SESSION[username] = $r['username'];
         $_SESSION[level] = $r['level'];
 
+        if ($r['level']=='guru') {
+            $qkd="SELECT kd_guru FROM guru WHERE username='$r[username]'";
+            $kd=mysqli_query($connect,$qkd);
+            $kode=mysqli_fetch_array($kd);
+            $_SESSION[kode]=$kode['kd_guru'];
+        }
+
         // session timeout
         $_SESSION[login] = 1;
         timer();
