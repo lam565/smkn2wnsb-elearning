@@ -3,7 +3,7 @@
     switch ($_SESSION['level']) {
         //Navigasi Guru
         case 'guru': ?>
-        <li class="<?php if ($_GET[module] == 'home') {echo "open";} ?>"><a href="media.php?module=home" class="menu-top-active">BERANDA</a></li>                           
+        <li class="<?php if ($_GET[module] == 'home') {echo "open";} ?>"><a href="media.php?module=home">BERANDA</a></li>                           
         <li class="<?php if ($_GET[module] == 'silabus') {echo "open";} ?>"><a href="media.php?module=silabus">SILABUS</a></li>
         <li class="<?php if ($_GET[module] == 'materi') {echo "open";} ?>"><a href="media.php?module=materi">MATERI</a></li>
         <li class="<?php if ($_GET[module] == 'ujian') {echo "open";} ?>"><a href="media.php?module=ujian">UJIAN</a></li>
@@ -15,7 +15,7 @@
 
         //Navigasi admin
         case 'admin': ?>
-        <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a href="media.php?module=home" class="menu-top-active">BERANDA</a></li>
+        <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a href="media.php?module=home">BERANDA</a></li>
 
         <li class="<?php if ($_GET['module'] == 'akun') {echo "open";} ?>"><a href="media.php?module=akun">JURUSAN</a></li>
         <li class="<?php if ($_GET['module'] == 'ortu') {echo "open";} ?>"><a href="media.php?module=ortu">ORANG TUA</a></li>
