@@ -98,16 +98,16 @@ if($_SESSION['login']==0){
 <script src="assets/js/bootstrap.js"></script>
 <!-- CUSTOM SCRIPTS  -->
 <script src="assets/js/custom.js"></script>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://malsup.github.com/jquery.media.js"></script>
+<script src="assets/js/jquery-1.9.1.js"></script>
+<script src="assets/js/bootstrap-3.3.5.js"></script>
+<script type="text/javascript" src="assets/js/malsup-media.js"></script>
 <script type="text/javascript">
     $(function () {
         $(document).on('click', '.pmateri', function (e) {
             e.preventDefault();
             $("#previewmateri").modal('show');
             $(".modal-title").html($(this).attr('data-judul'));
-            $.post('modul/mod_materi/dokumen.php',
+            $.post('modul/mod_materi_siswa/dokumen.php',
                 {id: $(this).attr('data-id')},
                 function (html) {
                     $(".modal-body").html(html);
