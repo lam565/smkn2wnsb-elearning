@@ -129,7 +129,7 @@ else{
                     <td>$rsilabus[judul]</td>
                     <td>$rsilabus[nama_mapel]</td>
                     <td>$rsilabus[nama_kelas]</td>
-                    <td>$rsilabus[nama_file]</td>
+                    <td><a href='files/silabus/$rsilabus[nama_file]'>$rsilabus[nama_file]</a></td>
                     <td>$rsilabus[tanggal_upload]</td>";
                     echo "</tr>";
                     $n++;
