@@ -75,7 +75,7 @@ if($_SESSION['login']==0){
     <!-- MENU SECTION END-->
 
     <div class="content-wrapper">
-     <div class="container">
+       <div class="container">
         <?php include 'content.php'; ?>
     </div>
 </div>
@@ -85,10 +85,10 @@ if($_SESSION['login']==0){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-             &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Designed by : - </a> 
-         </div>
-     </div>
- </div>
+               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Designed by : - </a> 
+           </div>
+       </div>
+   </div>
 </section>
 <!-- FOOTER SECTION END-->
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
@@ -102,7 +102,7 @@ if($_SESSION['login']==0){
 <script src="assets/js/bootstrap-3.3.5.js"></script>
 <script type="text/javascript" src="assets/js/malsup-media.js"></script>
 <script type="text/javascript">
-    $(function () {
+    $(document).ready(function () {
         $(document).on('click', '.pmateri', function (e) {
             e.preventDefault();
             $("#previewmateri").modal('show');
@@ -114,6 +114,35 @@ if($_SESSION['login']==0){
                 }
                 );
         });
+
+        $(document).on('change', '#cbbmapel', function(){
+            var mapel = $(this).val();
+            var kd_guru = $(this).attr('data-guru');
+            $.ajax({
+                url: 'function.php',
+                type: 'post',
+                data: {
+                    act: 'kelasmapel',
+                    mp: mapel,
+                    kdg: kd_guru
+                },
+                success: function (data){
+                    $('#infokls').html(data);
+                }
+            });
+
+        });
+
+        $("#fileupload").change(function () {
+            var fileExtension = ['pdf','jpeg', 'jpg', 'png'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                $(this).val('');
+                $(".warningnya").html("Ekstensi file harus: "+fileExtension.join(', '));
+            } else {
+                $(".warningnya").html("");
+            }
+        });
+        
     });
 </script>
 

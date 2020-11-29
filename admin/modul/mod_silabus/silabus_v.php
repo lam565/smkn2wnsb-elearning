@@ -41,7 +41,7 @@ else{
                 <form role="form" method="POST" enctype="multipart/form-data" action="modul/mod_silabus/update.php">
                     <div class="form-group">
                         <label>Pilih Mata Pelajaran</label>
-                        <select name="mapel" class="form-control" id="cbbmapel">
+                        <select name="mapel" class="form-control" id="cbbmapel" required="required">
                             <option selected="selected">Pilih Mata Pelajaran</option>
                             <?php
 
