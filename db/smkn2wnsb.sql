@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Nov 2020 pada 09.41
--- Versi server: 10.1.37-MariaDB
--- Versi PHP: 7.3.0
+-- Waktu pembuatan: 29 Nov 2020 pada 16.05
+-- Versi server: 10.4.14-MariaDB
+-- Versi PHP: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -34,7 +33,7 @@ CREATE TABLE `detail_kurikulum` (
   `kd_mapel` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL,
-  `kd_silabus` varchar(11) DEFAULT '0'
+  `kd_silabus` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -42,10 +41,11 @@ CREATE TABLE `detail_kurikulum` (
 --
 
 INSERT INTO `detail_kurikulum` (`id_detail`, `kd_kurikulum`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
-(1, 1, 'bind', 'xa1', 'GR001', '0'),
-(2, 1, 'mtk', 'xa1', 'GR002', '0'),
-(3, 1, 'bind', 'xa2', 'GR003', '0'),
-(4, 1, 'mtk', 'xa2', 'GR002', '0');
+(1, 1, 'bind', 'xa1', 'GR001', 1),
+(2, 1, 'mtk', 'xa1', 'GR002', 5),
+(3, 1, 'bind', 'xa2', 'GR003', 4),
+(4, 1, 'mtk', 'xa2', 'GR002', 5),
+(5, 1, 'mtk', 'xs1', 'GR001', 1);
 
 -- --------------------------------------------------------
 
@@ -210,15 +210,21 @@ INSERT INTO `mapel` (`kd_mapel`, `nama_mapel`) VALUES
 --
 
 CREATE TABLE `materi` (
-  `kd_materi` varchar(10) NOT NULL,
-  `kd_mapel` varchar(10) NOT NULL,
-  `kd_kelas` varchar(10) NOT NULL,
-  `kd_silabus` varchar(11) NOT NULL,
+  `kd_materi` int(11) NOT NULL,
+  `id_detail` varchar(30) NOT NULL,
   `nama_materi` varchar(300) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `file` varchar(50) NOT NULL,
   `tgl_up` date NOT NULL,
-  `kd_semester` int(11) NOT NULL,
   `pertemuan` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `materi`
+--
+
+INSERT INTO `materi` (`kd_materi`, `id_detail`, `nama_materi`, `deskripsi`, `file`, `tgl_up`, `pertemuan`) VALUES
+(2, '3', 'Gagasan Pokok', 'Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc ac magna. Maecenas odio dolor, vulputate vel, auctor ac, accumsan id, felis. Pellentesque cursus sagittis felis.', 'gagasan pokok_4055746.pdf', '2020-11-29', '1 dan 2');
 
 -- --------------------------------------------------------
 
@@ -284,7 +290,7 @@ CREATE TABLE `semester` (
 --
 
 CREATE TABLE `silabus` (
-  `kd_silabus` varchar(11) NOT NULL,
+  `kd_silabus` int(11) NOT NULL,
   `judul` varchar(32) NOT NULL,
   `nama_file` varchar(50) NOT NULL,
   `tanggal_upload` datetime NOT NULL
@@ -295,7 +301,9 @@ CREATE TABLE `silabus` (
 --
 
 INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VALUES
-('0', 'Belum Ada', 'silabus-default.pdf', '2020-11-27 00:00:00');
+(1, 'Belum Ada', 'silabus-default.pdf', '2020-11-27 00:00:00'),
+(4, 'Bahasa Indonesia', 'DataSiswa_8717461.pdf', '2020-11-28 00:00:00'),
+(5, 'Matematika kelas X', 'matematika_8929630.pdf', '2020-11-28 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -432,11 +440,7 @@ ALTER TABLE `mapel`
 -- Indeks untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  ADD PRIMARY KEY (`kd_materi`),
-  ADD KEY `kd_kelas` (`kd_kelas`),
-  ADD KEY `kd_mapel` (`kd_mapel`),
-  ADD KEY `kd_silabus` (`kd_silabus`),
-  ADD KEY `kd_semester` (`kd_semester`);
+  ADD PRIMARY KEY (`kd_materi`);
 
 --
 -- Indeks untuk tabel `nilai_ujian`
@@ -484,8 +488,7 @@ ALTER TABLE `siswa`
 --
 ALTER TABLE `soal_quis`
   ADD PRIMARY KEY (`kd_soal`),
-  ADD KEY `kd_kelas` (`kd_kelas`),
-  ADD KEY `kd_materi` (`kd_materi`);
+  ADD KEY `kd_kelas` (`kd_kelas`);
 
 --
 -- Indeks untuk tabel `tahun_ajar`
@@ -510,7 +513,7 @@ ALTER TABLE `wali_kelas`
 -- AUTO_INCREMENT untuk tabel `detail_kurikulum`
 --
 ALTER TABLE `detail_kurikulum`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_soal`
@@ -525,6 +528,12 @@ ALTER TABLE `kurikulum`
   MODIFY `kd_kurikulum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT untuk tabel `materi`
+--
+ALTER TABLE `materi`
+  MODIFY `kd_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT untuk tabel `ortu`
 --
 ALTER TABLE `ortu`
@@ -535,6 +544,12 @@ ALTER TABLE `ortu`
 --
 ALTER TABLE `semester`
   MODIFY `kd_semester` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `silabus`
+--
+ALTER TABLE `silabus`
+  MODIFY `kd_silabus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -569,15 +584,6 @@ ALTER TABLE `kelas`
   ADD CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`kd_jurusan`) REFERENCES `jurusan` (`kd_jurusan`);
 
 --
--- Ketidakleluasaan untuk tabel `materi`
---
-ALTER TABLE `materi`
-  ADD CONSTRAINT `materi_ibfk_1` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
-  ADD CONSTRAINT `materi_ibfk_2` FOREIGN KEY (`kd_mapel`) REFERENCES `mapel` (`kd_mapel`),
-  ADD CONSTRAINT `materi_ibfk_3` FOREIGN KEY (`kd_silabus`) REFERENCES `silabus` (`kd_silabus`),
-  ADD CONSTRAINT `materi_ibfk_4` FOREIGN KEY (`kd_semester`) REFERENCES `semester` (`kd_semester`);
-
---
 -- Ketidakleluasaan untuk tabel `nilai_ujian`
 --
 ALTER TABLE `nilai_ujian`
@@ -602,8 +608,7 @@ ALTER TABLE `siswa`
 -- Ketidakleluasaan untuk tabel `soal_quis`
 --
 ALTER TABLE `soal_quis`
-  ADD CONSTRAINT `soal_quis_ibfk_1` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
-  ADD CONSTRAINT `soal_quis_ibfk_2` FOREIGN KEY (`kd_materi`) REFERENCES `materi` (`kd_materi`);
+  ADD CONSTRAINT `soal_quis_ibfk_1` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`);
 
 --
 -- Ketidakleluasaan untuk tabel `tahun_ajar`
