@@ -27,6 +27,10 @@ if (!empty($fileupload)){
 	VALUES ('$id_detail','$nama_materi','$desc','$newfilename','$tglup','$pertemuan')";
 	$insmateri=mysqli_query($connect,$q);
 	if ($insmateri) {
+		$qt="INSERT INTO timeline (id_detailnya,jenis,waktu) 
+		VALUES ('$id_detail','materi','$tglup')";
+		mysqli_query($connect,$qt);
+		
 		move_uploaded_file($_FILES["filemateri"]["tmp_name"], $temp.$newfilename);
 		header("location:../../media.php?module=materi");
 	} else {
