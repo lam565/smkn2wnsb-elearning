@@ -1,11 +1,12 @@
 <?php
 include "../../../system/koneksi.php";
 
-$id_detail=$_POST['kdetail'];
+$kelas=$_POST['kd_kls'];
 $nama_materi=$_POST['nama_materi'];
 $pertemuan=$_POST['pertemuan'];
 $desc=$_POST['deskripsi'];
-$tglup=date('Y-m-d');
+$mapel=$_POST['mapel'];
+$tglup=date('Y-m-d H:i:s');
 
 $temp = "../../files/materi/";
 if (!file_exists($temp)){
@@ -23,19 +24,30 @@ if (!empty($fileupload)){
 	$filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
 	$newfilename   = $filename."_".$acak.'.'.$filext;
 
-	$q="INSERT INTO materi (id_detail,nama_materi,deskripsi,file,tgl_up,pertemuan)
-	VALUES ('$id_detail','$nama_materi','$desc','$newfilename','$tglup','$pertemuan')";
-	$insmateri=mysqli_query($connect,$q);
-	if ($insmateri) {
-		$qt="INSERT INTO timeline (id_detailnya,jenis,waktu) 
-		VALUES ('$id_detail','materi','$tglup')";
-		mysqli_query($connect,$qt);
-		
+	foreach ($kelas as $kd) {
+		$q="INSERT INTO materi (nama_materi,deskripsi,file,tgl_up,pertemuan,kd_mapel,kd_kelas)
+		VALUES ('$nama_materi','$desc','$newfilename','$tglup','$pertemuan','$mapel','$kd')";
+		$insmateri=mysqli_query($connect,$q);
+		if ($insmateri) {
+			$hmat=mysqli_query($connect,"SELECT MAX(kd_materi) AS kode FROM materi");
+			$kode=mysqli_fetch_array($hmat);
+
+			$qt="INSERT INTO timeline (jenis,id_jenis,waktu,kd_kelas,kd_mapel) 
+			VALUES ('materi','$kode[kode]','$tglup','$kd','$mapel')";
+			mysqli_query($connect,$qt);
+			$s="scs";
+		} else {
+			$s="err";
+			echo "Terjadi Kesalahan!";
+		}
+	}
+	if ($s=='scs') {
 		move_uploaded_file($_FILES["filemateri"]["tmp_name"], $temp.$newfilename);
 		header("location:../../media.php?module=materi");
 	} else {
 		echo "Terjadi Kesalahan!";
 	}
+
 }
 
 ?>

@@ -95,32 +95,42 @@
 
   <div class="col-md-8 col-sm-8 col-xs-12">
 
+
     <div class="row">
       <div class="panel panel-warning">
         <div class="panel-heading">
           Timeline Kelas XII A
         </div>
         <div class="panel-body">
-            <div class="alert alert-info">
-              <h4><i class="fa fa-briefcase"></i> MATERI</h4>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-            </div>
-            <div class="alert alert-info">
-              <h4><i class="fa fa-recycle"></i> TUGAS</h4>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-            </div>
-            <div class="alert alert-info">
-              <h4><i class="fa fa-recycle"></i> TUGAS</h4>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-            </div>
-            <div class="alert alert-info">
-              <h4><i class="fa fa-recycle"></i> TUGAS</h4>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-            </div>
-            <div class="alert alert-info">
-              <h4><i class="fa fa-recycle"></i> TUGAS</h4>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-            </div>
+          <?php 
+          $qt="SELECT timeline.jenis 
+          FROM timeline, kurikulum, detail_kurikulum as dk, guru, mapel, kelas 
+          WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND 
+          dk.kd_guru=guru.kd_guru AND 
+          dk.kd_mapel=timeline.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND dk.kd_kelas=timeline.kd_kelas AND dk.kd_mapel=mapel.kd_mapel AND timeline.kd_kelas='xa1'";
+
+          
+          ?>
+          <div class="alert alert-info">
+            <h4><i class="fa fa-briefcase"></i> MATERI</h4>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+          </div>
+          <div class="alert alert-info">
+            <h4><i class="fa fa-recycle"></i> TUGAS</h4>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+          </div>
+          <div class="alert alert-info">
+            <h4><i class="fa fa-recycle"></i> TUGAS</h4>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+          </div>
+          <div class="alert alert-info">
+            <h4><i class="fa fa-recycle"></i> TUGAS</h4>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+          </div>
+          <div class="alert alert-info">
+            <h4><i class="fa fa-recycle"></i> TUGAS</h4>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+          </div>
         </div>
         <div class="panel-footer">
           <a href="#">Lihat Semua</a>

@@ -57,9 +57,10 @@ else{
 
                         ?>
                     </select>
-                    <div id="infokls">
-
-                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Untuk Kelas</label>
+                    <div id="infokls">-</div>
                 </div>
                 <div class="form-group">
                     <label>Pertemuan ke</label>
@@ -100,6 +101,7 @@ else{
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>Pertemuan</th>
                     <th>Judul</th>
                     <th>Kelas</th>
                     <th>Pelajaran</th>
@@ -111,26 +113,19 @@ else{
             <tbody>
                 <div id="bag-data">
                     <?php 
-                    $q="SELECT materi.nama_materi, materi.file, materi.tgl_up, mapel.nama_mapel, materi.id_detail, materi.kd_materi 
-                    FROM materi, detail_kurikulum as dk, mapel, kelas 
-                    WHERE materi.id_detail=dk.id_detail AND dk.kd_mapel=mapel.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND dk.kd_guru='$_SESSION[kode]'";
+                    $q="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas 
+                    FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas 
+                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND dk.kd_guru='$_SESSION[kode]'";
                     $materi=mysqli_query($connect,$q);
                     if (mysqli_num_rows($materi)>0){
-                        $kelas="";
                         $n=1;
                         while ($rmateri=mysqli_fetch_array($materi)) {
                             echo "<tr>
 
                             <td>$n</td>
+                            <td>$rmateri[pertemuan]</td>
                             <td>$rmateri[nama_materi]</td>";
-                            $kls=explode(',', $rmateri['id_detail']);
-                            foreach ($kls as $kdk) {
-                                $q=mysqli_query($connect,"SELECT kelas.nama_kelas FROM detail_kurikulum as dk, kelas WHERE dk.kd_kelas=kelas.kd_kelas AND dk.id_detail='$kdk'");
-                                $k=mysqli_fetch_array($q);
-                                $kelas .= $k['nama_kelas'].", ";
-                            }
-                            $kelas=substr($kelas, 0, -2);
-                            echo "<td>$kelas</td>";
+                            echo "<td>$rmateri[nama_kelas]</td>";
                             echo "<td>$rmateri[nama_mapel]</td>
                             <td>$rmateri[file]</td>
                             <td>$rmateri[tgl_up]</td>

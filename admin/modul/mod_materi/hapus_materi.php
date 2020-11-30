@@ -10,6 +10,7 @@
 	$q="DELETE FROM materi WHERE kd_materi='$kd'";
 
 	if (mysqli_query($connect,$q)){
+		$delt="DELETE FROM timeline WHERE jenis='materi' AND id_jenis='$kd'";
 		unlink($file);
 		header("location:../../media.php?module=materi");
 		

@@ -31,6 +31,11 @@ if (!ctype_alnum($username) OR ! ctype_alnum($pass)) {
             $kd=mysqli_query($connect,$qkd);
             $kode=mysqli_fetch_array($kd);
             $_SESSION[kode]=$kode['kd_guru'];
+        } else if ($r['level']=='siswa') {
+            $qkd="SELECT nis FROM siswa WHERE username='$r[username]'";
+            $kd=mysqli_query($connect,$qkd);
+            $kode=mysqli_fetch_array($kd);
+            $_SESSION[kode]=$kode['nis'];
         }
 
         // session timeout
