@@ -15,26 +15,26 @@
 
         //Navigasi admin
        case 'admin': ?>
-        <li class="<?php if ($_GET['module'] == 'homeadm') {echo "open";} ?>"><a href="media.php?module=homeadm" class="menu-top-active">BERANDA</a></li>
-        <li class="<?php if ($_GET['module'] == 'akun') {echo "open";} ?>"><a href="media.php?module=akun">JURUSAN</a></li>
-		<li class="<?php if ($_GET['module'] == 'ortu') {echo "open";} ?>"><a href="media.php?module=ortu">ORANG TUA</a></li>
-		<li class="<?php if ($_GET['module'] == 'semester') {echo "open";} ?>"><a href="media.php?module=semester">SEMESTER</a></li>
-		<li class="<?php if ($_GET['module'] == 'tahun') {echo "open";} ?>"><a href="media.php?module=tahun">TAHUN AJARAN</a></li>
-        <li class="<?php if ($_GET['module'] == 'siswa') {echo "open";} ?>"><a href="media.php?module=siswa">SISWA</a></li>
-		<li class="<?php if ($_GET['module'] == 'guru') {echo "open";} ?>"><a href="media.php?module=guru">GURU</a></li>
-		<li class="<?php if ($_GET['module'] == 'kelas') {echo "open";} ?>"><a href="media.php?module=kelas">KELAS</a></li>
-		<li class="<?php if ($_GET['module'] == 'mapel') {echo "open";} ?>"><a href="media.php?module=mapel">MATA PELAJARAN</a></li>
-		<li class="<?php if ($_GET['module'] == 'kurikulum') {echo "open";} ?>"><a href="media.php?module=kurikulum">KURIKULUM</a></li>	
+        <li class="<?php if ($_GET['module'] == 'homeadm') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=homeadm" class="menu-top-active"><b>BERANDA</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'akun') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=akun"><b>JURUSAN</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'ortu') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=ortu"><b>ORANG TUA</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'semester') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=semester"><b>SEMESTER</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'tahun') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tahun"><b>TAHUN AJARAN</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'siswa') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=siswa"><b>SISWA</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'guru') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=guru"><b>GURU</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'kelas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=kelas"><b>KELAS</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'mapel') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=mapel"><b>MATA PELAJARAN</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'kurikulum') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=kurikulum"><b>KURIKULUM</b></a></li>	
 		
         <?php
         break;
 
         //Navigasi Siswa
         case 'siswa': ?>
-        <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a href="media.php?module=home" >Beranda</a></li>
-        <li class="<?php if ($_GET['module'] == 'materi') {echo "open";} ?>"><a href="media.php?module=materi&mp=all" >MATERI</a></li>
-        <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a href="media.php?module=tugas&mp=all" >TUGAS</a></li>
-        <li class="<?php if ($_GET['module'] == 'anggota') {echo "open";} ?>"><a href="media.php?module=anggota" >ANGGOTA</a></li>
+        <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=home" ><b>Beranda</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'materi') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=materi&mp=all" ><b>MATERI</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tugas&mp=all" ><b>TUGAS</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'anggota') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=anggota" ><b>ANGGOTA</b></a></li>
         
         <?php
         break;
