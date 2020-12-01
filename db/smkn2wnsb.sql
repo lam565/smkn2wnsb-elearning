@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Des 2020 pada 02.32
+-- Waktu pembuatan: 01 Des 2020 pada 23.20
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.10
 
@@ -142,6 +142,21 @@ INSERT INTO `kelas` (`kd_kelas`, `nama_kelas`, `tingkat`, `kd_jurusan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `kerja_tugas`
+--
+
+CREATE TABLE `kerja_tugas` (
+  `kd_kerja` int(11) NOT NULL,
+  `kd_tugas` int(11) NOT NULL,
+  `nis` varchar(10) NOT NULL,
+  `file` varchar(100) NOT NULL DEFAULT 'T',
+  `nilai` int(11) NOT NULL DEFAULT 0,
+  `status` varchar(20) NOT NULL DEFAULT 'T'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `kurikulum`
 --
 
@@ -227,7 +242,9 @@ CREATE TABLE `materi` (
 
 INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
 (8, 'Gagasan Pokok Paragraf', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'gagasan pokok_4287061.pdf', '2020-12-01', '1 dan 2', 'bind', 'xa1', 'GR001'),
-(9, 'Perkenalan Majas', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'doc_12729836.pdf', '2020-12-01', '1', 'bind', 'xa2', 'GR003');
+(9, 'Perkenalan Majas', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'doc_12729836.pdf', '2020-12-01', '1', 'bind', 'xa2', 'GR003'),
+(10, 'Logika Matematika', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'Logika matematika_4197165.pdf', '2020-12-01', '1 dan 2', 'mtk', 'xa1', 'GR002'),
+(11, 'Logika Matematika', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'Logika matematika_4197165.pdf', '2020-12-01', '1 dan 2', 'mtk', 'xa2', 'GR002');
 
 -- --------------------------------------------------------
 
@@ -413,7 +430,35 @@ CREATE TABLE `timeline` (
 
 INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
 (8, 'materi', 8, '2020-12-01 01:56:17', 'xa1', 'bind', 'GR001'),
-(9, 'materi', 9, '2020-12-01 02:17:08', 'xa2', 'bind', 'GR003');
+(9, 'materi', 9, '2020-12-01 02:17:08', 'xa2', 'bind', 'GR003'),
+(10, 'materi', 10, '2020-12-01 02:37:41', 'xa1', 'mtk', 'GR002'),
+(11, 'materi', 11, '2020-12-01 02:37:41', 'xa2', 'mtk', 'GR002'),
+(12, 'tugas', 1, '2020-12-01 17:08:31', 'xa1', 'bind', 'GR001');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tugas`
+--
+
+CREATE TABLE `tugas` (
+  `kd_tugas` int(11) NOT NULL,
+  `judul_tugas` varchar(100) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `batas_kumpul` date NOT NULL,
+  `file` varchar(50) NOT NULL,
+  `tgl_up` date NOT NULL,
+  `kd_kelas` varchar(10) NOT NULL,
+  `kd_mapel` varchar(10) NOT NULL,
+  `kd_guru` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tugas`
+--
+
+INSERT INTO `tugas` (`kd_tugas`, `judul_tugas`, `deskripsi`, `batas_kumpul`, `file`, `tgl_up`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
+(1, 'Tugas Bahasa Indonesia', 'Kerjakan sesuai perintah yang tertera di lampiran file', '2020-12-11', 'tugas bind_9857892.pdf', '2020-12-01', 'xa1', 'bind', 'GR001');
 
 -- --------------------------------------------------------
 
@@ -468,6 +513,12 @@ ALTER TABLE `jurusan`
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`kd_kelas`),
   ADD KEY `kd_jurusan` (`kd_jurusan`);
+
+--
+-- Indeks untuk tabel `kerja_tugas`
+--
+ALTER TABLE `kerja_tugas`
+  ADD PRIMARY KEY (`kd_kerja`);
 
 --
 -- Indeks untuk tabel `kurikulum`
@@ -555,6 +606,12 @@ ALTER TABLE `timeline`
   ADD PRIMARY KEY (`id_timeline`);
 
 --
+-- Indeks untuk tabel `tugas`
+--
+ALTER TABLE `tugas`
+  ADD PRIMARY KEY (`kd_tugas`);
+
+--
 -- Indeks untuk tabel `wali_kelas`
 --
 ALTER TABLE `wali_kelas`
@@ -579,6 +636,12 @@ ALTER TABLE `detail_soal`
   MODIFY `kd_detail_soal` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `kerja_tugas`
+--
+ALTER TABLE `kerja_tugas`
+  MODIFY `kd_kerja` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `kurikulum`
 --
 ALTER TABLE `kurikulum`
@@ -588,7 +651,7 @@ ALTER TABLE `kurikulum`
 -- AUTO_INCREMENT untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `kd_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `kd_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `ortu`
@@ -612,7 +675,13 @@ ALTER TABLE `silabus`
 -- AUTO_INCREMENT untuk tabel `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT untuk tabel `tugas`
+--
+ALTER TABLE `tugas`
+  MODIFY `kd_tugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
