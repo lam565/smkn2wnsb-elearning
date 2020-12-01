@@ -27,42 +27,16 @@ if ($update) {
 	$row = $sql->fetch_assoc();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	$err = false;
-	$file = $_FILES['gambar']['name'];
-	if ($update) {
-		if ($file) {
-			$x = explode('.', $_FILES['gambar']['name']);
-			$file_name = date("dmYHis").".".strtolower(end($x));
-			if (! move_uploaded_file($_FILES['gambar']['tmp_name'], "../../assets/img/guru/".$file_name)) {
-				echo "<script>alert('Upload File Gagal!'); window.location = 'media.php?module=guru'</script>";
-				$err = true;
-			}
-			@unlink("../../assets/img/guru/".$row["gambar"]);
-		} else {
-			$file_name = $row["gambar"];
-		}
-	} else {
-		if (!$file) {
-			
-			echo "<script>alert('File gambar tidak ada'); window.location = 'media.php?module=guru'</script>";
-			$err = true;
-		}
-		$x = explode('.', $_FILES['gambar']['name']);
-		$file_name = date("dmYHis").".".strtolower(end($x));
-		if (! move_uploaded_file($_FILES['gambar']['tmp_name'], "../../assets/img/guru/".$file_name)) {
-			echo "<script>alert('Upload File Gagal!'); window.location = 'media.php?module=guru'</script>";
-			$err = true;
-		}
-	}
+	
 	if ($update) {
 		$sql = "UPDATE guru SET username='$_POST[username]',nip='$_POST[nip]',nama='$_POST[nama]',gelpend='$_POST[gelpend]',
 		tmp_lahir='$_POST[tmp_lahir]',tgl_lahir='$_POST[tgl_lahir]',alamat='$_POST[alamat]',telp='$_POST[telp]',
-		email='$_POST[email]',foto='$file_name',status='$_POST[status]' WHERE kd_guru='$_GET[key]'";
+		email='$_POST[email]',status='$_POST[status]' WHERE kd_guru='$_GET[key]'";
 	} else {
 		$sql = "INSERT INTO guru VALUES ('$_POST[kd_guru]', '$_POST[username]', 
 		'$_POST[nip]','$_POST[nama]','$_POST[gelpend]','$_POST[tmp_lahir]',
 		'$_POST[tgl_lahir]','$_POST[alamat]','$_POST[telp]','$_POST[email]',
-		'$file_name','$_POST[status]')";
+		'','$_POST[status]')";
 	}
   if ($connection->query($sql)) {
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=guru'</script>";
@@ -139,13 +113,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                            <input class="form-control" name="email" type="text" <?= (!$update) ?: 'value="'.$row["email"].'"' ?>/>
                                             
                                         </div>
-										<div class="form-group">
-                                            <label>Foto </label>
-                                            <input type="file" name="gambar" class="form-control">
-			                <?php if ($update): ?>
-												<span class="help-block">*) Kosongkang jika tidak diubah</span>
-											<?php endif; ?>
-                                        </div>
+										
 										<div class="form-group">
                                             <label>Status </label>
                                             <input class="form-control" name="status" type="text" <?= (!$update) ?: 'value="'.$row["status"].'"' ?>/>

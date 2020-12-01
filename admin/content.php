@@ -41,46 +41,57 @@ else{
       break;
     }
     break;
-    case 'admin':
-    case 'admin':
+   case 'admin':
     switch ($modul) {
-      case 'home':
-      include "modul/mod_homeadm/home_v.php";
+      case 'homeadm':
+      include "modul/mod_homeadm/homeadm_v.php";
       break;
-      
-      case 'akun':
+	  
+	  case 'akun':
       include "modul/mod_akun/akun_v.php";
       break;
-      
-      case 'siswa':
+	  
+	  case 'siswa':
       include "modul/mod_siswa/siswa_v.php";
       break;
-      
-      case 'guru':
+	  
+	  case 'guru':
       include "modul/mod_guru/guru_v.php";
       break;
-      
-      case 'kelas':
+	  
+	  case 'kelas':
       include "modul/mod_kelas/kelas_v.php";
       break;
-      
-      case 'mapel':
+	  
+	  case 'mapel':
       include "modul/mod_mapel/mapel_v.php";
       break;
-      
-      case 'ortu':
+	  
+	  case 'ortu':
       include "modul/mod_ortu/ortu_v.php";
       break;
-      
-      case 'semester':
+	  
+	  case 'semester':
       include "modul/mod_semester/semester_v.php";
       break;
-      
-      case 'tahun':
+	  
+	   case 'tahun':
       include "modul/mod_tahun_ajar/tahun_v.php";
       break;
+	  
+	   case 'kurikulum':
+      include "modul/mod_kurikulum/kurikulum_v.php";
+      break;
+	  
+	   case 'detkurikulum':
+      include "modul/mod_detailkurikulum/detkurikulum_v.php";
+      break;
+	  
+	  case 'gfsiswa':
+      include "modul/mod_gfsiswa/gfsiswa_v.php";
+      break;
 
-      default:
+     default:
       //notfound modul
       include "modul/mod_404.php";
       break;

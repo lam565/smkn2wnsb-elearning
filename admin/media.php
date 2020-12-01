@@ -47,19 +47,15 @@ if($_SESSION['login']==0){
     <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="?module=home">
-                    <img src="assets/img/logo.png" />
+               
+                <a href="?module=home">
+                    <img src="assets/img/new.jpg" width="950" height="150"/>
                 </a>
 
             </div>
 
             <div class="right-div">
-                <a href="../logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
+                <a href="../logout.php" class="btn btn-primary pull-right">LOG ME OUT</a>
             </div>
         </div>
     </div>

@@ -31,11 +31,22 @@ if (!ctype_alnum($username) OR ! ctype_alnum($pass)) {
             $kd=mysqli_query($connect,$qkd);
             $kode=mysqli_fetch_array($kd);
             $_SESSION[kode]=$kode['kd_guru'];
+			
+			$qk=date('Y-m-d');
+			$q=date('Y-m-d H:i:s');
+			
+			$qkd1="insert into absensi values ('$kode[kd_guru]','$qk','$q','')";
+            $kd1=mysqli_query($connect,$qkd1);
+			header('location:admin/media.php?module=home');
         } else if ($r['level']=='siswa') {
             $qkd="SELECT nis FROM siswa WHERE username='$r[username]'";
             $kd=mysqli_query($connect,$qkd);
             $kode=mysqli_fetch_array($kd);
             $_SESSION[kode]=$kode['nis'];
+			header('location:admin/media.php?module=home');
+		} else if ($r['level']=='admin') {
+           
+			header('location:admin/media.php?module=homeadm');
         }
 
         // session timeout
@@ -43,7 +54,7 @@ if (!ctype_alnum($username) OR ! ctype_alnum($pass)) {
         timer();
 
 
-        header('location:admin/media.php?module=home');
+       
 
     } else {
         echo "<script>alert('Maaf! Username atau Password anda salah, mohon diulangi kembali'); window.location = 'index.php';</script>";

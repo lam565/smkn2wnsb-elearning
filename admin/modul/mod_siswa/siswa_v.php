@@ -27,51 +27,25 @@ if ($update) {
 	$row = $sql->fetch_assoc();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	$err = false;
-	$file = $_FILES['gambar']['name'];
+	
 	if ($update) {
-		if ($file) {
-			$x = explode('.', $_FILES['gambar']['name']);
-			$file_name = date("dmYHis").".".strtolower(end($x));
-			if (! move_uploaded_file($_FILES['gambar']['tmp_name'], "../../assets/img/siswa/".$file_name)) {
-				
-				echo "<script>alert('Upload File Gagal!'); window.location = 'media.php?module=siswa'</script>";
-				$err = true;
-			}
-			@unlink("../../assets/img/siswa/".$row["foto"]);
-		} else {
-			$file_name = $row["foto"];
-		}
+		$sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]', kelamin='$_POST[kelamin]', tmp_lahir='$_POST[tmp_lahir]', tgl_lahir='$_POST[tgl_lahir]', kd_ortu='$_POST[kd_ortu]',alamat='$_POST[alamat]',email='$_POST[email]',telp='$_POST[telp]',status='$_POST[status]' WHERE nis='$_GET[key]'";
 	} else {
-		if (!$file) {
-			
-			echo "<script>alert('File gambar tidak ada'); window.location = 'media.php?module=siswa'</script>";
-			$err = true;
-		}
-		$x = explode('.', $_FILES['gambar']['name']);
-		$file_name = date("dmYHis").".".strtolower(end($x));
-		if (! move_uploaded_file($_FILES['gambar']['tmp_name'], "../../assets/img/siswa/".$file_name)) {
-			echo "<script>alert('Upload File Gagal!'); window.location = 'media.php?module=siswa'</script>";
-			$err = true;
-		}
+		$sql = "INSERT INTO siswa VALUES ('$_POST[nis]', '$_POST[nisn]', '$_POST[nama]','$_POST[username]', '$_POST[kelamin]', '$_POST[tmp_lahir]', '$_POST[tgl_lahir]', '$_POST[kd_ortu]', '$_POST[alamat]', '$_POST[email]', '', '$_POST[telp]', '$_POST[status]')";
+		
 	}
-	if ($update) {
-		$sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]', kelamin='$_POST[kelamin]', tmp_lahir='$_POST[tmp_lahir]', tgl_lahir='$_POST[tgl_lahir]', kd_ortu='$_POST[kd_ortu]',alamat='$_POST[alamat]',email='$_POST[email]',foto='$file_name',telp='$_POST[telp]',status='$_POST[status]' WHERE nis='$_GET[key]'";
-	} else {
-		$sql = "INSERT INTO siswa VALUES ('$_POST[nis]', '$_POST[nisn]', '$_POST[username]', '$_POST[kelamin]', '$_POST[tmp_lahir]', '$_POST[tgl_lahir]', '$_POST[kd_ortu]', '$_POST[alamat]', '$_POST[email]', '$file_name', '$_POST[telp]', '$_POST[status]')";
-	}
-	if (!$err) {
+
 	  if ($connection->query($sql)) {
-	    
+	    $sql2 = "INSERT INTO rombel VALUES ('$_POST[nis]', '$_POST[kd_kelas]', '$_POST[kd_tajar]')";
 		echo "<script>alert('Berhasil!'); window.location = 'media.php?module=siswa'</script>";
 	  } else {
 			echo "<script>alert('Gagal!'); window.location = 'media.php?module=siswa'</script>";
 	  }
-	}
+	
 }
 if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
   $connection->query("DELETE FROM siswa WHERE nis='$_GET[key]'");
-	echo alert("Berhasil!", "?page=siswa");
+	echo "<script>alert('Berhasil!'); window.location = 'media.php?module=siswa'</script>";
 }
 ?>
 
@@ -144,13 +118,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <label>E-Mail</label>
                                             <input class="form-control" name="email" type="text" <?= (!$update) ?: 'value="'.$row["email"].'"' ?>/>
                                         </div>
-										<div class="form-group">
-                                            <label>Foto</label>
-                                           <input type="file" name="gambar" class="form-control">
-			                <?php if ($update): ?>
-												<span class="help-block">*) Kosongkang jika tidak diubah</span>
-											<?php endif; ?>
-                                        </div>
+										
 										<div class="form-group">
                                             <label>Tlp</label>
                                             <input class="form-control" name="telp" type="text" <?= (!$update) ?: 'value="'.$row["telp"].'"' ?>/>
@@ -158,6 +126,24 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 										<div class="form-group">
                                             <label>Status</label>
                                             <input class="form-control" name="status" type="text" <?= (!$update) ?: 'value="'.$row["status"].'"' ?>/>
+                                        </div>
+										 <div class="form-group">
+                                            <label>Kelas </label>
+                                            <select class="form-control" name="kd_kelas">
+												<option>Kelas</option>
+												<?php $query3 = $connection->query("SELECT * FROM kelas"); while ($data3 = $query3->fetch_assoc()): ?>
+													<option value="<?=$data3["kd_kelas"]?>" <?= (!$update) ?: (($row3["kd_kelas"] != $data3["kd_kelas"]) ?: 'selected="on"') ?>><?=$data3["nama_kelas"]?></option>
+												<?php endwhile; ?>
+											</select>
+                                        </div>
+										 <div class="form-group">
+                                            <label>Tahun Ajaran</label>
+                                            <select class="form-control" name="kd_tajar">
+												<option>Tahun Ajaran</option>
+												<?php $query5 = $connection->query("SELECT * FROM tahun_ajar"); while ($data5 = $query5->fetch_assoc()): ?>
+													<option value="<?=$data5["kd_tajar"]?>" <?= (!$update) ?: (($row5["kd_tajar"] != $data5["kd_tajar"]) ?: 'selected="on"') ?>><?=$data5["tahun_ajar"]?></option>
+												<?php endwhile; ?>
+											</select>
                                         </div>
                                         
                                        
@@ -217,7 +203,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 											 <td><?=$row['kd_ortu']?></td>
 											 <td><?=$row['alamat']?></td>
 											 <td><?=$row['email']?></td>
-											 <td><?=$row['foto']?></td>
+											 <td><?=$row['gambar']?></td>
 											 <td><?=$row['telp']?></td>
 											 <td><?=$row['status']?></td>
 											 <td class="hidden-print">
