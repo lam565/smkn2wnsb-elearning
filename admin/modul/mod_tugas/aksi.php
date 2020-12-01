@@ -30,7 +30,7 @@ if (isset($_GET['act'])){
 			$newfilename   = $filename."_".$acak.'.'.$filext;
 
 			foreach ($kelas as $kd) {
-				$q="INSERT INTO tugas (judul_tugas,deskripsi,batas_kumpul,file,tgl_up,kd_kelas,kd_mapel,kd_guru)
+				$q="INSERT INTO tugas (nama_tugas,deskripsi,batas_kumpul,file,tgl_up,kd_kelas,kd_mapel,kd_guru)
 				VALUES ('$judul','$desc','$batas','$newfilename','$tglup','$kd','$mapel','$kd_guru')";
 				$instugas=mysqli_query($connect,$q);
 				if ($instugas) {

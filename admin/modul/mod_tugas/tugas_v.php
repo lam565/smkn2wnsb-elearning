@@ -23,7 +23,7 @@ else{
 
 
     <div class="content-wrapper">
-       <div class="container">
+     <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">MANAJEMEN TUGAS</h4>
@@ -35,11 +35,11 @@ else{
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                     BUAT TUGAS
-                 </div>
-                 <div class="panel-body text-center recent-users-sec">
+                       BUAT TUGAS
+                   </div>
+                   <div class="panel-body text-center recent-users-sec">
                     <form role="form" name="fupmateri" method="POST" action="modul/mod_tugas/aksi.php?act=add" enctype="multipart/form-data">
-                       <div class="form-group">
+                     <div class="form-group">
                         <label>Mata Pelajaran</label>
                         <select name="mapel" class="form-control" id="cbbmapel" data-guru="<?php echo $_SESSION['kode'] ?>">
                             <option selected="selected">Pilih Mata Pelajaran</option>
@@ -92,34 +92,47 @@ else{
     <div class="col-md-8 col-sm-8 col-xs-12">
       <div class="panel panel-success">
         <div class="panel-heading">
-         DAFTAR TUGAS SISWA
-     </div>
-     <div class="panel-body">
+           DAFTAR TUGAS SISWA
+       </div>
+       <div class="panel-body">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Nama Ujian</th>
-
-                        <th>Tanggal</th>
-                        <th>Lama</th>
+                        <th>Nama Tugas</th>
+                        <th>Batas Kumpul</th>
+                        <th>File</th>
                         <th>Kelas</th>
                         <th>Mata Pelajaran</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Otto</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
+                    <?php 
+                    $q="SELECT tugas.nama_tugas, tugas.file, tugas.batas_kumpul, tugas.tgl_up, mapel.nama_mapel, tugas.kd_tugas, kelas.nama_kelas 
+                    FROM kurikulum, tugas, detail_kurikulum as dk, mapel, kelas 
+                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=tugas.kd_mapel AND tugas.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=tugas.kd_kelas AND dk.kd_kelas=kelas.kd_kelas AND tugas.kd_guru=dk.kd_guru AND tugas.kd_guru='$_SESSION[kode]'";
+                    $tugas=mysqli_query($connect,$q);
+                    if (mysqli_num_rows($tugas)>0){
+                        $n=1;
+                        while ($rtugas=mysqli_fetch_array($tugas)) {
+                            echo "<tr>
 
+                            <td>$n</td>
+                            <td>$rtugas[nama_tugas]</td>
+                            <td>$rtugas[batas_kumpul]</td>";
+                            echo "<td><a href='files/tugas/$rtugas[file]' target='_blank'>$rtugas[file]</a></td>";
+                            echo "<td>$rtugas[nama_kelas]</td>
+                            <td>$rtugas[nama_mapel]</td>
 
-                    </tr>
+                            </tr>";
+                            $n++;
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>Belum ada materi diupload</td></tr>";
+                    }
+                    ?>
 
                 </tbody>
             </table>
