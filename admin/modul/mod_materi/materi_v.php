@@ -23,7 +23,7 @@ else{
 
 
     <div class="content-wrapper">
-     <div class="container">
+       <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">SELAMAT DATANG DI DASHBOARD GURU <?php echo $_SESSION['kode']; ?></h4>
@@ -32,14 +32,14 @@ else{
 
         </div>
         <div class="row">
-         <div class="col-md-4 col-sm-4 col-xs-12">
-             <div class="panel panel-default">
+           <div class="col-md-4 col-sm-4 col-xs-12">
+               <div class="panel panel-default">
                 <div class="panel-heading">
-                   Upload Materi
-               </div>
-               <div class="panel-body text-center recent-users-sec">
+                 Upload Materi
+             </div>
+             <div class="panel-body text-center recent-users-sec">
                 <form role="form" name="fupmateri" method="POST" action="modul/mod_materi/simpan_materi.php" enctype="multipart/form-data">
-                 <div class="form-group">
+                   <div class="form-group">
                     <label>Mata Pelajaran</label>
                     <select name="mapel" class="form-control" id="cbbmapel" data-guru="<?php echo $_SESSION['kode'] ?>">
                         <option selected="selected">Pilih Mata Pelajaran</option>
@@ -93,9 +93,9 @@ else{
 <div class="col-md-8 col-sm-8 col-xs-12">
   <div class="panel panel-success">
     <div class="panel-heading">
-       Hasil Upload Materi
-   </div>
-   <div class="panel-body">
+     Hasil Upload Materi
+ </div>
+ <div class="panel-body">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead>
@@ -115,7 +115,7 @@ else{
                     <?php 
                     $q="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas 
                     FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas 
-                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND materi.kd_guru=dk.kd_guru AND materi.kd_guru='$_SESSION[kode]'";
+                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND dk.kd_kelas=kelas.kd_kelas AND materi.kd_guru=dk.kd_guru AND materi.kd_guru='$_SESSION[kode]'";
                     $materi=mysqli_query($connect,$q);
                     if (mysqli_num_rows($materi)>0){
                         $n=1;
