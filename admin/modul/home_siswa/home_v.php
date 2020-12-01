@@ -101,7 +101,7 @@
               $j=strtoupper($j);
               echo "<div class='alert alert-info'>
               <h4><i class='fa fa-briefcase'></i> $j</h4>
-              $r[nama] telah menambahkan $j pada $r[tgl_up]. <a href='' class='alert-link'>Buka $j</a>
+              Guru $r[nama] telah menambahkan $j $r[nama_mapel] pada $r[tgl_up]. <a href='' class='alert-link'>Buka $j</a>
               </div>";
             }
           }
@@ -110,7 +110,7 @@
           FROM timeline, kurikulum, detail_kurikulum as dk, guru, mapel, kelas 
           WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND 
           dk.kd_guru=guru.kd_guru AND 
-          dk.kd_mapel=timeline.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND dk.kd_kelas=timeline.kd_kelas AND dk.kd_mapel=mapel.kd_mapel AND timeline.kd_kelas='$kode_kelas' ORDER BY timeline.waktu";
+          dk.kd_mapel=timeline.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND dk.kd_kelas=timeline.kd_kelas AND dk.kd_mapel=mapel.kd_mapel AND timeline.kd_kelas='$kode_kelas' ORDER BY timeline.waktu DESC";
           $tlguru=mysqli_query($connect,$qt);
           while ($rTL=mysqli_fetch_array($tlguru)){
             getTL($rTL['jenis'],$rTL['id_jenis'],$connect);

@@ -15,7 +15,7 @@ else{
    <div class="container">
     <div class="row pad-botm">
       <div class="col-md-12">
-        <h4 class="header-line">SELAMAT DATANG DI DASHBOARD GURU</h4>
+        <h4 class="header-line">DASHBOARD GURU</h4>
       </div>
     </div>
 

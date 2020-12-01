@@ -6,9 +6,9 @@
         <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=home"><b>BERANDA</b></a></li>                           
         <li class="<?php if ($_GET['module'] == 'silabus') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=silabus"><b>SILABUS</b></a></li>
         <li class="<?php if ($_GET['module'] == 'materi') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=materi"><b>MATERI</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tugas"><b>TUGAS</b></a></li>
         <li class="<?php if ($_GET['module'] == 'ujian') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=ujian"><b>UJIAN</b></a></li>
         <li class="<?php if ($_GET['module'] == 'komunitas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=komunitas"><b>KOMUNITAS</b></a></li>
-        <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tugas"><b>QUESTION & ANSWER</b></a></li>
         <li class="<?php if ($_GET['module'] == 'laporan') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=laporan"><b>LAPORAN</b></a></li>
         <?php
         break;

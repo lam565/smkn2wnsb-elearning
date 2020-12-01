@@ -26,7 +26,7 @@ else{
      <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">SELAMAT DATANG DI DASHBOARD GURU</h4>
+                <h4 class="header-line">MANAJEMEN SILABUS</h4>
                 
             </div>
 
@@ -129,7 +129,7 @@ else{
                     <td>$rsilabus[judul]</td>
                     <td>$rsilabus[nama_mapel]</td>
                     <td>$rsilabus[nama_kelas]</td>
-                    <td><a href='files/silabus/$rsilabus[nama_file]'>$rsilabus[nama_file]</a></td>
+                    <td><a href='files/silabus/$rsilabus[nama_file]' target='_blank'>$rsilabus[nama_file]</a></td>
                     <td>$rsilabus[tanggal_upload]</td>";
                     echo "</tr>";
                     $n++;
