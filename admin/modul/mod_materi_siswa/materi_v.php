@@ -7,195 +7,85 @@
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-       Pilih Mata Pelajaran
+       Materi Untuk Kelas <?php echo $nama_kelas; ?>
      </div>        
 
      <div class="panel-body">
+      <?php
+      if (isset($_GET['mp'])){
+        $mapel=$_GET['mp'];
+      } else {
+        $mapel='all';
+      }
+      ?>
       <a href="?module=materi&mp=all" class="btn <?php echo $_GET['mp']=='all' ? "btn-default" : "btn-primary"; ?> btn-sm">Semua</a>
-      <a href="?module=materi&mp=kd_mapel1" class="btn <?php echo $_GET['mp']=='kd_mapel1' ? "btn-default": "btn-primary"; ?> btn-sm">Matematika</a>
-      <a href="?module=materi&mp=kd_mapel2" class="btn <?php echo $_GET['mp']=='kd_mapel2' ? "btn-default": "btn-primary"; ?> btn-sm">Bahasa Indonesia</a>
-      <a href="?module=materi&mp=kd_mapel3" class="btn <?php echo $_GET['mp']=='kd_mapel3' ? "btn-default": "btn-primary"; ?> btn-sm">Bahasa Inggris</a> 
+
+      <?php
+      $qmapel=mysqli_query($connect,"SELECT mapel.kd_mapel, mapel.nama_mapel 
+        FROM mapel, detail_kurikulum as dk, kurikulum
+        WHERE dk.kd_kurikulum=kurikulum.kd_kurikulum AND kurikulum.aktif='Y' AND
+        dk.kd_mapel=mapel.kd_mapel AND dk.kd_kelas='$kode_kelas'");
+      while ($rmp=mysqli_fetch_array($qmapel)){
+        $mapel==$rmp['kd_mapel'] ? $cbtn="btn-default" : $cbtn="btn-primary";
+        echo "<a href='?module=materi&mp=$rmp[kd_mapel]' class='btn $cbtn btn-sm'>$rmp[nama_mapel]</a>  ";
+      }
+      ?>
+
     </div>
   </div>
 </div>
 </div>
 <div class="row">
   <div class="col-md-9 col-sm-9 col-xs-12">
-    <?php
-    if (isset($_GET['mp'])){
-      $mapel=$_GET['mp'];
-    } else {
-      $mapel='all';
-    }
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+        <thead>
+          <tr>
+            <th>Materi </th>
+            <th>Mata Pelajaran </th>
+            <th>Guru Pengampu </th>
+            <th>File </th>
+            <th>Aksi </th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
 
-    switch ($mapel) {
-      case 'kd_mapel1':
-      ?>
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-          <thead>
-            <tr>
-              <th>Materi </th>
-              <th>Mata Pelajaran </th>
-              <th>Guru Pengampu </th>
-              <th>File </th>
-              <th>Aksi </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="odd gradeX">
-              <td>Tiga Dimensi</td>
-              <td>Matapelajaran 1</td>
-              <td>Guru Mapel 1</td>
-              <td class="center">Tiga Dimensi untuk SMK kelas XII Ganjil.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-            <tr class="odd gradeX">
-              <td>Aljabar Linier</td>
-              <td>Matapelajaran 1</td>
-              <td>Guru Mapel 1</td>
-              <td class="center">Aljabar Linier untuk SMK kelas XII Ganjil.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>       
-          </tbody>
-        </table>
-      </div>
-      <?php
-      break;
+          if ($mapel=='all') {
+            $qmat="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas , guru.nama
+                    FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas, guru 
+                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND materi.kd_guru=dk.kd_guru AND guru.kd_guru=dk.kd_guru AND materi.kd_kelas='$kode_kelas'";
+            $mat=mysqli_query($connect,$qmat);
+            while ($rmat=mysqli_fetch_array($mat)){
+              echo "<tr class='odd gradeX'>
+              <td>$rmat[nama_materi]</td>
+              <td>$rmat[nama_mapel]</td>
+              <td>$rmat[nama]</td>
+              <td class='center'>$rmat[file]</td>
+              <td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]'>Download</a> | <a href='#'' class='pmateri' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>
+              </tr>";
+            }
+          } else {
+            $qmat="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas , guru.nama
+                    FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas, guru 
+                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND materi.kd_guru=dk.kd_guru AND guru.kd_guru=dk.kd_guru AND materi.kd_kelas='$kode_kelas' AND materi.kd_mapel='$mapel'";
+            $mat=mysqli_query($connect,$qmat);
+            while ($rmat=mysqli_fetch_array($mat)){
+              echo "<tr class='odd gradeX'>
+              <td>$rmat[nama_materi]</td>
+              <td>$rmat[nama_mapel]</td>
+              <td>$rmat[nama]</td>
+              <td class='center'>$rmat[file]</td>
+              <td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]'>Download</a> | <a href='#'' class='pmateri' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>
+              </tr>";
+            }
+          }
 
-      case 'kd_mapel2':
-      ?>
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-          <thead>
-            <tr>
-              <th>Materi </th>
-              <th>Mata Pelajaran </th>
-              <th>Guru Pengampu </th>
-              <th>File </th>
-              <th>Aksi </th>
-            </tr>
-          </thead>
-            <tr class="odd gradeX">
-              <td>Inti Bacaan dan Gagasan Pokok </td>
-              <td>Matapelajaran 2</td>
-              <td>Guru Mapel 2</td>
-              <td class="center">Gagasan Pokok.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-          <tbody>                                
-          </tbody>
-        </table>
-      </div>
-      <?php
-      break;
+          ?>                               
+        </tbody>
+      </table>
+    </div>
 
-      case 'kd_mapel3':
-      ?>
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-          <thead>
-            <tr>
-              <th>Materi </th>
-              <th>Mata Pelajaran </th>
-              <th>Guru Pengampu </th>
-              <th>File </th>
-              <th>Aksi </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="odd gradeX">
-              <td>Past Tense</td>
-              <td>Matapelajaran 3</td>
-              <td>Guru Mapel 3</td>
-              <td class="center">Past Tense.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-            <tr class="odd gradeX">
-              <td>Telling Time</td>
-              <td>Matapelajaran 3</td>
-              <td>Guru Mapel 3</td>
-              <td class="center">Telling Time.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-            <tr class="odd gradeX">
-              <td>Expression</td>
-              <td>Matapelajaran 3</td>
-              <td>Guru Mapel 3</td>
-              <td class="center">Expression.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>                            
-          </tbody>
-        </table>
-      </div>
-      <?php
-      break;
-
-      default:
-      //all
-      ?>
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-          <thead>
-            <tr>
-              <th>Materi </th>
-              <th>Mata Pelajaran </th>
-              <th>Guru Pengampu </th>
-              <th>File </th>
-              <th>Aksi </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="odd gradeX">
-              <td>Aljabar Linier</td>
-              <td>Matapelajaran 1</td>
-              <td>Guru Mapel 1</td>
-              <td class="center">Aljabar Linier untuk SMK kelas XII Ganjil.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr> 
-            <tr class="odd gradeX">
-              <td>Past Tense</td>
-              <td>Matapelajaran 3</td>
-              <td>Guru Mapel 3</td>
-              <td class="center">Past Tense.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-            <tr class="odd gradeX">
-              <td>Inti Bacaan dan Gagasan Pokok </td>
-              <td>Matapelajaran 2</td>
-              <td>Guru Mapel 2</td>
-              <td class="center">Gagasan Pokok.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-            <tr class="odd gradeX">
-              <td>Telling Time</td>
-              <td>Matapelajaran 3</td>
-              <td>Guru Mapel 3</td>
-              <td class="center">Telling Time.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-            <tr class="odd gradeX">
-              <td>Tiga Dimensi</td>
-              <td>Matapelajaran 1</td>
-              <td>Guru Mapel 1</td>
-              <td class="center">Tiga Dimensi untuk SMK kelas XII Ganjil.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>
-            <tr class="odd gradeX">
-              <td>Expression</td>
-              <td>Matapelajaran 3</td>
-              <td>Guru Mapel 3</td>
-              <td class="center">Expression.pdf</td>
-              <td class="center"><a href="modul/mod_materi_siswa/download.php?materi=file materi.pdf">Download</a> | <a href="#" class="pmateri" data-id="1" data-judul="Judule Materi">Preview</a></td>
-            </tr>                                
-          </tbody>
-        </table>
-      </div>
-      <?php
-      break;
-    }
-
-    ?>
   </div>
 
   <div class="modal fade" id="previewmateri" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -218,7 +108,7 @@
   <div class="col-md-3 col-sm-3 col-xs-12" >
     <div class="alert alert-info text-center">
       <?php
-      
+
       switch ($mapel) {
         case 'kd_mapel1':
         ?>

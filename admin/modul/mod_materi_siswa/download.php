@@ -2,7 +2,7 @@
 if (isset($_GET['materi'])) {
     $filename    = $_GET['materi'];
 
-    $back_dir    ="../../files/";
+    $back_dir    ="../../files/materi/";
     $file = $back_dir.$_GET['materi'];
 
     if (file_exists($file)) {

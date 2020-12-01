@@ -14,7 +14,12 @@ if($_SESSION['login']==0){
 } else {
     if (empty($_SESSION['username']) AND empty($_SESSION['level']) AND $_SESSION['login']==0) {
       echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = 'index.php';</script>";
-  } else{ ?>
+  } else{ 
+    $qtj="SELECT * FROM tahun_ajar WHERE aktif='Y'";
+    $tj=mysqli_fetch_array(mysqli_query($connect,$qtj));
+    $kd_tajar=$tj['kd_tajar'];
+    $namatajar=$tj['tahun_ajar']." Semester ".$tj['kd_semester'];
+    ?>
 
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -85,7 +90,7 @@ if($_SESSION['login']==0){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Designed by : - </a> 
+               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
            </div>
        </div>
    </div>

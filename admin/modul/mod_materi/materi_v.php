@@ -26,7 +26,7 @@ else{
      <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">SELAMAT DATANG DI DASHBOARD GURU</h4>
+                <h4 class="header-line">SELAMAT DATANG DI DASHBOARD GURU <?php echo $_SESSION['kode']; ?></h4>
                 
             </div>
 
@@ -115,7 +115,7 @@ else{
                     <?php 
                     $q="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas 
                     FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas 
-                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND dk.kd_guru='$_SESSION[kode]'";
+                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND materi.kd_guru=dk.kd_guru AND materi.kd_guru='$_SESSION[kode]'";
                     $materi=mysqli_query($connect,$q);
                     if (mysqli_num_rows($materi)>0){
                         $n=1;

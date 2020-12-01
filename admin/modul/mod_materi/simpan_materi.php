@@ -7,6 +7,7 @@ $pertemuan=$_POST['pertemuan'];
 $desc=$_POST['deskripsi'];
 $mapel=$_POST['mapel'];
 $tglup=date('Y-m-d H:i:s');
+$kd_guru=$_POST['kd_guru'];
 
 $temp = "../../files/materi/";
 if (!file_exists($temp)){
@@ -25,15 +26,15 @@ if (!empty($fileupload)){
 	$newfilename   = $filename."_".$acak.'.'.$filext;
 
 	foreach ($kelas as $kd) {
-		$q="INSERT INTO materi (nama_materi,deskripsi,file,tgl_up,pertemuan,kd_mapel,kd_kelas)
-		VALUES ('$nama_materi','$desc','$newfilename','$tglup','$pertemuan','$mapel','$kd')";
+		$q="INSERT INTO materi (nama_materi,deskripsi,file,tgl_up,pertemuan,kd_mapel,kd_kelas,kd_guru)
+		VALUES ('$nama_materi','$desc','$newfilename','$tglup','$pertemuan','$mapel','$kd','$kd_guru')";
 		$insmateri=mysqli_query($connect,$q);
 		if ($insmateri) {
 			$hmat=mysqli_query($connect,"SELECT MAX(kd_materi) AS kode FROM materi");
 			$kode=mysqli_fetch_array($hmat);
 
-			$qt="INSERT INTO timeline (jenis,id_jenis,waktu,kd_kelas,kd_mapel) 
-			VALUES ('materi','$kode[kode]','$tglup','$kd','$mapel')";
+			$qt="INSERT INTO timeline (jenis,id_jenis,waktu,kd_kelas,kd_mapel,kd_guru) 
+			VALUES ('materi','$kode[kode]','$tglup','$kd','$mapel','$kd_guru')";
 			mysqli_query($connect,$qt);
 			$s="scs";
 		} else {
