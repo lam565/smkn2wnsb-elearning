@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Nov 2020 pada 23.29
+-- Waktu pembuatan: 01 Des 2020 pada 02.32
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.10
 
@@ -217,16 +217,17 @@ CREATE TABLE `materi` (
   `tgl_up` date NOT NULL,
   `pertemuan` varchar(10) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
-  `kd_kelas` varchar(10) NOT NULL
+  `kd_kelas` varchar(10) NOT NULL,
+  `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `materi`
 --
 
-INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`) VALUES
-(2, 'Gagasan Pokok Cerita', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'gagasan pokok_14949784.pdf', '2020-11-30', '1 dan 2', 'bind', 'xa1'),
-(3, 'Dimensi Tiga', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'Dimensi 3_89877786.pdf', '2020-11-30', '1 - 4', 'mtk', 'xs1');
+INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
+(8, 'Gagasan Pokok Paragraf', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'gagasan pokok_4287061.pdf', '2020-12-01', '1 dan 2', 'bind', 'xa1', 'GR001'),
+(9, 'Perkenalan Majas', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'doc_12729836.pdf', '2020-12-01', '1', 'bind', 'xa2', 'GR003');
 
 -- --------------------------------------------------------
 
@@ -273,6 +274,13 @@ CREATE TABLE `rombel` (
   `kd_kelas` varchar(10) NOT NULL,
   `kd_tajar` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `rombel`
+--
+
+INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
+('3123', 'xa1', '2020-2021-ganjil');
 
 -- --------------------------------------------------------
 
@@ -395,16 +403,17 @@ CREATE TABLE `timeline` (
   `id_jenis` int(11) NOT NULL,
   `waktu` datetime NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
-  `kd_mapel` varchar(10) NOT NULL
+  `kd_mapel` varchar(10) NOT NULL,
+  `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `timeline`
 --
 
-INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`, `kd_mapel`) VALUES
-(2, 'materi', 2, '2020-11-30 23:09:39', 'xa1', 'bind'),
-(3, 'materi', 3, '2020-11-30 23:10:35', 'xs1', 'mtk');
+INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
+(8, 'materi', 8, '2020-12-01 01:56:17', 'xa1', 'bind', 'GR001'),
+(9, 'materi', 9, '2020-12-01 02:17:08', 'xa2', 'bind', 'GR003');
 
 -- --------------------------------------------------------
 
@@ -579,7 +588,7 @@ ALTER TABLE `kurikulum`
 -- AUTO_INCREMENT untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `kd_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `kd_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `ortu`
@@ -603,7 +612,7 @@ ALTER TABLE `silabus`
 -- AUTO_INCREMENT untuk tabel `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
