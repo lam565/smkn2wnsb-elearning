@@ -52,7 +52,7 @@
           <?php
 
           if ($mapel=='all') {
-            $qmat="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas , guru.nama
+            $qmat="SELECT materi.nama_materi, materi.ForL, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas , guru.nama
                     FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas, guru 
                     WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND kelas.kd_kelas=dk.kd_kelas AND materi.kd_guru=dk.kd_guru AND guru.kd_guru=dk.kd_guru AND materi.kd_kelas='$kode_kelas'";
             $mat=mysqli_query($connect,$qmat);
@@ -60,13 +60,18 @@
               echo "<tr class='odd gradeX'>
               <td>$rmat[nama_materi]</td>
               <td>$rmat[nama_mapel]</td>
-              <td>$rmat[nama]</td>
-              <td class='center'>$rmat[file]</td>
-              <td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]'>Download</a> | <a href='#'' class='pmateri' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>
-              </tr>";
+              <td>$rmat[nama]</td>";
+              if ($rmat['ForL']=='file') {
+                echo "<td class='center'>$rmat[file]</td>
+              <td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]'>Download</a> | <a href='#'' class='pmateri' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>";  
+              } else {
+                echo "<td class='center'>$rmat[file]</td>
+              <td class='center'><a href='$rmat[file]' target='_blank'>Lihat</a></td>";
+              }
+              echo "</tr>";
             }
           } else {
-            $qmat="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas , guru.nama
+            $qmat="SELECT materi.nama_materi, materi.ForL, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas , guru.nama
                     FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas, guru 
                     WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND kelas.kd_kelas=dk.kd_kelas AND materi.kd_guru=dk.kd_guru AND guru.kd_guru=dk.kd_guru AND materi.kd_kelas='$kode_kelas' AND materi.kd_mapel='$mapel'";
             $mat=mysqli_query($connect,$qmat);
@@ -74,10 +79,16 @@
               echo "<tr class='odd gradeX'>
               <td>$rmat[nama_materi]</td>
               <td>$rmat[nama_mapel]</td>
-              <td>$rmat[nama]</td>
-              <td class='center'>$rmat[file]</td>
-              <td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]'>Download</a> | <a href='#'' class='pmateri' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>
-              </tr>";
+              <td>$rmat[nama]</td>";
+              if ($rmat['ForL']=='file') {
+                echo "<td class='center'>$rmat[file]</td>
+              <td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]'>Download</a> | <a href='#'' class='pmateri' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>";  
+              } else {
+                echo "<td class='center'>$rmat[file]</td>
+              <td class='center'><a href='$rmat[file]' target='_blank'>Lihat</a></td>";
+              }
+              
+              echo "</tr>";
             }
           }
 
