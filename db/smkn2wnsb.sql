@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Des 2020 pada 23.20
+-- Waktu pembuatan: 03 Des 2020 pada 03.25
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.10
 
@@ -33,7 +33,7 @@ CREATE TABLE `detail_kurikulum` (
   `kd_mapel` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL,
-  `kd_silabus` int(11) DEFAULT 1
+  `kd_silabus` varchar(30) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -41,11 +41,11 @@ CREATE TABLE `detail_kurikulum` (
 --
 
 INSERT INTO `detail_kurikulum` (`id_detail`, `kd_kurikulum`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
-(1, 1, 'bind', 'xa1', 'GR001', 6),
-(2, 1, 'mtk', 'xa1', 'GR002', 5),
-(3, 1, 'bind', 'xa2', 'GR003', 4),
-(4, 1, 'mtk', 'xa2', 'GR002', 5),
-(5, 1, 'mtk', 'xs1', 'GR001', 7);
+(1, 1, 'bind', 'xa1', 'GR001', '042020GR001001'),
+(2, 1, 'mtk', 'xa1', 'GR002', '1'),
+(3, 1, 'bind', 'xa2', 'GR003', '1'),
+(4, 1, 'mtk', 'xa2', 'GR002', '1'),
+(5, 1, 'mtk', 'xs1', 'GR001', '1');
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,9 @@ CREATE TABLE `detail_soal` (
   `pil_E` varchar(50) NOT NULL,
   `kunci` varchar(5) NOT NULL,
   `keterangan` text NOT NULL,
-  `gambar` varchar(100) NOT NULL DEFAULT 'T'
+  `gambar` varchar(100) NOT NULL DEFAULT 'T',
+  `C` varchar(10) NOT NULL DEFAULT '-',
+  `P` varchar(10) NOT NULL DEFAULT '-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -78,10 +80,6 @@ CREATE TABLE `guru` (
   `username` varchar(50) NOT NULL,
   `nip` varchar(50) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `gelpend` varchar(10) NOT NULL,
-  `tmp_lahir` varchar(20) NOT NULL,
-  `tgl_lahir` date NOT NULL,
-  `alamat` text NOT NULL,
   `telp` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL,
   `foto` varchar(100) NOT NULL,
@@ -92,10 +90,10 @@ CREATE TABLE `guru` (
 -- Dumping data untuk tabel `guru`
 --
 
-INSERT INTO `guru` (`kd_guru`, `username`, `nip`, `nama`, `gelpend`, `tmp_lahir`, `tgl_lahir`, `alamat`, `telp`, `email`, `foto`, `status`) VALUES
-('GR001', 'ari', '020481902470147', 'Ari', 'S. Kom.', 'Wonosobo', '1994-01-07', 'kadklajsdlajsldajsd', '080808097', 'emaeai@sndakd.com', 'foto.jpg', 'aktif'),
-('GR002', 'surtini', '1819165161681651681', 'Surtini', 'S. Pd.', 'Wonosobo', '1984-12-23', 'Wonosobo', '2161909190', 'email@email.com', 'surtini.jpg', 'aktif'),
-('GR003', 'Sarjiah', '4188684454668455', 'Sarjiah', 'S. Pd.', 'Magelang', '1980-11-16', 'Wonosobo', '08215616165', 'email@mail.com', 'sarjiah.jpg', 'aktif');
+INSERT INTO `guru` (`kd_guru`, `username`, `nip`, `nama`, `telp`, `email`, `foto`, `status`) VALUES
+('GR001', 'ari', '020481902470147', 'Ari', '080808097', 'emaeai@sndakd.com', 'foto.jpg', 'aktif'),
+('GR002', 'surtini', '1819165161681651681', 'Surtini', '2161909190', 'email@email.com', 'surtini.jpg', 'aktif'),
+('GR003', 'Sarjiah', '4188684454668455', 'Sarjiah', '08215616165', 'email@mail.com', 'sarjiah.jpg', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -147,7 +145,7 @@ INSERT INTO `kelas` (`kd_kelas`, `nama_kelas`, `tingkat`, `kd_jurusan`) VALUES
 
 CREATE TABLE `kerja_tugas` (
   `kd_kerja` int(11) NOT NULL,
-  `kd_tugas` int(11) NOT NULL,
+  `kd_tugas` varchar(30) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `file` varchar(100) NOT NULL DEFAULT 'T',
   `nilai` int(11) NOT NULL DEFAULT 0,
@@ -225,11 +223,12 @@ INSERT INTO `mapel` (`kd_mapel`, `nama_mapel`) VALUES
 --
 
 CREATE TABLE `materi` (
-  `kd_materi` int(11) NOT NULL,
+  `kd_materi` varchar(30) NOT NULL,
   `nama_materi` varchar(300) NOT NULL,
   `deskripsi` text NOT NULL,
+  `ForL` varchar(5) NOT NULL DEFAULT 'F',
   `file` varchar(50) NOT NULL,
-  `tgl_up` date NOT NULL,
+  `tgl_up` datetime NOT NULL,
   `pertemuan` varchar(10) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
@@ -240,11 +239,9 @@ CREATE TABLE `materi` (
 -- Dumping data untuk tabel `materi`
 --
 
-INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
-(8, 'Gagasan Pokok Paragraf', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'gagasan pokok_4287061.pdf', '2020-12-01', '1 dan 2', 'bind', 'xa1', 'GR001'),
-(9, 'Perkenalan Majas', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'doc_12729836.pdf', '2020-12-01', '1', 'bind', 'xa2', 'GR003'),
-(10, 'Logika Matematika', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'Logika matematika_4197165.pdf', '2020-12-01', '1 dan 2', 'mtk', 'xa1', 'GR002'),
-(11, 'Logika Matematika', 'In in nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Donec ullamcorper fringilla eros. Fusce in sapien eu purus dapibus commodo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'Logika matematika_4197165.pdf', '2020-12-01', '1 dan 2', 'mtk', 'xa2', 'GR002');
+INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `ForL`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
+('012020GR001001', 'Pertemuan awal', 'Pantun dan Peribahasa', 'F', 'pantun dan peribahasa_53913634.pdf', '2020-12-03 09:12:30', '1 dan 2', 'bind', 'xa1', 'GR001'),
+('012020GR001002', 'Sinopsis Film', 'Tonton film', 'link', 'https://youtube.com', '2020-12-03 09:21:58', '3', 'bind', 'xa1', 'GR001');
 
 -- --------------------------------------------------------
 
@@ -256,29 +253,6 @@ CREATE TABLE `nilai_ujian` (
   `kd_nilai_ujian` varchar(10) NOT NULL,
   `nis` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `ortu`
---
-
-CREATE TABLE `ortu` (
-  `kd_ortu` int(11) NOT NULL,
-  `ayah` varchar(100) NOT NULL,
-  `pekerjaan_ayah` varchar(32) NOT NULL,
-  `ibu` varchar(100) NOT NULL,
-  `pekerjaan_ibu` varchar(32) NOT NULL,
-  `alamat` text NOT NULL,
-  `telp` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `ortu`
---
-
-INSERT INTO `ortu` (`kd_ortu`, `ayah`, `pekerjaan_ayah`, `ibu`, `pekerjaan_ibu`, `alamat`, `telp`) VALUES
-(1, 'Ayah Siswa 1', 'Petani', 'Ibu Siswa 1', 'Ibu Rumah Tangga', 'Wonosobo', '0987757989');
 
 -- --------------------------------------------------------
 
@@ -302,30 +276,11 @@ INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `semester`
---
-
-CREATE TABLE `semester` (
-  `kd_semester` int(11) NOT NULL,
-  `semester` varchar(10) CHARACTER SET latin1 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `semester`
---
-
-INSERT INTO `semester` (`kd_semester`, `semester`) VALUES
-(1, 'Ganjil'),
-(2, 'Genap');
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `silabus`
 --
 
 CREATE TABLE `silabus` (
-  `kd_silabus` int(11) NOT NULL,
+  `kd_silabus` varchar(30) NOT NULL,
   `judul` varchar(32) NOT NULL,
   `nama_file` varchar(50) NOT NULL,
   `tanggal_upload` datetime NOT NULL
@@ -336,11 +291,8 @@ CREATE TABLE `silabus` (
 --
 
 INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VALUES
-(1, 'Belum Ada', 'silabus-default.pdf', '2020-11-27 00:00:00'),
-(4, 'Bahasa Indonesia', 'DataSiswa_8717461.pdf', '2020-11-28 00:00:00'),
-(5, 'Matematika kelas X', 'matematika_8929630.pdf', '2020-11-28 00:00:00'),
-(6, 'Silabus Bahasa Indonesia', 'bahasa indonesia_24357.pdf', '2020-11-30 00:00:00'),
-(7, 'Silabus Matematika', 'silabus matematika_13168549.pdf', '2020-11-30 00:00:00');
+('042020GR001001', 'Silabus 2020', '042020GR001001.pdf', '2020-12-03 02:34:56'),
+('1', 'Belum Ada', 'silabus-default.pdf', '2020-11-27 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -354,35 +306,31 @@ CREATE TABLE `siswa` (
   `nama` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `kelamin` varchar(10) NOT NULL,
-  `tmp_lahir` varchar(20) NOT NULL,
-  `tgl_lahir` date NOT NULL,
-  `kd_ortu` int(11) NOT NULL,
-  `alamat` text NOT NULL,
   `email` varchar(50) NOT NULL,
-  `foto` varchar(100) NOT NULL,
-  `telp` varchar(20) NOT NULL,
-  `status` varchar(10) NOT NULL
+  `foto` varchar(100) NOT NULL DEFAULT 'default.jpg',
+  `telp` varchar(20) NOT NULL DEFAULT '-',
+  `status` varchar(10) NOT NULL DEFAULT 'Aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `siswa`
 --
 
-INSERT INTO `siswa` (`nis`, `nisn`, `nama`, `username`, `kelamin`, `tmp_lahir`, `tgl_lahir`, `kd_ortu`, `alamat`, `email`, `foto`, `telp`, `status`) VALUES
-('3123', '-', 'Siswa Dummy', 'siswa1', 'L', 'Wonosobo', '1993-10-10', 1, 'Wonosobo', 'email@gmail.com', 'foto.jpg', '0857432211', 'Aktif');
+INSERT INTO `siswa` (`nis`, `nisn`, `nama`, `username`, `kelamin`, `email`, `foto`, `telp`, `status`) VALUES
+('3123', '-', 'Siswa Dummy', 'siswa1', 'L', 'email@gmail.com', 'foto.jpg', '0857432211', 'Aktif');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `soal_quis`
+-- Struktur dari tabel `soal`
 --
 
-CREATE TABLE `soal_quis` (
+CREATE TABLE `soal` (
   `kd_soal` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_materi` varchar(10) NOT NULL,
-  `nama_quiz` varchar(100) NOT NULL,
-  `tgl_quiz` date NOT NULL,
+  `nama_soal` varchar(100) NOT NULL,
+  `tgl_mulai` datetime NOT NULL,
   `jam` int(11) NOT NULL,
   `menit` int(11) NOT NULL,
   `detik` int(11) NOT NULL
@@ -417,7 +365,7 @@ INSERT INTO `tahun_ajar` (`kd_tajar`, `tahun_ajar`, `kd_semester`, `aktif`) VALU
 CREATE TABLE `timeline` (
   `id_timeline` int(11) NOT NULL,
   `jenis` varchar(30) NOT NULL,
-  `id_jenis` int(11) NOT NULL,
+  `id_jenis` varchar(30) NOT NULL,
   `waktu` datetime NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
@@ -429,11 +377,8 @@ CREATE TABLE `timeline` (
 --
 
 INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
-(8, 'materi', 8, '2020-12-01 01:56:17', 'xa1', 'bind', 'GR001'),
-(9, 'materi', 9, '2020-12-01 02:17:08', 'xa2', 'bind', 'GR003'),
-(10, 'materi', 10, '2020-12-01 02:37:41', 'xa1', 'mtk', 'GR002'),
-(11, 'materi', 11, '2020-12-01 02:37:41', 'xa2', 'mtk', 'GR002'),
-(12, 'tugas', 1, '2020-12-01 17:08:31', 'xa1', 'bind', 'GR001');
+(1, 'materi', '012020GR001001', '2020-12-03 09:12:30', 'xa1', 'bind', 'GR001'),
+(3, 'materi', '012020GR001002', '2020-12-03 09:21:58', 'xa1', 'bind', 'GR001');
 
 -- --------------------------------------------------------
 
@@ -443,22 +388,16 @@ INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`,
 
 CREATE TABLE `tugas` (
   `kd_tugas` int(11) NOT NULL,
-  `judul_tugas` varchar(100) NOT NULL,
+  `nama_tugas` varchar(100) NOT NULL,
   `deskripsi` text NOT NULL,
-  `batas_kumpul` date NOT NULL,
+  `batas_awal` datetime NOT NULL,
+  `batas_ahir` datetime NOT NULL,
   `file` varchar(50) NOT NULL,
   `tgl_up` date NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tugas`
---
-
-INSERT INTO `tugas` (`kd_tugas`, `judul_tugas`, `deskripsi`, `batas_kumpul`, `file`, `tgl_up`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
-(1, 'Tugas Bahasa Indonesia', 'Kerjakan sesuai perintah yang tertera di lampiran file', '2020-12-11', 'tugas bind_9857892.pdf', '2020-12-01', 'xa1', 'bind', 'GR001');
 
 -- --------------------------------------------------------
 
@@ -484,8 +423,7 @@ ALTER TABLE `detail_kurikulum`
   ADD KEY `kd_guru` (`kd_guru`),
   ADD KEY `kd_kelas` (`kd_kelas`),
   ADD KEY `kd_kurikulum` (`kd_kurikulum`),
-  ADD KEY `kd_mapel` (`kd_mapel`),
-  ADD KEY `kd_silabus` (`kd_silabus`);
+  ADD KEY `kd_mapel` (`kd_mapel`);
 
 --
 -- Indeks untuk tabel `detail_soal`
@@ -552,24 +490,12 @@ ALTER TABLE `nilai_ujian`
   ADD KEY `nis` (`nis`);
 
 --
--- Indeks untuk tabel `ortu`
---
-ALTER TABLE `ortu`
-  ADD PRIMARY KEY (`kd_ortu`);
-
---
 -- Indeks untuk tabel `rombel`
 --
 ALTER TABLE `rombel`
   ADD KEY `ang-siswa` (`nis`),
   ADD KEY `ang-kelas` (`kd_kelas`),
   ADD KEY `ang-tajar` (`kd_tajar`);
-
---
--- Indeks untuk tabel `semester`
---
-ALTER TABLE `semester`
-  ADD PRIMARY KEY (`kd_semester`);
 
 --
 -- Indeks untuk tabel `silabus`
@@ -582,13 +508,12 @@ ALTER TABLE `silabus`
 --
 ALTER TABLE `siswa`
   ADD PRIMARY KEY (`nis`),
-  ADD KEY `username` (`username`),
-  ADD KEY `kd_ortu` (`kd_ortu`);
+  ADD KEY `username` (`username`);
 
 --
--- Indeks untuk tabel `soal_quis`
+-- Indeks untuk tabel `soal`
 --
-ALTER TABLE `soal_quis`
+ALTER TABLE `soal`
   ADD PRIMARY KEY (`kd_soal`),
   ADD KEY `kd_kelas` (`kd_kelas`);
 
@@ -596,8 +521,7 @@ ALTER TABLE `soal_quis`
 -- Indeks untuk tabel `tahun_ajar`
 --
 ALTER TABLE `tahun_ajar`
-  ADD PRIMARY KEY (`kd_tajar`),
-  ADD KEY `kd_semester` (`kd_semester`);
+  ADD PRIMARY KEY (`kd_tajar`);
 
 --
 -- Indeks untuk tabel `timeline`
@@ -633,7 +557,7 @@ ALTER TABLE `detail_kurikulum`
 -- AUTO_INCREMENT untuk tabel `detail_soal`
 --
 ALTER TABLE `detail_soal`
-  MODIFY `kd_detail_soal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `kd_detail_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `kerja_tugas`
@@ -648,40 +572,16 @@ ALTER TABLE `kurikulum`
   MODIFY `kd_kurikulum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `materi`
---
-ALTER TABLE `materi`
-  MODIFY `kd_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT untuk tabel `ortu`
---
-ALTER TABLE `ortu`
-  MODIFY `kd_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `semester`
---
-ALTER TABLE `semester`
-  MODIFY `kd_semester` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `silabus`
---
-ALTER TABLE `silabus`
-  MODIFY `kd_silabus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
 -- AUTO_INCREMENT untuk tabel `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tugas`
 --
 ALTER TABLE `tugas`
-  MODIFY `kd_tugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `kd_tugas` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -694,14 +594,13 @@ ALTER TABLE `detail_kurikulum`
   ADD CONSTRAINT `detail_kurikulum_ibfk_1` FOREIGN KEY (`kd_guru`) REFERENCES `guru` (`kd_guru`),
   ADD CONSTRAINT `detail_kurikulum_ibfk_2` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
   ADD CONSTRAINT `detail_kurikulum_ibfk_3` FOREIGN KEY (`kd_kurikulum`) REFERENCES `kurikulum` (`kd_kurikulum`),
-  ADD CONSTRAINT `detail_kurikulum_ibfk_4` FOREIGN KEY (`kd_mapel`) REFERENCES `mapel` (`kd_mapel`),
-  ADD CONSTRAINT `detail_kurikulum_ibfk_5` FOREIGN KEY (`kd_silabus`) REFERENCES `silabus` (`kd_silabus`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `detail_kurikulum_ibfk_4` FOREIGN KEY (`kd_mapel`) REFERENCES `mapel` (`kd_mapel`);
 
 --
 -- Ketidakleluasaan untuk tabel `detail_soal`
 --
 ALTER TABLE `detail_soal`
-  ADD CONSTRAINT `detail_soal_ibfk_1` FOREIGN KEY (`kd_soal`) REFERENCES `soal_quis` (`kd_soal`);
+  ADD CONSTRAINT `detail_soal_ibfk_1` FOREIGN KEY (`kd_soal`) REFERENCES `soal` (`kd_soal`);
 
 --
 -- Ketidakleluasaan untuk tabel `guru`
@@ -733,20 +632,13 @@ ALTER TABLE `rombel`
 -- Ketidakleluasaan untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`username`) REFERENCES `login` (`username`),
-  ADD CONSTRAINT `siswa_ibfk_2` FOREIGN KEY (`kd_ortu`) REFERENCES `ortu` (`kd_ortu`);
+  ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`username`) REFERENCES `login` (`username`);
 
 --
--- Ketidakleluasaan untuk tabel `soal_quis`
+-- Ketidakleluasaan untuk tabel `soal`
 --
-ALTER TABLE `soal_quis`
-  ADD CONSTRAINT `soal_quis_ibfk_1` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`);
-
---
--- Ketidakleluasaan untuk tabel `tahun_ajar`
---
-ALTER TABLE `tahun_ajar`
-  ADD CONSTRAINT `tahun_ajar_ibfk_1` FOREIGN KEY (`kd_semester`) REFERENCES `semester` (`kd_semester`);
+ALTER TABLE `soal`
+  ADD CONSTRAINT `soal_ibfk_1` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`);
 
 --
 -- Ketidakleluasaan untuk tabel `wali_kelas`
