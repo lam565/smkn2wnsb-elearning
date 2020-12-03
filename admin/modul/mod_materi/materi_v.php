@@ -23,7 +23,7 @@ else{
 
 
     <div class="content-wrapper">
-     <div class="container">
+       <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">MANAJEMEN MATERI PELAJARAN</h4>
@@ -32,14 +32,14 @@ else{
 
         </div>
         <div class="row">
-         <div class="col-md-4 col-sm-4 col-xs-12">
+           <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="panel panel-default">
-            <div class="panel-heading">
-                   Upload Materi
-               </div>
-               <div class="panel-body text-center recent-users-sec">
+                <div class="panel-heading">
+                 Upload Materi
+             </div>
+             <div class="panel-body text-center recent-users-sec">
                 <form role="form" name="fupmateri" method="POST" action="modul/mod_materi/simpan_materi.php" enctype="multipart/form-data">
-                 <div class="form-group">
+                   <div class="form-group">
                     <label>Mata Pelajaran</label>
                     <select name="mapel" class="form-control" id="cbbmapel" data-guru="<?php echo $_SESSION['kode'] ?>">
                         <option selected="selected">Pilih Mata Pelajaran</option>
@@ -75,8 +75,17 @@ else{
                     <textarea class="form-control" name="deskripsi" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Upload File Materi</label>
-                    <input class="form-control" type="file" name="filemateri" id="fileupload" />
+                    <label>File Atau Link</label>
+                    <select name="ForL" class="form-control" id="cbbForL">
+                        <option value="file" selected="selected">FILE</option>
+                        <option value="link">LINK</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div id="ForL">
+                        <label>Upload File Materi</label>
+                        <input class="form-control" type="file" name="filemateri" id="fileupload" />
+                    </div>
                     <p class="warningnya text-danger text-left"></p>
                 </div>
                 
@@ -93,9 +102,9 @@ else{
 <div class="col-md-8 col-sm-8 col-xs-12">
   <div class="panel panel-success">
     <div class="panel-heading">
-       Hasil Upload Materi
-   </div>
-   <div class="panel-body">
+     Hasil Upload Materi
+ </div>
+ <div class="panel-body">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead>

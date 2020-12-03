@@ -134,6 +134,17 @@ if($_SESSION['login']==0){
 
         });
 
+        $(document).on('change', '#cbbForL', function(){
+            var pil = $(this).val();
+            $output="";
+            if (pil=='file') {
+                $output = "<label>Upload File Materi</label><input class='form-control' type='file' name='filemateri' id='fileupload' />";
+            } else if (pil=='link') {
+                $output = "<label>Upload Link Materi</label><input class='form-control' type='text' name='linkmateri' id='fileupload' />";
+            }
+            $("#ForL").html($output);
+        });
+
         $("#fileupload").change(function () {
             var fileExtension = ['pdf','jpeg', 'jpg', 'png'];
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {

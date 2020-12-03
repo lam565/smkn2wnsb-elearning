@@ -4,10 +4,11 @@ include "../../../system/koneksi.php";
 $kd_mapel=$_POST['mapel'];
 $judul=$_POST['judul'];
 $kd_guru=$_POST['kd_guru'];
+date_default_timezone_set("Asia/Bangkok");
 $upl=date('Y-m-d H:i:s');
-$thn=date("Y");
 
 //buat kode
+$thn=date("Y");
 $k="04".$thn.$kd_guru;
 $qsil="SELECT MAX(kd_silabus) AS kode FROM silabus WHERE kd_silabus LIKE '$k%'";
 $max=mysqli_fetch_array(mysqli_query($connect,$qsil));
