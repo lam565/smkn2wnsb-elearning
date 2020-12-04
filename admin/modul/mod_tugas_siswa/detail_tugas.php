@@ -1,6 +1,20 @@
+<?php 
+	if (!isset($_GET['kd'])) {
+		header("location:?module=tugas&mp=all");
+	}
+
+	$kd=$_GET['kd'];
+
+	$qt="SELECT * 
+	FROM tugas, kerja_tugas, mapel, guru, kelas
+	WHERE tugas.kd_tugas=kerja_tugas.kd_tugas AND tugas.kd_mapel=mapel.kd_mapel AND tugas.kd_guru=guru.kd_guru AND tugas.kd_kelas=kelas.kd_kelas AND tugas.kd_kelas='$kode_kelas' AND kerja_tugas.nis='$_SESSION[kode]'";
+	$qtugas=mysqli_query($connect,$qt);
+	$rtugas=mysqli_fetch_array($qtugas);
+
+ ?>
 <div class="row pad-botm">
 	<div class="col-md-12">
-		<h4 class="header-line">Judul Tugas</h4>
+		<h4 class="header-line"><?php echo $rtugas['nama_tugas']; ?></h4>
 	</div>
 </div>
 <div class="row">
@@ -9,15 +23,15 @@
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-md-6">
-						<strong>Nama Guru</strong>
+						<strong><?php echo "Diberikan oleh: ".$rtugas['nama']; ?></strong>
 					</div>
-					<div class="col-md-6 text-right">24 Nov 2020</div>
+					<div class="col-md-6 text-right"><?php echo "Pada: ".$rtugas['tgl_up']; ?></div>
 				</div>
 			</div>
 			<div class="panel-body">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+				<p><?php echo $rtugas['deskripsi']; ?>.</p>
 				<hr>
-				File : <a href="#">File Tugas Jika Ada!</a>
+				File : <?php echo "<a href='files/tugas/$rtugas[file]' target='_blank'>Download Tugas</a>"; ?>
 			</div>
 			<div class="panel-footer text-right">
 				Belum Mengumpulkan
