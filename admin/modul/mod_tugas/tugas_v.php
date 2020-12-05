@@ -23,7 +23,7 @@ else{
 
 
     <div class="content-wrapper">
-       <div class="container">
+     <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">MANAJEMEN TUGAS</h4>
@@ -44,11 +44,11 @@ else{
                     ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                           UBAH TUGAS
-                       </div>
-                       <div class="panel-body text-center recent-users-sec">
+                         UBAH TUGAS
+                     </div>
+                     <div class="panel-body text-center recent-users-sec">
                         <form role="form" name="fupmateri" method="POST" action="modul/mod_tugas/aksi.php?act=edit" enctype="multipart/form-data">
-                         <div class="form-group">
+                           <div class="form-group">
                             <label>Mata Pelajaran</label>
                             <input class="form-control" type="txt" name="mpl" value="<?php echo $etugas['nama_mapel'] ?>" disabled="disabled">
                             <input type="hidden" name="mapel" value="<?php echo $etugas['kd_mapel'] ?>">
@@ -70,16 +70,16 @@ else{
                             <textarea class="form-control" name="deskripsi" rows="3"><?php echo $etugas['deskripsi'] ?></textarea>
                         </div>
                         <div class="form-group">
-                         <label>Awal Pengerjaan</label>
-                         <input class="form-control" type="date" name="awaltgl" value="<?php echo substr($etugas['batas_awal'],0,10) ?>"/>
-                         <input class="form-control" type="time" name="awaljam" value="<?php echo substr($etugas['batas_awal'],11,5) ?>"/>
-                     </div>
-                     <div class="form-group">
-                         <label>Batas Akhir Pengerjaan</label>
-                         <input class="form-control" type="date" name="ahirtgl" value="<?php echo substr($etugas['batas_ahir'],0,10) ?>"/>
-                         <input class="form-control" type="time" name="ahirjam" value="<?php echo substr($etugas['batas_ahir'],11,5) ?>"/>
-                     </div>
-                     <div class="form-group">
+                           <label>Awal Pengerjaan</label>
+                           <input class="form-control" type="date" name="awaltgl" value="<?php echo substr($etugas['batas_awal'],0,10) ?>"/>
+                           <input class="form-control" type="time" name="awaljam" value="<?php echo substr($etugas['batas_awal'],11,5) ?>"/>
+                       </div>
+                       <div class="form-group">
+                           <label>Batas Akhir Pengerjaan</label>
+                           <input class="form-control" type="date" name="ahirtgl" value="<?php echo substr($etugas['batas_ahir'],0,10) ?>"/>
+                           <input class="form-control" type="time" name="ahirjam" value="<?php echo substr($etugas['batas_ahir'],11,5) ?>"/>
+                       </div>
+                       <div class="form-group">
                         <label>Ubah File Tugas</label>
                         <input class="form-control" type="file" name="fuptugas" id="fileupload" />
                         <p class="warningnya text-danger text-left">Kosongkan jika tidak mengubah file</p>
@@ -97,11 +97,11 @@ else{
     } else { ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-               BUAT TUGAS
-           </div>
-           <div class="panel-body text-center recent-users-sec">
+             BUAT TUGAS
+         </div>
+         <div class="panel-body text-center recent-users-sec">
             <form role="form" name="fupmateri" method="POST" action="modul/mod_tugas/aksi.php?act=add" enctype="multipart/form-data">
-             <div class="form-group">
+               <div class="form-group">
                 <label>Mata Pelajaran</label>
                 <select name="mapel" class="form-control" id="cbbmapel" data-guru="<?php echo $_SESSION['kode'] ?>">
                     <option selected="selected">Pilih Mata Pelajaran</option>
@@ -133,16 +133,16 @@ else{
                 <textarea class="form-control" name="deskripsi" rows="3"></textarea>
             </div>
             <div class="form-group">
-             <label>Awal Pengerjaan</label>
-             <input class="form-control" type="date" name="awaltgl" />
-             <input class="form-control" type="time" name="awaljam" />
-         </div>
-         <div class="form-group">
-             <label>Batas Akhir Pengerjaan</label>
-             <input class="form-control" type="date" name="ahirtgl" />
-             <input class="form-control" type="time" name="ahirjam" />
-         </div>
-         <div class="form-group">
+               <label>Awal Pengerjaan</label>
+               <input class="form-control" type="date" name="awaltgl" />
+               <input class="form-control" type="time" name="awaljam" />
+           </div>
+           <div class="form-group">
+               <label>Batas Akhir Pengerjaan</label>
+               <input class="form-control" type="date" name="ahirtgl" />
+               <input class="form-control" type="time" name="ahirjam" />
+           </div>
+           <div class="form-group">
             <label>Upload File Tugas</label>
             <input class="form-control" type="file" name="fuptugas" id="fileupload" />
             <p class="warningnya text-danger text-left"></p>
@@ -165,19 +165,19 @@ else{
 <div class="col-md-8 col-sm-8 col-xs-12">
   <div class="panel panel-success">
     <div class="panel-heading">
-     DAFTAR TUGAS SISWA
- </div>
- <div class="panel-body">
+       DAFTAR TUGAS SISWA
+   </div>
+   <div class="panel-body">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Nama Tugas</th>
-                    <th>Batas Kumpul</th>
-                    <th>File</th>
-                    <th>Kelas</th>
                     <th>Mata Pelajaran</th>
+                    <th>Kelas</th>
+                    <th>Belum Mengumpulkan</th>
+                    <th>Sudah Mengumpulkan</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
