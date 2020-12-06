@@ -30,6 +30,10 @@ else{
       case 'tugas':
       include "modul/mod_tugas/tugas_v.php";
       break;
+
+      case 'detailtugas':
+      include "modul/mod_tugas/detailtugas.php";
+      break;
       
       case 'laporan':
       include "modul/mod_laporan/laporan_v.php";

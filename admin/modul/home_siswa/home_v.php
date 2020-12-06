@@ -100,9 +100,21 @@
             while ($r=mysqli_fetch_array($q)){
               $j=strtoupper($j);
               echo "<div class='alert alert-info'>
-              <h4><i class='fa fa-briefcase'></i> $j</h4>
-              Guru $r[nama] telah menambahkan $j $r[nama_mapel] pada $r[tgl_up]. <a href='' class='alert-link'>Buka $j</a>
-              </div>";
+              <h4><i class='fa fa-briefcase'></i> $j</h4>";
+              switch ($j) {
+                case 'TUGAS':
+                  echo "Guru $r[nama] telah menambahkan TUGAS $r[nama_mapel] pada $r[tgl_up]. <a href='?module=detailtugas&kd=$r[kd_tugas]' class='alert-link'>Buka Tugas</a>";
+                  break;
+                case 'MATERI':
+                  echo "Guru $r[nama] telah menambahkan MATERI $r[nama_mapel] pada $r[tgl_up]. <a href='?module=materi&mp=$r[kd_mapel]' class='alert-link'>Buka materi</a>";
+                  break;
+
+                default:
+                  # code...
+                  break;
+              }
+              
+              echo "</div>";
             }
           }
 

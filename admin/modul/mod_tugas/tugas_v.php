@@ -176,13 +176,19 @@ else{
                     <th>Nama Tugas</th>
                     <th>Mata Pelajaran</th>
                     <th>Kelas</th>
-                    <th>Belum Mengumpulkan</th>
-                    <th>Sudah Mengumpulkan</th>
+                    <th>Belum</th>
+                    <th>Dikoreksi</th>
+                    <th>Dinilai</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
+                function jmlSiswa ($kd,$cn,$sts){
+                    $a="SELECT nis FROM kerja_tugas WHERE kd_tugas='$kd' AND status_kerja='$sts'";
+                    $j=mysqli_num_rows(mysqli_query($cn,$a));
+                    return $j;
+                }
                 $q="SELECT tugas.nama_tugas, tugas.file, tugas.batas_ahir, tugas.tgl_up, mapel.nama_mapel, tugas.kd_tugas, kelas.nama_kelas 
                 FROM kurikulum, tugas, detail_kurikulum as dk, mapel, kelas 
                 WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=tugas.kd_mapel AND tugas.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=tugas.kd_kelas AND dk.kd_kelas=kelas.kd_kelas AND tugas.kd_guru=dk.kd_guru AND tugas.kd_guru='$_SESSION[kode]'";
@@ -194,10 +200,14 @@ else{
 
                         <td>$n</td>
                         <td>$rtugas[nama_tugas]</td>
-                        <td>$rtugas[batas_ahir]</td>";
-                        echo "<td><a href='files/tugas/$rtugas[file]' target='_blank'>$rtugas[file]</a></td>";
-                        echo "<td>$rtugas[nama_kelas]</td>
                         <td>$rtugas[nama_mapel]</td>
+                        <td>$rtugas[nama_kelas]</td>";
+                        $jb=jmlSiswa($rtugas['kd_tugas'],$connect,'T');
+                        $jk=jmlSiswa($rtugas['kd_tugas'],$connect,'K');
+                        $jn=jmlSiswa($rtugas['kd_tugas'],$connect,'N');
+                        echo "<td>$jb <a href='?module=detailtugas&kd=$rtugas[kd_tugas]&st=T'> - Lihat</a></td>";
+                        echo "<td>$jk <a href=''> - Lihat</a></td>";
+                        echo "<td>$jn <a href=''> - Lihat</a></td>
                         <td><a href='modul/mod_tugas/aksi.php?act=del&id=$rtugas[kd_tugas]'>Hapus</a> | <a href='?module=tugas&eid=$rtugas[kd_tugas]'>Edit</a></td>
                         </tr>";
                         $n++;

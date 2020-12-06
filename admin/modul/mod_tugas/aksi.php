@@ -15,21 +15,6 @@ if (isset($_GET['act'])){
 		$mapel=$_POST['mapel'];
 		$kd_guru=$_POST['kd_guru'];
 
-		//buat kode tugas 02
-		$thn=date("Y");
-		$k="02".$thn.$kd_guru;
-		$qcek="SELECT MAX(kd_tugas) AS kode FROM tugas WHERE kd_tugas LIKE '$k%'";
-		$max=mysqli_fetch_array(mysqli_query($connect,$qcek));
-		$kodeurut=substr($max['kode'],strlen($k),3)+1;
-		if ($kodeurut<10) {
-			$kodeurut="00".$kodeurut;
-		} else if ($kodeurut<100){
-			$kodeurut="0".$kodeurut;
-		} else {
-
-		}
-		$kd_tugas=$k.$kodeurut;
-
 		$temp = "../../files/tugas/";
 		if (!file_exists($temp)){
 			mkdir($temp);
@@ -44,41 +29,56 @@ if (isset($_GET['act'])){
 			$filext       = substr($filename, strrpos($filename, '.'));
 			$filext       = str_replace('.','',$filext);
 			$filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
-			$newfilename   = $kd_tugas.'.'.$filext;
+			$newfilename   = $filename.'_'.$acak.'.'.$filext;
 
 			foreach ($kelas as $kd) {
+				//buat kode tugas 02
+				$thn=date("Y");
+				$k="02".$thn.$kd_guru;
+				$qcek="SELECT MAX(kd_tugas) AS kode FROM tugas WHERE kd_tugas LIKE '$k%'";
+				$max=mysqli_fetch_array(mysqli_query($connect,$qcek));
+				$kodeurut=substr($max['kode'],strlen($k),3)+1;
+				if ($kodeurut<10) {
+					$kodeurut="00".$kodeurut;
+				} else if ($kodeurut<100){
+					$kodeurut="0".$kodeurut;
+				} else {
+
+				}
+				$kd_tugas=$k.$kodeurut;
+
 				$q="INSERT INTO tugas (kd_tugas,nama_tugas,deskripsi,batas_awal,batas_ahir,file,tgl_up,kd_kelas,kd_mapel,kd_guru)
 				VALUES ('$kd_tugas','$judul','$desc','$awal','$ahir','$newfilename','$tglup','$kd','$mapel','$kd_guru')";
 				$instugas=mysqli_query($connect,$q);
 				if ($instugas) {
 					$t="SELECT siswa.nis FROM siswa, tahun_ajar, rombel WHERE rombel.nis=siswa.nis AND rombel.kd_tajar=tahun_ajar.kd_tajar AND tahun_ajar.aktif='Y' AND rombel.kd_kelas='$kd'";
 					$tj=mysqli_query($connect,$t);
-					while ($jt=mysqli_fetch_array($tj)) {
+					$jnis=mysqli_num_rows($tj);
+					if ($jnis>0){
+						while ($jt=mysqli_fetch_array($tj)) {
 						//buat kode kerja tugas 12
-						$thn=date("Y");
-						$ks="12".$thn.$jt['nis'];
-						$qscek="SELECT MAX(kd_kerja) AS kode FROM kerja_tugas WHERE kd_kerja LIKE '$ks%'";
-						$maxs=mysqli_fetch_array(mysqli_query($connect,$qscek));
-						$kodeuruts=substr($max['kode'],strlen($ks),3)+1;
-						if ($kodeuruts<10) {
-							$kodeuruts="00".$kodeuruts;
-						} else if ($kodeuruts<100){
-							$kodeuruts="0".$kodeuruts;
-						} else {
+							$thn=date("Y");
+							$ks="12".$thn.$jt['nis'];
+							$qscek="SELECT MAX(kd_kerja) AS kode FROM kerja_tugas WHERE kd_kerja LIKE '$ks%'";
+							$maxs=mysqli_fetch_array(mysqli_query($connect,$qscek));
+							$kodeuruts=substr($max['kode'],strlen($ks),3)+1;
+							if ($kodeuruts<10) {
+								$kodeuruts="00".$kodeuruts;
+							} else if ($kodeuruts<100){
+								$kodeuruts="0".$kodeuruts;
+							} else {
 
+							}
+							$kd_kerja=$ks.$kodeuruts;
+
+							mysqli_query($connect,"INSERT INTO kerja_tugas (kd_kerja,kd_tugas,nis) VALUES ('$kd_kerja','$kd_tugas','$jt[nis]')");
 						}
-						$kd_kerja=$ks.$kodeuruts;
-
-						mysqli_query($connect,"INSERT INTO kerja_tugas (kd_kerja,kd_tugas,nis) VALUES ('$kd_kerja','$kd_tugas','$jt[nis]')");
-					} 
+					}
 					$qt="INSERT INTO timeline (jenis,id_jenis,waktu,kd_kelas,kd_mapel,kd_guru) 
 					VALUES ('tugas','$kd_tugas','$tglup','$kd','$mapel','$kd_guru')";
 					mysqli_query($connect,$qt);
 					$s="scs";
-				} else {
-					$s="err";
-					echo "Terjadi Kesalahan!";
-				}
+				} 
 			}
 			if ($s=='scs') {
 				move_uploaded_file($_FILES["fuptugas"]["tmp_name"], $temp.$newfilename);
@@ -105,9 +105,11 @@ if (isset($_GET['act'])){
 			mysqli_query($connect,$delts);
 			$delt="DELETE FROM timeline WHERE timeline.jenis='tugas' AND timeline.id_jenis='$kd'";
 			mysqli_query($connect,$delt);
-			unlink($file);
+			$qc="SELECT * FROM tugas WHERE file='$rfile[file]'";
+			if (mysqli_num_rows(mysqli_query($connect,$qc))<=1){
+				unlink($file);
+			}
 			echo "<script>alert('Berhasil menghapus tugas'); location='../../media.php?module=tugas'</script>";
-
 		}
 		break;
 
@@ -172,6 +174,24 @@ if (isset($_GET['act'])){
 			}
 		}
 
+		break;
+
+		case 'berinilai':
+			if (isset($_POST['draf'])){
+				$nil=$_POST['nilai'];
+				$kd=$_POST['kd'];
+				$kdt=$_POST['kdt'];
+
+				$qn="UPDATE kerja_tugas SET nilai='$nil' WHERE kd_kerja='$kd'";
+				$ex=mysqli_query($connect,$qn);
+				if ($ex){
+					echo "<script>alert('Berhasil menambah nilai Sementara'); location='../../media.php?module=detailtugas&kd=$kdt&st=T&eid=$kd'</script>";
+				} else {
+					echo "<script>alert('Berhasil menambah nilai Sementara'); location='../../media.php?module=tugas'</script>";
+				}
+			} else if (isset($_POST['simpan'])){
+				echo "simpan";
+			}
 		break;
 
 		default:

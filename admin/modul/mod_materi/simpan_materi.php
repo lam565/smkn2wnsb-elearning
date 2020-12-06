@@ -11,21 +11,6 @@ date_default_timezone_set("Asia/Bangkok");
 $tglup=date('Y-m-d H:i:s');
 $kd_guru=$_POST['kd_guru'];
 
-//buat kode materi 01
-$thn=date("Y");
-$k="01".$thn.$kd_guru;
-$qmat="SELECT MAX(kd_materi) AS kode FROM materi WHERE kd_materi LIKE '$k%'";
-$max=mysqli_fetch_array(mysqli_query($connect,$qmat));
-$kodeurut=substr($max['kode'],strlen($k),3)+1;
-if ($kodeurut<10) {
-	$kodeurut="00".$kodeurut;
-} else if ($kodeurut<100){
-	$kodeurut="0".$kodeurut;
-} else {
-
-}
-$kd_materi=$k.$kodeurut;
-
 if ($forl=='file') {
 	$temp = "../../files/materi/";
 	if (!file_exists($temp)){
@@ -44,6 +29,20 @@ if ($forl=='file') {
 		$newfilename   = $filename."_".$acak.'.'.$filext;
 
 		foreach ($kelas as $kd) {
+			//buat kode materi 01
+			$thn=date("Y");
+			$k="01".$thn.$kd_guru;
+			$qmat="SELECT MAX(kd_materi) AS kode FROM materi WHERE kd_materi LIKE '$k%'";
+			$max=mysqli_fetch_array(mysqli_query($connect,$qmat));
+			$kodeurut=substr($max['kode'],strlen($k),3)+1;
+			if ($kodeurut<10) {
+				$kodeurut="00".$kodeurut;
+			} else if ($kodeurut<100){
+				$kodeurut="0".$kodeurut;
+			} else {
+
+			}
+			$kd_materi=$k.$kodeurut;
 			$q="INSERT INTO materi (kd_materi,nama_materi,deskripsi,ForL,file,tgl_up,pertemuan,kd_mapel,kd_kelas,kd_guru)
 			VALUES ('$kd_materi','$nama_materi','$desc','$forl','$newfilename','$tglup','$pertemuan','$mapel','$kd','$kd_guru')";
 			$insmateri=mysqli_query($connect,$q);

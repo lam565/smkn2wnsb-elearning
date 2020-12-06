@@ -46,23 +46,38 @@ $rtugas=mysqli_fetch_array($qtugas);
 			<div class="panel-body">
 				<form method="POST" action="modul/mod_tugas_siswa/aksi.php?act=tbjawab" enctype="multipart/form-data">
 					
-						<?php 
-							if ($rtugas['status_kerja']=='T'){
+					<?php 
+					if ($rtugas['status_kerja']=='T'){
 
-								echo  "<div class='alert alert-danger'>Anda Belum Mengumpulkan Tugas
-					</div>";
-							} else if ($rtugas['status_kerja']=='K'){
-								echo  "<div class='alert alert-warning'>Jawaban Anda Sedang Dikoreksi</div>";
-							} else if ($rtugas['status_kerja']=='N') {
-								echo  "<div class='alert alert-success'>Anda mendapat nilai: $rtugas[nilai]</div>";
-							}
-						 ?>
+						echo  "<div class='alert alert-danger'>Anda Belum Mengumpulkan Tugas
+						</div>";
+					} else if ($rtugas['status_kerja']=='K'){
+						echo  "<div class='alert alert-warning'>Jawaban Anda Sedang Dikoreksi</div>";
+					} else if ($rtugas['status_kerja']=='N') {
+						echo  "<div class='alert alert-success'>Anda mendapat nilai: $rtugas[nilai]</div>";
+					}
+					?>
 					<h4>Upload Jawaban:</h4>
 					<div class="form-group">
 						<input class="form-control" type="FILE" name="ftugas">
 						<input type="hidden" name="kd_kerja" value="<?php echo $rtugas['kd_kerja'] ?>">	
 					</div>
-					<button type="submit" class="btn btn-primary">Kirim Jawaban</button>
+					<?php
+					date_default_timezone_set('Asia/Jakarta');
+					$skr=date("Y-m-d H:i:s"); 
+					if (strtotime($rtugas['batas_awal']) <= strtotime($skr) AND strtotime($skr) <= strtotime($rtugas['batas_ahir'])) {
+						if ($rtugas['status_kerja']=='T'){
+							echo "<button type='submit' class='btn btn-primary'>Kirim Jawaban</button>";
+						} else if ($rtugas['status_kerja']=='K') {
+							echo "<button type='submit' class='btn btn-primary'>Kirim Ulang</button>";
+						}
+						
+					} else if (strtotime($rtugas['batas_awal']) >= strtotime($skr)) {
+						echo "<b class='text-info'>Belum bisa mengumpulkan tugas karena belum dimulai </b>";
+					} else {
+						echo "<b class='text-warning'>Tidak bisa mengumpulkan tugas karena sudah lewat batas </b>";
+					}
+					?>
 				</form>
 			</div>
 			<div class="panel-footer text-left">
