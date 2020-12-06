@@ -205,10 +205,10 @@ else{
                         $jb=jmlSiswa($rtugas['kd_tugas'],$connect,'T');
                         $jk=jmlSiswa($rtugas['kd_tugas'],$connect,'K');
                         $jn=jmlSiswa($rtugas['kd_tugas'],$connect,'N');
-                        echo "<td>$jb <a href='?module=detailtugas&kd=$rtugas[kd_tugas]&st=T'> - Lihat</a></td>";
-                        echo "<td>$jk <a href=''> - Lihat</a></td>";
-                        echo "<td>$jn <a href=''> - Lihat</a></td>
-                        <td><a href='modul/mod_tugas/aksi.php?act=del&id=$rtugas[kd_tugas]'>Hapus</a> | <a href='?module=tugas&eid=$rtugas[kd_tugas]'>Edit</a></td>
+                        echo "<td>$jb </td>";
+                        echo "<td>$jk </td>";
+                        echo "<td>$jn </td>
+                        <td><a href='modul/mod_tugas/aksi.php?act=del&id=$rtugas[kd_tugas]'>Hapus</a> | <a href='?module=tugas&eid=$rtugas[kd_tugas]'>Edit</a> | <a href='?module=detailtugas&kd=$rtugas[kd_tugas]'>Penilaian</a></td>
                         </tr>";
                         $n++;
                     }

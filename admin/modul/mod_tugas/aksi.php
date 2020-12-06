@@ -29,7 +29,7 @@ if (isset($_GET['act'])){
 			$filext       = substr($filename, strrpos($filename, '.'));
 			$filext       = str_replace('.','',$filext);
 			$filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
-			$newfilename   = $filename.'_'.$acak.'.'.$filext;
+			$newfilename   = $judul.'_'.$acak.'.'.$filext;
 
 			foreach ($kelas as $kd) {
 				//buat kode tugas 02
@@ -61,7 +61,7 @@ if (isset($_GET['act'])){
 							$ks="12".$thn.$jt['nis'];
 							$qscek="SELECT MAX(kd_kerja) AS kode FROM kerja_tugas WHERE kd_kerja LIKE '$ks%'";
 							$maxs=mysqli_fetch_array(mysqli_query($connect,$qscek));
-							$kodeuruts=substr($max['kode'],strlen($ks),3)+1;
+							$kodeuruts=substr($maxs['kode'],strlen($ks),3)+1;
 							if ($kodeuruts<10) {
 								$kodeuruts="00".$kodeuruts;
 							} else if ($kodeuruts<100){
@@ -71,7 +71,7 @@ if (isset($_GET['act'])){
 							}
 							$kd_kerja=$ks.$kodeuruts;
 
-							mysqli_query($connect,"INSERT INTO kerja_tugas (kd_kerja,kd_tugas,nis) VALUES ('$kd_kerja','$kd_tugas','$jt[nis]')");
+							mysqli_query($connect,"INSERT INTO kerja_tugas (kd_kerja,kd_tugas,nis,file_kerja,nilai,status_kerja) VALUES ('$kd_kerja','$kd_tugas','$jt[nis]','T','0','T')");
 						}
 					}
 					$qt="INSERT INTO timeline (jenis,id_jenis,waktu,kd_kelas,kd_mapel,kd_guru) 
@@ -106,7 +106,7 @@ if (isset($_GET['act'])){
 			$delt="DELETE FROM timeline WHERE timeline.jenis='tugas' AND timeline.id_jenis='$kd'";
 			mysqli_query($connect,$delt);
 			$qc="SELECT * FROM tugas WHERE file='$rfile[file]'";
-			if (mysqli_num_rows(mysqli_query($connect,$qc))<=1){
+			if (mysqli_num_rows(mysqli_query($connect,$qc))<1){
 				unlink($file);
 			}
 			echo "<script>alert('Berhasil menghapus tugas'); location='../../media.php?module=tugas'</script>";
@@ -190,7 +190,17 @@ if (isset($_GET['act'])){
 					echo "<script>alert('Berhasil menambah nilai Sementara'); location='../../media.php?module=tugas'</script>";
 				}
 			} else if (isset($_POST['simpan'])){
-				echo "simpan";
+				$nil=$_POST['nilai'];
+				$kd=$_POST['kd'];
+				$kdt=$_POST['kdt'];
+
+				$qn="UPDATE kerja_tugas SET nilai='$nil',status_kerja='N' WHERE kd_kerja='$kd'";
+				$ex=mysqli_query($connect,$qn);
+				if ($ex){
+					echo "<script>alert('Berhasil menambah nilai Sementara'); location='../../media.php?module=detailtugas&kd=$kdt&st=T&eid=$kd'</script>";
+				} else {
+					echo "<script>alert('Berhasil memberikan nilai'); location='../../media.php?module=tugas'</script>";
+				}
 			}
 		break;
 

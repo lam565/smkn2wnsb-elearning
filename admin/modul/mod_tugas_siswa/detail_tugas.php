@@ -73,7 +73,8 @@ $rtugas=mysqli_fetch_array($qtugas);
 						}
 						
 					} else if (strtotime($rtugas['batas_awal']) >= strtotime($skr)) {
-						echo "<b class='text-info'>Belum bisa mengumpulkan tugas karena belum dimulai </b>";
+						echo "<p class='text-info'>Belum bisa mengumpulkan tugas karena belum dimulai. ";
+						echo "<br>Tugas dimulai pada $rtugas[batas_awal]</p>";
 					} else {
 						echo "<b class='text-warning'>Tidak bisa mengumpulkan tugas karena sudah lewat batas </b>";
 					}
