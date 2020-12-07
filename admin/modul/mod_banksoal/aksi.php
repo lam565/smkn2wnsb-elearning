@@ -26,6 +26,19 @@ if (isset($_GET['act'])){
 		}
 		break;
 
+		case 'upd':
+		$mp=$_POST['mapel'];
+		$nama_soal=$_POST['nama_soal'];
+		$kd_guru=$_POST['kd_guru'];
+		$kd_soal=$_POST['kd_soal'];
+
+		$q="UPDATE soal SET nama_soal='$nama_soal', kd_mapel='$mp' WHERE kd_soal='$kd_soal'";
+		$upd=mysqli_query($connect,$q);
+		if ($upd) {
+			echo "<script>alert('Berhasil mengubah soal'); location='../../media.php?module=banksoal'</script>";
+		}
+		break;
+
 		default:
 				# code...
 		break;

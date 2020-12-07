@@ -39,7 +39,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 							UBAH SOAL
 						</div>
 						<div class="panel-body text-center">
-							<form method="post" action="modul/mdo_banksoal/aksi.php?act=add">
+							<form method="post" action="modul/mdo_banksoal/aksi.php?act=upd">
 								<div class="form-group">
 
 									<label>Mata Pelajaran</label>
