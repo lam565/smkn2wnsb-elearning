@@ -41,6 +41,20 @@ if (isset($_GET['act'])){
 		}
 		break;
 
+		case 'del':
+			$q="DELETE FROM soal WHERE kd_soal='$_GET[kd]'";
+			$exe=mysqli_query($connect,$q);
+			if ($exe){
+				$qc=mysqli_query($connect,"SELECT kd_soal FROM detail_soal WHERE kd_soal='$_GET[kd]'");
+				$cn=mysqli_num_rows($qc);
+				if ($cn>0) {
+					$qd="DELETE FROM detail_soal WHERE kd_soal='$_GET[kd]'";
+					mysqli_query($connect,$qd);
+				}
+				echo "<script>alert('Berhasil menghapus soal'); location='../../media.php?module=banksoal'</script>";
+			}
+		break;
+
 		default:
 				# code...
 		break;

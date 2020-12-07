@@ -26,6 +26,9 @@ else{
       case 'banksoal':
       include "modul/mod_banksoal/banksoal_v.php";
       break;
+      case 'buatsoal':
+      include "modul/mod_banksoal/buatsoal.php";
+      break;
 
       case 'ujian':
       include "modul/mod_ujian/ujian_v.php";

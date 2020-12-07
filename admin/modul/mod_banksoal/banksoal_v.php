@@ -172,7 +172,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 												<td>$rsoal[nama_mapel]</td><td>";
 												echo $rsoal['acak']=='Y' ? "YA" : "TIDAK";
 												echo "</td><td>$j</td>
-												<td> <a class='btn btn-primary' href=''>+Soal </a>  <a class='btn btn-primary' href='?module=banksoal&eid=$rsoal[kd_soal]'>Edit </a> <a href='' class='btn btn-primary'>Hapus</a></td>";
+												<td> <a class='btn btn-primary' href='?module=buatsoal&kds=$rsoal[kd_soal]'>+Soal </a>  <a class='btn btn-primary' href='?module=banksoal&eid=$rsoal[kd_soal]'>Edit </a> <a href='modul/mod_banksoal/aksi.php?act=del&kd=$rsoal[kd_soal]' class='btn btn-primary'>Hapus</a></td>";
 												echo "</tr>";
 												$no++;
 											}
