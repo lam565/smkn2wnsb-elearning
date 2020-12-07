@@ -54,52 +54,105 @@ if (!isset($_GET['kds'])) {
 								TAMBAH PERTANYAAN
 							</div>
 							<div class="panel-body text-center">
-								<form>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>No</label>
-											<input type="text" class="form-control" name="no" disabled="disabled" value="">
-											<input type="hidden" name="no" value="">	
-										</div>
-										<div class="form-group">
-											<label>PERTANYAAN</label>
-											<textarea class="form-control" name="pertanyaan" rows="13"></textarea>	
-										</div>
-										
-										<div class="form-group">
-											<label>KUNCI JAWABAN</label>
-											<input type="text" class="form-control" name="kunci_jawaban" placeholder="Kunci jawaban">	
-										</div>
-										
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="#normal" data-toggle="tab">NORMAL</a>
+									</li>
+									<li class=""><a href="#import" data-toggle="tab">IMPORT DARI EXCEL</a>
+									</li>
+								</ul>
+
+								<div class="tab-content">
+									<div class="tab-pane fade active in" id="normal">
+										<form>
+											<div class="col-md-6">
+												<?php 
+												$thn=date("Y");
+												$k="44".$thn.$_SESSION['kode'];
+												$qcek="SELECT MAX(kd_detail_soal) AS kode FROM detail_soal WHERE kd_detail_soal LIKE '$k%'";
+												$max=mysqli_fetch_array(mysqli_query($connect,$qcek));
+												$kodeurut=substr($max['kode'],strlen($k),3)+1;
+												if ($kodeurut<10) {
+													$kodeurut="00".$kodeurut;
+												} else if ($kodeurut<100){
+													$kodeurut="0".$kodeurut;
+												}
+												$kd_detail_soal=$k.$kodeurut;
+												?>
+												<div class="form-group">
+													<label>No</label>
+													<input type="text" class="form-control" name="no" disabled="disabled" value="<?php echo $kodeurut; ?>">
+													<input type="hidden" name="kd_detail" value="<?php echo $kd_detail_soal; ?>">	
+												</div>
+												<div class="form-group">
+													<label>Jenis Ketergantungan</label>
+													<select class="form-control">
+														<option value="-">Normal</option>
+														<option value="Parent">Parent</option>
+														<option value="Child">Child</option>
+													</select>
+												</div>
+												<div class="form-group" id="child"></div>
+												<div class="form-group">
+													<label>PERTANYAAN</label>
+													<textarea class="form-control" name="pertanyaan" rows="8"></textarea>	
+												</div>
+												<div class="form-group">
+													<label>Gambar</label>
+													<input class="form-control" type="file" name="gbsoal">
+												</div>
+											</div>
+											<div class="form-group col-md-6">
+												<div class="form-group">
+													<label>A</label>
+													<input type="text" class="form-control" name="a" placeholder="Pilihan A">	
+												</div>
+												<div class="form-group">
+													<label>B</label>
+													<input type="text" class="form-control" name="b" placeholder="Pilihan B">	
+												</div>
+												<div class="form-group">
+													<label>C</label>
+													<input type="text" class="form-control" name="c" placeholder="Pilihan C">	
+												</div>
+												<div class="form-group">
+													<label>D</label>
+													<input type="text" class="form-control" name="d" placeholder="Pilihan D">	
+												</div>
+												<div class="form-group">
+													<label>E</label>
+													<input type="text" class="form-control" name="e" placeholder="Pilihan E">	
+												</div>
+												<div class="form-group">
+													<label>KUNCI JAWABAN</label>
+													<input type="text" class="form-control" name="kunci_jawaban" placeholder="Kunci jawaban">	
+												</div>
+
+												<div class="form-group">
+													<button type="submit" name="lanjut" class="btn btn-success">Lanjut</button>
+													<button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
+												</div>
+											</div>
+										</form>
 									</div>
-									<div class="form-group col-md-6">
-										<div class="form-group">
-											<label>A</label>
-											<input type="text" class="form-control" name="a" placeholder="Pilihan A">	
-										</div>
-										<div class="form-group">
-											<label>B</label>
-											<input type="text" class="form-control" name="b" placeholder="Pilihan B">	
-										</div>
-										<div class="form-group">
-											<label>C</label>
-											<input type="text" class="form-control" name="c" placeholder="Pilihan C">	
-										</div>
-										<div class="form-group">
-											<label>D</label>
-											<input type="text" class="form-control" name="d" placeholder="Pilihan D">	
-										</div>
-										<div class="form-group">
-											<label>E</label>
-											<input type="text" class="form-control" name="e" placeholder="Pilihan E">	
-										</div>
-										<label>Tambahkan Gambar</label>
-										<input type="file" name="gbsoal">
+									<div class="tab-pane fade" id="import">
+										<form>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<div class="form-group text-left">
+													<label>IMPORT SOAL</label>
+													<input class="form-control" type="file" name="impsoal">
+													<input type="submit" name="import" value="IMPORT">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<div class="alert alert-info">
+													<p>Import file excel sesuai dengan</p>
+													<br><br><br> 
+												</div>
+											</div>
+										</form>
 									</div>
-									<div class="col-md-12">
-										<button type="submit" class="btn btn-primary">Tambah</button>
-									</div>
-								</form>
+								</div>
+								
 							</div>
 						</div>	
 					</div>
