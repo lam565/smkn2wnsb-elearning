@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Des 2020 pada 08.44
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.2.34
+-- Waktu pembuatan: 07 Des 2020 pada 09.20
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -148,7 +149,7 @@ CREATE TABLE `kerja_tugas` (
   `kd_tugas` varchar(30) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `file_kerja` varchar(100) NOT NULL DEFAULT 'T',
-  `nilai` int(11) NOT NULL DEFAULT 0,
+  `nilai` int(11) NOT NULL DEFAULT '0',
   `status_kerja` varchar(20) NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -335,8 +336,9 @@ INSERT INTO `siswa` (`nis`, `nisn`, `nama`, `username`, `kelamin`, `email`, `fot
 --
 
 CREATE TABLE `soal` (
-  `kd_soal` varchar(10) NOT NULL,
+  `kd_soal` varchar(30) NOT NULL,
   `nama_soal` varchar(100) NOT NULL,
+  `acak` varchar(5) NOT NULL DEFAULT 'T',
   `kd_mapel` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -345,8 +347,9 @@ CREATE TABLE `soal` (
 -- Dumping data untuk tabel `soal`
 --
 
-INSERT INTO `soal` (`kd_soal`, `nama_soal`, `kd_mapel`, `kd_guru`) VALUES
-('142020GR00', 'Soal Ujian BI', 'bind', 'GR001');
+INSERT INTO `soal` (`kd_soal`, `nama_soal`, `acak`, `kd_mapel`, `kd_guru`) VALUES
+('142020GR001001', 'Soal Bahasa Indonesia I', 'T', 'bind', 'GR001'),
+('142020GR001002', 'Soal Matematika', 'T', 'mtk', 'GR001');
 
 -- --------------------------------------------------------
 

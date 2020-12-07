@@ -6,6 +6,7 @@ if (isset($_GET['act'])){
 		$mp=$_POST['mapel'];
 		$nama_soal=$_POST['nama_soal'];
 		$kd_guru=$_POST['kd_guru'];
+		$acak=$_POST['jenis_soal'];
 		$thn=date("Y");
 		$ks="14".$thn.$kd_guru;
 
@@ -19,7 +20,7 @@ if (isset($_GET['act'])){
 		}
 		$kd_soal=$ks.$nourut;
 
-		$qins="INSERT INTO soal VALUES ('$kd_soal','$nama_soal','$mp','$kd_guru')";
+		$qins="INSERT INTO soal VALUES ('$kd_soal','$nama_soal','$acak','$mp','$kd_guru')";
 		$ins=mysqli_query($connect,$qins);
 		if ($ins){
 			echo "<script>alert('Berhasil membuat soal, selanjutnya buatlah daftar pertanyaan!'); location='../../media.php?module=banksoal'</script>";
@@ -31,8 +32,9 @@ if (isset($_GET['act'])){
 		$nama_soal=$_POST['nama_soal'];
 		$kd_guru=$_POST['kd_guru'];
 		$kd_soal=$_POST['kd_soal'];
+		$acak=$_POST['jenis_soal'];
 
-		$q="UPDATE soal SET nama_soal='$nama_soal', kd_mapel='$mp' WHERE kd_soal='$kd_soal'";
+		$q="UPDATE soal SET nama_soal='$nama_soal', kd_mapel='$mp', acak='$acak' WHERE kd_soal='$kd_soal'";
 		$upd=mysqli_query($connect,$q);
 		if ($upd) {
 			echo "<script>alert('Berhasil mengubah soal'); location='../../media.php?module=banksoal'</script>";

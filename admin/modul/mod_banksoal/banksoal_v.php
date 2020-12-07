@@ -27,7 +27,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 			$id=$_GET['eid'];
 			$qw="SELECT soal.*, mapel.nama_mapel, kelas.nama_kelas, mapel.kd_mapel 
 			FROM kurikulum, soal, detail_kurikulum as dk, mapel, kelas 
-			WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=soal.kd_mapel AND soal.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=soal.kd_kelas AND dk.kd_kelas=kelas.kd_kelas AND soal.kd_guru=dk.kd_guru AND soal.kd_guru='$_SESSION[kode]' AND soal.kd_soal='$id'";
+			WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=soal.kd_mapel AND soal.kd_mapel=mapel.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND soal.kd_guru=dk.kd_guru AND soal.kd_guru='$_SESSION[kode]' AND soal.kd_soal='$id'";
 			$soal=mysqli_query($connect,$qw);
 			$esoal=mysqli_fetch_array($soal);
 
@@ -39,7 +39,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 							UBAH SOAL
 						</div>
 						<div class="panel-body text-center">
-							<form method="post" action="modul/mdo_banksoal/aksi.php?act=upd">
+							<form method="post" action="modul/mod_banksoal/aksi.php?act=upd">
 								<div class="form-group">
 
 									<label>Mata Pelajaran</label>
@@ -69,6 +69,13 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 									<input class="form-control" type="hidden" name="kd_guru" value="<?php echo $_SESSION['kode']; ?>" />
 									<input class="form-control" type="hidden" name="kd_soal" value="<?php echo $id; ?>" />
 								</div>
+								<div class="form-group">
+										<label>Jenis Soal</label>
+										<select class="form-control" name="jenis_soal">
+											<option value="T" <?php echo $esoal['acak']=='T' ? "selected='selected'" : ""; ?>>Tidak Acak</option>
+											<option value="Y" <?php echo $esoal['acak']=='Y' ? "selected='selected'" : ""; ?>>Acak</option>
+										</select>
+									</div>
 								<button type="submit" class="btn btn-success">Update </button>
 							</form>
 						</div>
@@ -111,6 +118,13 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 										<input class="form-control" type="text" name="nama_soal" />
 										<input class="form-control" type="hidden" name="kd_guru" value="<?php echo $_SESSION['kode'] ?>" />
 									</div>
+									<div class="form-group">
+										<label>Jenis Soal</label>
+										<select class="form-control" name="jenis_soal">
+											<option value="T" selected="selected">Tidak Acak</option>
+											<option value="Y">Acak</option>
+										</select>
+									</div>
 									<button type="submit" class="btn btn-success">Simpan </button>
 								</form>
 
@@ -133,7 +147,8 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 											<th>#</th>
 											<th>Nama Soal</th>
 											<th>Mata Pelajaran</th>
-											<th>Pertanyaan</th>
+											<th>Jenis</th>
+											<th>Soal</th>
 											<th>Aksi</th>
 										</tr>
 									</thead>
@@ -145,7 +160,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 												return $n;
 											}
 
-											$qsoal="SELECT soal.kd_soal,soal.nama_soal,mapel.nama_mapel
+											$qsoal="SELECT soal.acak, soal.kd_soal,soal.nama_soal,mapel.nama_mapel
 											FROM soal,mapel WHERE soal.kd_mapel=mapel.kd_mapel AND soal.kd_guru='$_SESSION[kode]'";
 											$csoal=mysqli_query($connect,$qsoal);
 											$no=1;
@@ -154,10 +169,12 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 												echo "<tr>";
 												echo "<td>$no</td>
 												<td>$rsoal[nama_soal]</td>
-												<td>$rsoal[nama_mapel]</td>
-												<td>$j</td>
-												<td> + Pertanyaan| Edit | Hapus</td>";
+												<td>$rsoal[nama_mapel]</td><td>";
+												echo $rsoal['acak']=='Y' ? "YA" : "TIDAK";
+												echo "</td><td>$j</td>
+												<td> <a class='btn btn-primary' href=''>+Soal </a>  <a class='btn btn-primary' href='?module=banksoal&eid=$rsoal[kd_soal]'>Edit </a> <a href='' class='btn btn-primary'>Hapus</a></td>";
 												echo "</tr>";
+												$no++;
 											}
 										 ?>
 									</tbody>
