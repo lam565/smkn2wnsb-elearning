@@ -25,7 +25,8 @@
 		<li class="<?php if ($_GET['module'] == 'guru') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=guru"><b>GURU</b></a></li>
 		<li class="<?php if ($_GET['module'] == 'kelas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=kelas"><b>KELAS</b></a></li>
 		<li class="<?php if ($_GET['module'] == 'mapel') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=mapel"><b>MATA PELAJARAN</b></a></li>
-		<li class="<?php if ($_GET['module'] == 'kurikulum') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=kurikulum"><b>KURIKULUM</b></a></li>	
+		<li class="<?php if ($_GET['module'] == 'kurikulum') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=kurikulum"><b>KURIKULUM</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'pelaporan') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=pelaporan"><b>PELAPORAN</b></a></li>		
 		
         <?php
         break;
@@ -37,7 +38,7 @@
         <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tugas&mp=all" ><b>TUGAS</b></a></li>
         <li class="<?php if ($_GET['module'] == 'nilai') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=nilai&mp=all" ><b>NILAI</b></a></li>
         <li class="<?php if ($_GET['module'] == 'anggota') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=anggota" ><b>ANGGOTA</b></a></li>
-        
+        <li> <a style="color:blue;" href="web-grup" ><b>FORUM KELAS</b></a></li>
         <?php
         break;
 
