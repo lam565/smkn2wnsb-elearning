@@ -98,6 +98,10 @@ else{
       include "modul/mod_detailkurikulum/detkurikulum_v.php";
       break;
 	  
+	  case 'pelaporan':
+      include "modul/mod_pelaporan/pelaporan_v.php";
+      break;
+	  
 	  case 'gfsiswa':
       include "modul/mod_gfsiswa/gfsiswa_v.php";
       break;
@@ -126,6 +130,15 @@ else{
       break;
       case 'detailtugas':
       include "modul/mod_tugas_siswa/detail_tugas.php";
+      break;
+	  case 'forum':
+      include "modul/mod_forum/forum_v.php";
+      break;
+	  case 'tampil_forum':
+      include "modul/mod_forum/tampil_forum.php";
+      break;
+	  case 'forum_c':
+      include "modul/mod_forum/forum_c.php";
       break;
 
       default:
