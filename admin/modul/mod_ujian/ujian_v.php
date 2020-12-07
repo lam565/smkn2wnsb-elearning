@@ -35,9 +35,9 @@ else{
             <?php 
             if (isset($_GET['eid'])){
                 ?>
-                div class="panel panel-default">
+                <div class="panel panel-default">
                 <div class="panel-heading">
-                   Ujian Online
+                   Ujian eid
                </div>
                <div class="panel-body text-center recent-users-sec">
                 <form role="form">
@@ -151,22 +151,21 @@ else{
    ?>
    <div class="panel panel-default">
     <div class="panel-heading">
-     Ujian Online
+     Tambah Ujian Online
  </div>
  <div class="panel-body text-center recent-users-sec">
     <form role="form">
-
        <div class="form-group">
         <label>Nama Ujian</label>
         <input class="form-control" type="text" />
     </div>
-    
-    
+
+
     <div class="form-group">
         <label>Tanggal </label>
         <input class="form-control" type="text" />
     </div>
-    
+
     <div class="form-example-int form-horizental">
         <div class="form-group">
            <div class="row">

@@ -23,6 +23,10 @@ else{
       include "modul/mod_materi/materi_v.php";
       break;
       
+      case 'banksoal':
+      include "modul/mod_banksoal/banksoal_v.php";
+      break;
+
       case 'ujian':
       include "modul/mod_ujian/ujian_v.php";
       break;
