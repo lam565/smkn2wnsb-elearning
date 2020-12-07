@@ -42,8 +42,6 @@ if (isset($_GET['act'])){
 					$kodeurut="00".$kodeurut;
 				} else if ($kodeurut<100){
 					$kodeurut="0".$kodeurut;
-				} else {
-
 				}
 				$kd_tugas=$k.$kodeurut;
 
@@ -66,8 +64,6 @@ if (isset($_GET['act'])){
 								$kodeuruts="00".$kodeuruts;
 							} else if ($kodeuruts<100){
 								$kodeuruts="0".$kodeuruts;
-							} else {
-
 							}
 							$kd_kerja=$ks.$kodeuruts;
 

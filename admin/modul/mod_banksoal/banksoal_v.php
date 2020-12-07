@@ -86,7 +86,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 								BUAT SOAL
 							</div>
 							<div class="panel-body text-center">
-								<form method="post" action="modul/mdo_banksoal/aksi.php?act=add">
+								<form method="post" action="modul/mod_banksoal/aksi.php?act=add">
 									<div class="form-group">
 
 										<label>Mata Pelajaran</label>
@@ -126,6 +126,43 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 							DAFTAR SOAL
 						</div>
 						<div class="panel-body text-center">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Nama Soal</th>
+											<th>Mata Pelajaran</th>
+											<th>Pertanyaan</th>
+											<th>Aksi</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php 
+											function jumSoal($kd,$conn){
+												$q=mysqli_query($conn,"SELECT kd_detail_soal FROM detail_soal WHERE kd_soal='$kd'");
+												$n=mysqli_num_rows($q);
+												return $n;
+											}
+
+											$qsoal="SELECT soal.kd_soal,soal.nama_soal,mapel.nama_mapel
+											FROM soal,mapel WHERE soal.kd_mapel=mapel.kd_mapel AND soal.kd_guru='$_SESSION[kode]'";
+											$csoal=mysqli_query($connect,$qsoal);
+											$no=1;
+											while ($rsoal=mysqli_fetch_array($csoal)){
+												$j=jumSoal($rsoal['kd_soal'],$connect);
+												echo "<tr>";
+												echo "<td>$no</td>
+												<td>$rsoal[nama_soal]</td>
+												<td>$rsoal[nama_mapel]</td>
+												<td>$j</td>
+												<td> + Pertanyaan| Edit | Hapus</td>";
+												echo "</tr>";
+											}
+										 ?>
+									</tbody>
+								</table>
+							</div>
 
 						</div>
 					</div>
