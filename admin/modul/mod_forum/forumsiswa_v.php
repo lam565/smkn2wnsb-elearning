@@ -28,11 +28,11 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
         <div class="row pad-botm">
             <div class="col-md-12">
 			 <?php
-	$sql1 = $connection->query("SELECT * FROM guru
+	$sql1 = $connection->query("SELECT * FROM siswa
 	WHERE username='$_SESSION[username]'");
 	$row1 = $sql1->fetch_assoc();
 	?>
-                <h4 class="header-line">SELAMAT DATANG DI DASHBOARD <?=$row1['nama']?>,<?=$row1['gelpend']?></h4>
+                <h4 class="header-line">SELAMAT DATANG DI DASHBOARD <?=$row1['nama']?></h4>
                 
                             </div>
 
@@ -40,9 +40,10 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 	   <div class="row">
 	  
 	<?php
-	$sql = $connection->query("SELECT * FROM guru,detail_kurikulum,mapel 
-	WHERE guru.kd_guru=detail_kurikulum.kd_guru and mapel.kd_mapel=detail_kurikulum.kd_mapel
-	and guru.kd_guru='$row1[kd_guru]'");
+	$sql = $connection->query("SELECT * FROM siswa,rombel,detail_kurikulum,mapel,kelas 
+	WHERE 
+	siswa.nis=rombel.nis and kelas.kd_kelas=rombel.kd_kelas and mapel.kd_mapel=detail_kurikulum.kd_mapel and kelas.kd_kelas=detail_kurikulum.kd_kelas
+	and siswa.nis='$row1[nis]'");
 	while($row = $sql->fetch_assoc()):
 
 ?>

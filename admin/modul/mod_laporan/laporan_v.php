@@ -12,7 +12,7 @@ a {
 <!-- CSS/ -->
 
 <?php
-
+include "config.php";
 
 if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION['login']==0){
 echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../index.php';</script>";
@@ -170,34 +170,31 @@ echo '<option value="12">Desember</option>';
                                         </div>
 										
 										<br><br>
-                                        
                                         <div class="form-group">
                                             <label>Kelas </label>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="" />VII 
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="" />VIII
-                                                </label>
-                                            </div>
-                                            
+                                            <select class="form-control" name="kd_kelas">
+												<option>Kelas</option>
+												<?php $query1 = $connection->query("SELECT * FROM guru where username='$_SESSION[username]'"); 
+												$data1 = $query1->fetch_assoc(); 
+												?>
+												<?php $query2 = $connection->query("SELECT * FROM detail_kurikulum where kd_guru='$data1[kd_guru]'"); while ($data2 = $query2->fetch_assoc()): ?>
+													<option value="<?=$data2["kd_kelas"]?>"><?=$data2["kd_kelas"]?></option>
+												<?php endwhile; ?>
+											</select>
                                         </div>
+										
+                                        
 										 <div class="form-group">
                                             <label>Mata Pelajaran</label>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="" />VII 
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="" />VIII
-                                                </label>
-                                            </div>
-                                            
+                                            <select class="form-control" name="kd_mapel">
+												<option>Mata Pelajaran</option>
+												<?php $query3 = $connection->query("SELECT * FROM guru where username='$_SESSION[username]'"); 
+												$data3 = $query3->fetch_assoc(); 
+												?>
+												<?php $query5 = $connection->query("SELECT * FROM detail_kurikulum where kd_guru='$data3[kd_guru]'"); while ($data5 = $query5->fetch_assoc()): ?>
+													<option value="<?=$data5["kd_mapel"]?>"><?=$data5["kd_mapel"]?></option>
+												<?php endwhile; ?>
+											</select>
                                         </div>
                                         
                                        
@@ -219,27 +216,26 @@ echo '<option value="12">Desember</option>';
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nama Ujian</th>
+                                            <th>ID Ujian</th>
                                            
-                                             <th>Tanggal</th>
-											 <th>Lama</th>
-											 <th>Kelas</th>
-											 <th>Mata Pelajaran</th>
+                                             <th>NIS</th>
 											 
                                         </tr>
                                     </thead>
                                     <tbody>
+									<?php if ($query = $connection->query("SELECT * FROM nilai_ujian")): ?>
+	                        <?php while($row = $query->fetch_assoc()): ?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-											 <td>Otto</td>
-											 <td>Mark</td>
-                                            <td>Otto</td>
+										<td></td>
+                                            <td><?=$row['kd_nilai_ujian']?></td>
+                                            <td><?=$row['nis']?></td>
+                                            
 											 
                                            
                                         </tr>
-                                        
+										<a href="media.php?module=cetak">cetak</a>
+                                        <?php endwhile ?>
+	                    <?php endif ?>
                                     </tbody>
                                 </table>
                             </div>

@@ -42,6 +42,10 @@ else{
       include "modul/mod_tugas/detailtugas.php";
       break;
       
+	  case 'forum':
+      include "modul/mod_forum/forum_v.php";
+      break;
+	  
       case 'laporan':
       include "modul/mod_laporan/laporan_v.php";
       break;
@@ -131,14 +135,9 @@ else{
       case 'detailtugas':
       include "modul/mod_tugas_siswa/detail_tugas.php";
       break;
-	  case 'forum':
-      include "modul/mod_forum/forum_v.php";
-      break;
-	  case 'tampil_forum':
-      include "modul/mod_forum/tampil_forum.php";
-      break;
-	  case 'forum_c':
-      include "modul/mod_forum/forum_c.php";
+	  
+	   case 'forum':
+      include "modul/mod_forum/forumsiswa_v.php";
       break;
 
       default:

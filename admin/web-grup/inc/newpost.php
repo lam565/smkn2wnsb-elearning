@@ -36,11 +36,11 @@ if (@$_SESSION["username"] == $useruser) {
             $date = date("G:i d/m/Y");
 
             if ($pindah) {
-                mysqli_query($connection, "INSERT INTO post VALUES('','$judul','$isi','$useruser','$date','$dt$alamat_gambar','0')");
+                mysqli_query($connection, "INSERT INTO post VALUES('','5','$judul','$isi','$useruser','$date','$dt$alamat_gambar','0','0','')");
                 echo "<div class='alert alert-info'>Postingan Telah Ditambahkan. <a href='./?p=user&user=$data2[username]#post'>Lihat Semua Postingan Kamu</a></div>";
             }
             else{
-                mysqli_query($connection, "INSERT INTO post VALUES('','$judul','$isi','$useruser','$date','','0')");
+                mysqli_query($connection, "INSERT INTO post VALUES('','5','$judul','$isi','$useruser','$date','','0','0','')");
                 echo "<div class='alert alert-info'>Postingan Telah Ditambahkan. <a href='./?p=user&user=$data2[username]#post'>Lihat Semua Postingan Kamu</a></div>";
             }
             }
