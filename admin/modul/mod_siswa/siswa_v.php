@@ -29,9 +29,12 @@ else{
    if ($_SERVER["REQUEST_METHOD"] == "POST") {
        
        if ($update) {
-          $sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]', kelamin='$_POST[kelamin]', tmp_lahir='$_POST[tmp_lahir]', tgl_lahir='$_POST[tgl_lahir]', kd_ortu='$_POST[kd_ortu]',alamat='$_POST[alamat]',email='$_POST[email]',telp='$_POST[telp]',status='$_POST[status]' WHERE nis='$_GET[key]'";
+          $sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]', 
+		  kelamin='$_POST[kelamin]',email='$_POST[email]',telp='$_POST[telp]',
+		  status='$_POST[status]' WHERE nis='$_GET[key]'";
       } else {
-          $sql = "INSERT INTO siswa VALUES ('$_POST[nis]', '$_POST[nisn]', '$_POST[nama]','$_POST[username]', '$_POST[kelamin]', '$_POST[tmp_lahir]', '$_POST[tgl_lahir]', '$_POST[kd_ortu]', '$_POST[alamat]', '$_POST[email]', '', '$_POST[telp]', '$_POST[status]')";
+          $sql = "INSERT INTO siswa VALUES ('$_POST[nis]', '$_POST[nisn]', '$_POST[nama]',
+		  '$_POST[username]', '$_POST[kelamin]', '$_POST[email]', '', '$_POST[telp]', '$_POST[status]')";
           
       }
 
@@ -86,34 +89,21 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
             <input class="form-control" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
         </div>
         <div class="form-group">
-            <label>Jenis Kelamin</label>
-            <input class="form-control" name="kelamin" type="text" <?= (!$update) ?: 'value="'.$row["kelamin"].'"' ?>/>
-        </div>
-        <div class="form-group">
-            <label>Tempat Lahir</label>
-            <input class="form-control" name="tmp_lahir" type="text" <?= (!$update) ?: 'value="'.$row["tmp_lahir"].'"' ?>/>
-            
-        </div>
-        <div class="form-group">
-            <label>Tanggal Lahir</label>
-            <input class="form-control" name="tgl_lahir" type="text" <?= (!$update) ?: 'value="'.$row["tgl_lahir"].'"' ?>/>
-            
-        </div>
-        
-        <div class="form-group">
-            <label>Orang Tua</label>
-            <select class="form-control" name="kd_ortu">
-                <option>Pilih</option>
-                <?php $query = $connection->query("SELECT * FROM ortu"); while ($data = $query->fetch_assoc()): ?>
-                <option value="<?=$data["kd_ortu"]?>" <?= (!$update) ?: (($row["kd_ortu"] != $data["kd_ortu"]) ?: 'selected="on"') ?>><?=$data["ayah"]?></option>
-            <?php endwhile; ?>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label>Alamat</label>
-        <input class="form-control" name="alamat" type="text" <?= (!$update) ?: 'value="'.$row["alamat"].'"' ?>/>
-    </div>
+                                            <label>Jenis Kelamin</label>
+                                            <select class="form-control" name="kelamin">
+												
+												<?php $query5 = $connection->query("SELECT * FROM siswa group by kelamin"); while ($data5 = $query5->fetch_assoc()): ?>
+												
+												<option value="<?=$data5["kelamin"]?>" <?= (!$update) ?: (($data5["kelamin"] != $data5["kelamin"]) ?: 'selected="on"') ?>><?=$data5["kelamin"]?></option>
+												
+												
+												
+												<?php endwhile; ?>
+											
+												
+											</select>
+                                        </div>
+       
     <div class="form-group">
         <label>E-Mail</label>
         <input class="form-control" name="email" type="text" <?= (!$update) ?: 'value="'.$row["email"].'"' ?>/>
@@ -173,10 +163,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                     <th>Nama Siswa</th>
                     <th>Username</th>
                     <th>Jenis Kelamin</th>
-                    <th>Tempat Lahir</th>
-                    <th>Tanggal Lahir</th>
-                    <th>Orang Tua</th>
-                    <th>Alamat</th>
+                   
                     <th>E-mail</th>
                     <th>Foto</th>
                     <th>Telp</th>
@@ -197,13 +184,9 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                     <td><?=$row['username']?></td>
                     
                     <td><?=$row['kelamin']?></td>
-                    <td><?=$row['tmp_lahir']?></td>
                     
-                    <td><?=$row['tgl_lahir']?></td>
-                    <td><?=$row['kd_ortu']?></td>
-                    <td><?=$row['alamat']?></td>
                     <td><?=$row['email']?></td>
-                    <td><?=$row['gambar']?></td>
+                    <td><?=$row['foto']?></td>
                     <td><?=$row['telp']?></td>
                     <td><?=$row['status']?></td>
                     <td class="hidden-print">

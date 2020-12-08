@@ -46,6 +46,10 @@ else{
       include "modul/mod_forum/forum_v.php";
       break;
 	  
+	  case 'tampil_forum':
+      include "modul/mod_forum/tampil_forum.php";
+      break;
+	  
       case 'laporan':
       include "modul/mod_laporan/laporan_v.php";
       break;
@@ -82,13 +86,11 @@ else{
       include "modul/mod_mapel/mapel_v.php";
       break;
 	  
-	  case 'ortu':
-      include "modul/mod_ortu/ortu_v.php";
+	  case 'rombel':
+      include "modul/mod_rombel/rombel_v.php";
       break;
 	  
-	  case 'semester':
-      include "modul/mod_semester/semester_v.php";
-      break;
+	  
 	  
 	   case 'tahun':
       include "modul/mod_tahun_ajar/tahun_v.php";

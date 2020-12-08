@@ -20,6 +20,7 @@
         <li class="<?php if ($_GET['module'] == 'tahun') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tahun"><b>TAHUN AJARAN</b></a></li>
         <li class="<?php if ($_GET['module'] == 'akun') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=akun"><b>JURUSAN</b></a></li>
         <li class="<?php if ($_GET['module'] == 'kelas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=kelas"><b>KELAS</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'rombel') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=rombel"><b>ROMBEL</b></a></li>
         <li class="<?php if ($_GET['module'] == 'guru') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=guru"><b>GURU</b></a></li>
         <li class="<?php if ($_GET['module'] == 'siswa') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=siswa"><b>SISWA</b></a></li>
 		<li class="<?php if ($_GET['module'] == 'mapel') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=mapel"><b>MATA PELAJARAN</b></a></li>

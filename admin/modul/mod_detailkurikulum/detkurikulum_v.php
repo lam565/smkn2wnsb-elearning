@@ -30,9 +30,10 @@ if ($update) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($update) {
 		$sql = "UPDATE detail_kurikulum SET kd_kurikulum='$_POST[kd_kurikulum]',
-		kd_mapel='$_POST[kd_mapel]',kd_kelas='$_POST[kd_kelas]',kd_guru='$_POST[kd_guru]' WHERE id_detail='$_GET[key]'";
+		kd_mapel='$_POST[kd_mapel]',kd_kelas='$_POST[kd_kelas]',kd_guru='$_POST[kd_guru]',kd_silabus='$_POST[kd_silabus]' WHERE id_detail='$_GET[key]'";
 	} else {
-		$sql = "INSERT INTO detail_kurikulum VALUES ('$_POST[id_detail]','$_POST[kd_kurikulum]', '$_POST[kd_mapel]', '$_POST[kd_kelas]', '$_POST[kd_guru]')";
+		$sql = "INSERT INTO detail_kurikulum VALUES ('$_POST[id_detail]','$_POST[kd_kurikulum]', 
+		'$_POST[kd_mapel]', '$_POST[kd_kelas]', '$_POST[kd_guru]','$_POST[kd_silabus]')";
 	}
   if ($connection->query($sql)) {
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=detkurikulum&key2=$_GET[key2]'</script>";
@@ -100,7 +101,16 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <select class="form-control" name="kd_guru">
 												<option>Guru</option>
 												<?php $query = $connection->query("SELECT * FROM guru"); while ($data = $query->fetch_assoc()): ?>
-													<option value="<?=$data["kd_guru"]?>" <?= (!$update) ?: (($row["kd_guru"] != $data["kd_guru"]) ?: 'selected="on"') ?>><?=$data["nama"]?>,<?=$data["gelpend"]?></option>
+													<option value="<?=$data["kd_guru"]?>" <?= (!$update) ?: (($row["kd_guru"] != $data["kd_guru"]) ?: 'selected="on"') ?>><?=$data["nama"]?></option>
+												<?php endwhile; ?>
+											</select>
+                                        </div>
+										<div class="form-group">
+                                            <label>Silabus </label>
+                                            <select class="form-control" name="kd_silabus">
+												<option>Silabus</option>
+												<?php $query = $connection->query("SELECT * FROM silabus"); while ($data = $query->fetch_assoc()): ?>
+													<option value="<?=$data["kd_silabus"]?>" <?= (!$update) ?: (($row["kd_silabus"] != $data["kd_silabus"]) ?: 'selected="on"') ?>><?=$data["judul"]?></option>
 												<?php endwhile; ?>
 											</select>
                                         </div>
@@ -131,6 +141,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 											 <th>Kd Mapel</th>
 											  <th>Kd Kelas</th>
 											   <th>Kd Guru</th>
+											    <th>Kd Silabus</th>
 											 <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -145,6 +156,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 											<td><?=$row['kd_mapel']?></td>
 											<td><?=$row['kd_kelas']?></td>
 											<td><?=$row['kd_guru']?></td>
+											<td><?=$row['kd_silabus']?></td>
 											
 											<td class="hidden-print">
 	                                <div class="btn-group">

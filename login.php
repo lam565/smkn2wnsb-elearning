@@ -19,6 +19,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
   
   <script src="assets/js/respond.min.js"></script>
+  <link rel="shortcut icon" href="admin/assets/img/smk.png">
   <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>
   <![endif]-->
@@ -37,7 +38,8 @@
   <div class="col-md-12">
           <!-- Logo. -->
           <div class="logo" align="center">
-            <h1><span class="bold">SMKN 2 WONOSOBO</span></h1>
+		  <img src="admin/assets/img/new_logo.png" width="180" height="150">
+            <h1 style="color:red;"><span class="bold">SMKN 2 WONOSOBO</span></h1>
             <p class="meta"></p>
           </div>
           <!-- Logo ends -->

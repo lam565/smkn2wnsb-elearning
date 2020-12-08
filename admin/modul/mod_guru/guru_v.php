@@ -29,13 +29,11 @@ if ($update) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	
 	if ($update) {
-		$sql = "UPDATE guru SET username='$_POST[username]',nip='$_POST[nip]',nama='$_POST[nama]',gelpend='$_POST[gelpend]',
-		tmp_lahir='$_POST[tmp_lahir]',tgl_lahir='$_POST[tgl_lahir]',alamat='$_POST[alamat]',telp='$_POST[telp]',
+		$sql = "UPDATE guru SET username='$_POST[username]',nip='$_POST[nip]',nama='$_POST[nama]',telp='$_POST[telp]',
 		email='$_POST[email]',status='$_POST[status]' WHERE kd_guru='$_GET[key]'";
 	} else {
 		$sql = "INSERT INTO guru VALUES ('$_POST[kd_guru]', '$_POST[username]', 
-		'$_POST[nip]','$_POST[nama]','$_POST[gelpend]','$_POST[tmp_lahir]',
-		'$_POST[tgl_lahir]','$_POST[alamat]','$_POST[telp]','$_POST[email]',
+		'$_POST[nip]','$_POST[nama]','$_POST[telp]','$_POST[email]',
 		'','$_POST[status]')";
 	}
   if ($connection->query($sql)) {
@@ -85,24 +83,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <label>Nama Guru </label>
                                             <input class="form-control" name="nama" type="text" <?= (!$update) ?: 'value="'.$row["nama"].'"' ?>/>
                                         </div>
-										<div class="form-group">
-                                            <label>Gelar </label>
-                                            <input class="form-control" name="gelpend" type="text" <?= (!$update) ?: 'value="'.$row["gelpend"].'"' ?>/>
-                                        </div>
-										<div class="form-group">
-                                            <label>Tempat Lahir </label>
-                                            <input class="form-control" name="tmp_lahir" type="text" <?= (!$update) ?: 'value="'.$row["tmp_lahir"].'"' ?>/>
-                                        </div>
-										<div class="form-group">
-                                            <label>Tanggal Lahir </label>
-                                            <input class="form-control" name="tgl_lahir" type="text" <?= (!$update) ?: 'value="'.$row["tgl_lahir"].'"' ?>/>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label>Alamat</label>
-                                           <input class="form-control" name="alamat" type="text" <?= (!$update) ?: 'value="'.$row["alamat"].'"' ?>/>
-                                            
-                                        </div>
+										
 										<div class="form-group">
                                             <label>Telp </label>
                                            <input class="form-control" name="telp" type="text" <?= (!$update) ?: 'value="'.$row["telp"].'"' ?>/>
@@ -140,13 +121,13 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                     <thead>
                                         <tr>
                                             <th>#</th>
+											<th>ID</th>
+											
                                             <th>NIP</th>
-											 <th>Username</th>
+											 
 											 <th>Nama</th>
 											 
-											 <th>Tempat Lahir</th>
-											
-											 <th>Alamat</th>
+											 
 											 <th>Telp</th>
 											 <th>E-Mail</th>
 											 <th>Foto</th>
@@ -160,13 +141,13 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 	                    <?php if ($query = $connection->query("SELECT * FROM guru")): ?>
 	                        <?php while($row = $query->fetch_assoc()): ?>
                                             <td></td>
+											<td><?=$row['kd_guru']?></td>
+											 
                                             <td><?=$row['nip']?></td>
-                                            <td><?=$row['username']?></td>
-											<td><?=$row['nama']?>,<?=$row['gelpend']?></td>
+                                           
+											<td><?=$row['nama']?></td>
 											
-											<td><?=$row['tmp_lahir']?>,<?=$row['tgl_lahir']?></td>
 											
-											<td><?=$row['alamat']?></td>
 											<td><?=$row['telp']?></td>
 											<td><?=$row['email']?></td>
 											<td><?=$row['foto']?></td>

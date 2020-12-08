@@ -44,20 +44,27 @@ if($_SESSION['login']==0){
 
 </head>
 <body>
-    <div class="navbar navbar-inverse set-radius-zero" >
+   <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
-               
-                <a href="?module=home">
-                    <img src="assets/img/new.jpg" width="950" height="150"/>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+
+                    <img src="assets/img/new_logo.png" width="150" height="110"/>
+					SMKN 2 WONOSOBO
+					
                 </a>
 
             </div>
 
             <div class="right-div">
-                <a href="../logout.php" class="btn btn-primary pull-right">LOG ME OUT</a>
+                <a href="../logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
             </div>
-        </div>
+        </div><br><br>
     </div>
     <!-- LOGO HEADER END-->
     <section class="menu-section">

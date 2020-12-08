@@ -74,22 +74,32 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <input class="form-control" name="tahun_ajar" type="text" <?= (!$update) ?: 'value="'.$row["tahun_ajar"].'"' ?>/>
                                         </div>
 										
-										
+										 <div class="form-group">
+                                            <label>Semester </label>
+                                            <input class="form-control" name="kd_semester" type="text" <?= (!$update) ?: 'value="'.$row["kd_semester"].'"' ?>/>
+                                        </div>
 										
 										<div class="form-group">
-                                            <label>Semester </label>
-                                            <select class="form-control" name="kd_semester">
-												<option>Semester</option>
-												<?php $query = $connection->query("SELECT * FROM semester"); while ($data = $query->fetch_assoc()): ?>
-													<option value="<?=$data["kd_semester"]?>" <?= (!$update) ?: (($row["kd_semester"] != $data["kd_semester"]) ?: 'selected="on"') ?>><?=$data["semester"]?></option>
+                                            <label>Status </label>
+                                            <select class="form-control" name="aktif">
+												
+												<?php $query5 = $connection->query("SELECT * FROM tahun_ajar"); while ($data5 = $query5->fetch_assoc()): ?>
+												<?php if($data5["aktif"]=='Y'){ ?>
+												<option value="Y" <?= (!$update) ?: (($data5["aktif"] != $data5["aktif"]) ?: 'selected="on"') ?>>Aktif</option>
+												<option value="T">NonAktif</option>
+												<?php } else { ?>
+												<option value="T" <?= (!$update) ?: (($data5["aktif"] != $data5["aktif"]) ?: 'selected="on"') ?>>NonAktif</option>
+												<option value="Y">Aktif</option>
+												<?php } ?>
+												
+												
 												<?php endwhile; ?>
+											
+												
 											</select>
                                         </div>
                                         
-                                        <div class="form-group">
-                                            <label>Aktif </label>
-                                            <input class="form-control" name="aktif" type="text" <?= (!$update) ?: 'value="'.$row["aktif"].'"' ?>/>
-                                        </div>
+                                       
                                         
                                        
                                        <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>
