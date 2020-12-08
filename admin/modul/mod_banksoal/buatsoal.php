@@ -96,7 +96,7 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 														</div>
 														<div class="form-group">
 															<label>Jenis Ketergantungan</label>
-															<select class="form-control" name="jenis">
+															<select class="form-control" name="jenis" id="cbbketergantungan" data-soal="<?php echo $_GET['kds']; ?>">
 																<option value="-">Normal</option>
 																<option value="Parent">Parent</option>
 																<option value="Child">Child</option>
@@ -203,7 +203,7 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 												<tbody>
 													<?php 
 													$np=1;
-													$qpert=mysqli_query($connect,"SELECT soal FROM detail_soal WHERE kd_soal='$_GET[kds]'");
+													$qpert=mysqli_query($connect,"SELECT soal,kd_detail_soal FROM detail_soal WHERE kd_soal='$_GET[kds]'");
 													while ($rpert=mysqli_fetch_array($qpert)){
 														?>
 														<tr>
@@ -211,7 +211,7 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 															<td class="text-left"><?php echo $rpert['soal']; ?></td>
 															<td>
 																<a href="" class="btn btn-warning">EDIT</a>
-																<a href="" class="btn btn-danger">HAPUS</a>
+																<a href="modul/mod_banksoal/aksi.php?act=del&kdd=<?php echo $rpert['kd_detail_soal']; ?>" onclick="return confirm('Yakin Hapus?')" class="btn btn-danger">HAPUS</a>
 															</td>
 														</tr>
 														<?php

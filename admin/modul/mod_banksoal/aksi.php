@@ -71,8 +71,8 @@ if (isset($_GET['act'])){
 			$C="-";
 			$P=$_POST['parent'];
 		} else if ($jenis=='Parent'){
-			$C="-";
-			$P="Y";
+			$C="Y";
+			$P="-";
 		} else {
 			$C="-";
 			$P="-";
@@ -159,6 +159,21 @@ if (isset($_GET['act'])){
 //    hapus file xls yang udah dibaca
 		unlink($_FILES['filesoal']['name']);
 		echo "<script>alert('Berhasil menambahkan $barisreal soal'); location='../../media.php?module=buatsoal&v=add&kds=$id_soal'</script>";
+		break;
+
+		case 'del':
+			$kd=$_GET['kdd'];
+			$q1=mysqli_query($connect,"SELECT gambar,kd_detail_soal FROM detail_soal WHERE kd_detail_soal='$kd' ");
+			$r1=mysqli_fetch_array($q1);
+			$q="DELETE FROM detail_soal WHERE kd_detail_soal='$kd'";
+			$r=mysqli_query($connect,$q);
+			if ($r) {
+				if ($r1['gambar']!='T') {
+					unlink($r1['gambar']);
+				}
+				echo "<script>alert('Berhasil menghapus pertanyaan'); location=''../../media.php?module=banksoal</script>";
+			}
+
 		break;
 
 		default:

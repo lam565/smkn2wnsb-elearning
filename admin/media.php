@@ -76,7 +76,7 @@ if($_SESSION['login']==0){
     <!-- MENU SECTION END-->
 
     <div class="content-wrapper">
-     <div class="container">
+       <div class="container">
         <?php include 'content.php'; ?>
     </div>
 </div>
@@ -86,10 +86,10 @@ if($_SESSION['login']==0){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-             &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
-         </div>
-     </div>
- </div>
+               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
+           </div>
+       </div>
+   </div>
 </section>
 <!-- FOOTER SECTION END-->
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
@@ -116,6 +116,25 @@ if($_SESSION['login']==0){
                 );
         });
 
+        $(document).on('change', '#cbbketergantungan', function(){
+            var pil = $(this).val();
+            var kd_soal = $(this).attr('data-soal');
+            if (pil=="Child"){
+                $.ajax({
+                    url: 'modul/mod_banksoal/getchild.php',
+                    type: 'post',
+                    data: {
+                        kds : kd_soal
+                    },
+                    success: function (data){
+                        $('#child').html(data);
+                    }
+                });
+            } else {
+                $('#child').html("");
+            }
+
+        });
         $(document).on('change', '#cbbmapel', function(){
             var mapel = $(this).val();
             var kd_guru = $(this).attr('data-guru');
