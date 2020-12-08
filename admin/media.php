@@ -123,6 +123,25 @@ if($_SESSION['login']==0){
                 );
         });
 
+        $(document).on('change', '#cbbketergantungan', function(){
+            var pil = $(this).val();
+            var kd_soal = $(this).attr('data-soal');
+            if (pil=="Child"){
+                $.ajax({
+                    url: 'modul/mod_banksoal/getchild.php',
+                    type: 'post',
+                    data: {
+                        kds : kd_soal
+                    },
+                    success: function (data){
+                        $('#child').html(data);
+                    }
+                });
+            } else {
+                $('#child').html("");
+            }
+
+        });
         $(document).on('change', '#cbbmapel', function(){
             var mapel = $(this).val();
             var kd_guru = $(this).attr('data-guru');
@@ -163,6 +182,20 @@ if($_SESSION['login']==0){
         });
         
     });
+</script>
+<script type="text/javascript">
+//    validasi form (hanya file .xls yang diijinkan)
+function validateForm()
+{
+    function hasExtension(inputID, exts) {
+        var fileName = document.getElementById(inputID).value;
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+    if(!hasExtension('filesoal', ['.xls'])){
+        alert("Hanya file XLS yang diijinkan.");
+        return false;
+    }
+}
 </script>
 
 </body>
