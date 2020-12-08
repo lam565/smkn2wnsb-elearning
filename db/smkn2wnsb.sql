@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Des 2020 pada 09.20
--- Versi server: 10.1.37-MariaDB
--- Versi PHP: 7.3.0
+-- Waktu pembuatan: 08 Des 2020 pada 01.53
+-- Versi server: 10.4.14-MariaDB
+-- Versi PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -42,11 +41,8 @@ CREATE TABLE `detail_kurikulum` (
 --
 
 INSERT INTO `detail_kurikulum` (`id_detail`, `kd_kurikulum`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
-(1, 1, 'bind', 'xa1', 'GR001', '042020GR001001'),
-(2, 1, 'mtk', 'xa1', 'GR002', '1'),
-(3, 1, 'bind', 'xa2', 'GR003', '1'),
-(4, 1, 'mtk', 'xa2', 'GR002', '1'),
-(5, 1, 'mtk', 'xs1', 'GR001', '1');
+(6, 3, 'bind', 'xav1', 'GR007', '1'),
+(7, 3, 'mtk', 'xav1', 'GR009', '1');
 
 -- --------------------------------------------------------
 
@@ -79,12 +75,12 @@ CREATE TABLE `detail_soal` (
 CREATE TABLE `guru` (
   `kd_guru` varchar(20) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `nip` varchar(50) NOT NULL,
+  `nip` varchar(50) NOT NULL DEFAULT '-',
   `nama` varchar(100) NOT NULL,
-  `telp` varchar(20) NOT NULL,
-  `email` varchar(30) NOT NULL,
-  `foto` varchar(100) NOT NULL,
-  `status` varchar(10) NOT NULL
+  `telp` varchar(20) NOT NULL DEFAULT '-',
+  `email` varchar(30) NOT NULL DEFAULT '-',
+  `foto` varchar(100) NOT NULL DEFAULT 'default.jpg',
+  `status` varchar(10) NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -92,9 +88,10 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`kd_guru`, `username`, `nip`, `nama`, `telp`, `email`, `foto`, `status`) VALUES
-('GR001', 'ari', '020481902470147', 'Ari', '080808097', 'emaeai@sndakd.com', 'foto.jpg', 'aktif'),
-('GR002', 'surtini', '1819165161681651681', 'Surtini', '2161909190', 'email@email.com', 'surtini.jpg', 'aktif'),
-('GR003', 'Sarjiah', '4188684454668455', 'Sarjiah', '08215616165', 'email@mail.com', 'sarjiah.jpg', 'aktif');
+('GR001', 'ainurr001', '02301012742128', 'Ainur Rojik, S.Pd., M.Eng.', '0857813817', 'email@mail.com', 'default.jpg', 'aktif'),
+('GR007', 'sitii007', '-', 'Siti Istinganah, S.Pd, M.Pd', '-', '-', 'default.jpg', 'aktif'),
+('GR009', 'pujii009', '-', 'Puji Iswati,S.Pd  ', '-', '-', 'default.jpg', 'aktif'),
+('GR022', 'dewinp022', '182392189213298', 'Dewi Natalia Purnaningsih, S.Si, M.M', '1274912801302', 'email@mail.com', 'default.jpg', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -104,7 +101,7 @@ INSERT INTO `guru` (`kd_guru`, `username`, `nip`, `nama`, `telp`, `email`, `foto
 
 CREATE TABLE `jurusan` (
   `kd_jurusan` varchar(10) NOT NULL,
-  `nama_jurusan` varchar(30) NOT NULL
+  `nama_jurusan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -112,8 +109,12 @@ CREATE TABLE `jurusan` (
 --
 
 INSERT INTO `jurusan` (`kd_jurusan`, `nama_jurusan`) VALUES
-('1', 'IPA'),
-('2', 'IPS');
+('akl', 'Akuntansi dan Keuangan Lembaga'),
+('an', 'Animasi'),
+('av', 'Teknik Audio Video'),
+('dpib', 'Desain Permodelan dan Informasi Bangunan'),
+('intel', 'Teknik Instalasi Tenaga Listrik'),
+('tkro', 'Teknik Kendaraan Ringan Otomotif');
 
 -- --------------------------------------------------------
 
@@ -133,10 +134,12 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`kd_kelas`, `nama_kelas`, `tingkat`, `kd_jurusan`) VALUES
-('xa1', 'X IPA 1', '10', '1'),
-('xa2', 'X IPA 2', '10', '1'),
-('xs1', 'X IPS 1', '10', '2'),
-('xs2', 'X IPS 2', '10', '2');
+('xakl1', 'X AKL 1', 'X', 'akl'),
+('xan1', 'X AN 1', 'X', 'an'),
+('xav1', 'X AV 1', 'X', 'av'),
+('xdpib1', 'X DPIB 1', 'X', 'dpib'),
+('xintel1', 'X INTEL 1', 'X', 'intel'),
+('xtkro1', 'X TKRO 1', 'X', 'tkro');
 
 -- --------------------------------------------------------
 
@@ -149,17 +152,9 @@ CREATE TABLE `kerja_tugas` (
   `kd_tugas` varchar(30) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `file_kerja` varchar(100) NOT NULL DEFAULT 'T',
-  `nilai` int(11) NOT NULL DEFAULT '0',
+  `nilai` int(11) NOT NULL DEFAULT 0,
   `status_kerja` varchar(20) NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `kerja_tugas`
---
-
-INSERT INTO `kerja_tugas` (`kd_kerja`, `kd_tugas`, `nis`, `file_kerja`, `nilai`, `status_kerja`) VALUES
-('1220203123001', '022020GR001001', '3123', '1220203123001.jpg', 90, 'N'),
-('1220203123002', '022020GR001002', '3123', 'T', 0, 'T');
 
 -- --------------------------------------------------------
 
@@ -178,7 +173,8 @@ CREATE TABLE `kurikulum` (
 --
 
 INSERT INTO `kurikulum` (`kd_kurikulum`, `nama_kurikulum`, `aktif`) VALUES
-(1, 'Kurikulum 2020', 'Y');
+(2, 'Kurikulm 2010', 'N'),
+(3, 'Kurikulum 2020', 'Y');
 
 -- --------------------------------------------------------
 
@@ -199,12 +195,15 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`username`, `password`, `level`, `last`, `status`) VALUES
+('abdullahpl001', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:07:55', 'aktif'),
 ('admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', '2020-11-25 19:08:22', 'Aktif'),
-('ari', 'fc292bd7df071858c2d0f955545673c1', 'guru', '2020-11-14 17:38:35', 'aktif'),
-('Sarjiah', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-11-27 08:04:04', 'Aktif'),
-('siswa1', '013f0f67779f3b1686c604db150d12ea', 'siswa', '2020-11-14 18:26:22', 'Aktif'),
-('superadmin', '63e0c1f48ef9e06cd96ca43a24d01a21', 'superadmin', '0000-00-00 00:00:00', ''),
-('surtini', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-11-27 08:04:04', 'Aktif');
+('aguspk001', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:04:35', 'aktif'),
+('ainurr001', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-08 07:01:45', 'aktif'),
+('ajengs003', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:07:27', 'aktif'),
+('azimans005', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:07:55', 'aktif'),
+('dewinp022', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-08 07:01:45', 'aktif'),
+('pujii009', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-08 06:59:28', 'aktif'),
+('sitii007', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-08 06:59:28', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -214,7 +213,7 @@ INSERT INTO `login` (`username`, `password`, `level`, `last`, `status`) VALUES
 
 CREATE TABLE `mapel` (
   `kd_mapel` varchar(10) NOT NULL,
-  `nama_mapel` varchar(20) NOT NULL
+  `nama_mapel` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -223,7 +222,12 @@ CREATE TABLE `mapel` (
 
 INSERT INTO `mapel` (`kd_mapel`, `nama_mapel`) VALUES
 ('bind', 'Bahasa Indonesia'),
-('mtk', 'Matematika');
+('bing', 'Bahasa Inggris'),
+('bk', 'Bimbingan dan Konseling(BK)'),
+('mtk', 'Matematika'),
+('pabp', 'Pendidikan Agama dan Budi Pekerti'),
+('ppkn', 'Pendidikan Pancasila dan Kewarganegaraan'),
+('sjr', 'Sejarah Indonesia');
 
 -- --------------------------------------------------------
 
@@ -244,15 +248,6 @@ CREATE TABLE `materi` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `materi`
---
-
-INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `ForL`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
-('012020GR001001', 'Pertemuan awal', 'Pantun dan Peribahasa', 'file', 'pantun dan peribahasa_53913634.pdf', '2020-12-03 09:12:30', '1 dan 2', 'bind', 'xa1', 'GR001'),
-('012020GR002001', 'Materi 1', 'Deskripsi saja', 'file', 'Permohonan_33836816.pdf', '2020-12-06 09:50:23', '1 dan 2', 'mtk', 'xa1', 'GR002'),
-('012020GR002002', 'Materi 1', 'Deskripsi saja', 'file', 'Permohonan_33836816.pdf', '2020-12-06 09:50:23', '1 dan 2', 'mtk', 'xa2', 'GR002');
-
 -- --------------------------------------------------------
 
 --
@@ -261,7 +256,13 @@ INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `ForL`, `file`, `
 
 CREATE TABLE `nilai_ujian` (
   `kd_nilai_ujian` varchar(10) NOT NULL,
-  `nis` varchar(10) NOT NULL
+  `nis` varchar(10) NOT NULL,
+  `kd_ujian` varchar(50) NOT NULL,
+  `tgl_mengerjakan` datetime NOT NULL,
+  `nilai` int(11) NOT NULL,
+  `salah` int(11) NOT NULL,
+  `benar` int(11) NOT NULL,
+  `kosong` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -281,7 +282,10 @@ CREATE TABLE `rombel` (
 --
 
 INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
-('3123', 'xa1', '2020-2021-ganjil');
+('7768', 'xintel1', '2020-2021-ganjil'),
+('7770', 'xintel1', '2020-2021-ganjil'),
+('7801', 'xan1', '2020-2021-ganjil'),
+('7805', 'xintel1', '2020-2021-ganjil');
 
 -- --------------------------------------------------------
 
@@ -296,14 +300,6 @@ CREATE TABLE `silabus` (
   `tanggal_upload` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `silabus`
---
-
-INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VALUES
-('042020GR001001', 'Silabus 2020', '042020GR001001.pdf', '2020-12-03 02:34:56'),
-('1', 'Belum Ada', 'silabus-default.pdf', '2020-11-27 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -316,7 +312,7 @@ CREATE TABLE `siswa` (
   `nama` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `kelamin` varchar(10) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL DEFAULT '-',
   `foto` varchar(100) NOT NULL DEFAULT 'default.jpg',
   `telp` varchar(20) NOT NULL DEFAULT '-',
   `status` varchar(10) NOT NULL DEFAULT 'Aktif'
@@ -327,7 +323,10 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `nisn`, `nama`, `username`, `kelamin`, `email`, `foto`, `telp`, `status`) VALUES
-('3123', '-', 'Siswa Dummy', 'siswa1', 'L', 'email@gmail.com', 'foto.jpg', '0857432211', 'Aktif');
+('7768', '-', 'AGUS PUTRA KURNIAWAN', 'aguspk001', 'L', '-', 'default.jpg', '-', 'Aktif'),
+('7770', '-', 'AJENG SITIANINGRUM', 'ajengs003', 'P', '-', 'default.jpg', '-', 'Aktif'),
+('7801', '-', 'ABDULLAH PARVEST LATIEF', 'abdullahpl001', 'L', '-', 'default.jpg', '-', 'Aktif'),
+('7805', '-', 'AZIMA NUR SYALIMA', 'azimans005', 'P', '-', 'default.jpg', '-', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -342,14 +341,6 @@ CREATE TABLE `soal` (
   `kd_mapel` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `soal`
---
-
-INSERT INTO `soal` (`kd_soal`, `nama_soal`, `acak`, `kd_mapel`, `kd_guru`) VALUES
-('142020GR001001', 'Soal Bahasa Indonesia I', 'T', 'bind', 'GR001'),
-('142020GR001002', 'Soal Matematika', 'T', 'mtk', 'GR001');
 
 -- --------------------------------------------------------
 
@@ -387,18 +378,6 @@ CREATE TABLE `timeline` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `timeline`
---
-
-INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
-(1, 'materi', '012020GR001001', '2020-12-03 09:12:30', 'xa1', 'bind', 'GR001'),
-(18, 'materi', '012020GR002001', '2020-12-06 09:50:23', 'xa1', 'mtk', 'GR002'),
-(19, 'materi', '012020GR002002', '2020-12-06 09:50:23', 'xa2', 'mtk', 'GR002'),
-(42, 'tugas', '022020GR001001', '2020-12-06 18:28:52', 'xa1', 'bind', 'GR001'),
-(43, 'tugas', '022020GR001002', '2020-12-06 18:29:37', 'xa1', 'bind', 'GR001'),
-(44, 'tugas', '022020GR001003', '2020-12-06 20:00:59', 'xs1', 'mtk', 'GR001');
-
 -- --------------------------------------------------------
 
 --
@@ -417,15 +396,6 @@ CREATE TABLE `tugas` (
   `kd_mapel` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tugas`
---
-
-INSERT INTO `tugas` (`kd_tugas`, `nama_tugas`, `deskripsi`, `batas_awal`, `batas_ahir`, `file`, `tgl_up`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
-('022020GR001001', 'Tugas 1', 'sfasfaegaggagasg', '2020-12-06 19:00:00', '2020-12-07 12:00:00', 'PROPOSAL STIMULUS COVID 19_70755774.pdf', '2020-12-06 18:28:52', 'xa1', 'bind', 'GR001'),
-('022020GR001002', 'Tugas 2', 'dasfasfasdasdas', '2020-12-06 12:59:00', '2020-12-07 13:00:00', 'ijazah (1)_55496699.pdf', '2020-12-06 18:29:37', 'xa1', 'bind', 'GR001'),
-('022020GR001003', 'Tugas Matematika', 'Deskripsi tugas matematika', '2020-12-06 19:00:00', '2020-12-07 18:00:00', 'Tugas Matematika_25978827.pdf', '2020-12-06 20:00:59', 'xs1', 'mtk', 'GR001');
 
 -- --------------------------------------------------------
 
@@ -604,7 +574,7 @@ ALTER TABLE `wali_kelas`
 -- AUTO_INCREMENT untuk tabel `detail_kurikulum`
 --
 ALTER TABLE `detail_kurikulum`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_soal`
@@ -616,13 +586,13 @@ ALTER TABLE `detail_soal`
 -- AUTO_INCREMENT untuk tabel `kurikulum`
 --
 ALTER TABLE `kurikulum`
-  MODIFY `kd_kurikulum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `kd_kurikulum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
