@@ -113,6 +113,54 @@ if (isset($_GET['act'])){
 		}
 		break;
 
+		case 'import':
+			//koneksi ke database, username,password  dan namadatabase menyesuaikan
+		require "../../../assets/excel_reader2.php";
+
+		$target = basename($_FILES['filesoal']['name']) ;
+		move_uploaded_file($_FILES['filesoal']['tmp_name'], $target);
+		$data = new Spreadsheet_Excel_Reader($_FILES['filesoal']['name'],false);
+//menghitung jumlah baris file xls
+		$baris = $data->rowcount($sheet_index=0);
+//import data excel mulai baris ke-2 (karena tabel xls ada header pada baris 1)
+		for ($i=2; $i<=$baris; $i++)
+		{
+//menghitung jumlah real data. Karena kita mulai pada baris ke-2, maka jumlah baris yang sebenarnya adalah
+//jumlah baris data dikurangi 1. Demikian juga untuk awal dari pengulangan yaitu i juga dikurangi 1
+			$barisreal = $baris-1;
+			$k = $i-1;
+//buat kode detail soal
+			$thn=date("Y");
+			$ks="44".$thn.$_POST['kd_guru'];
+			$qcek="SELECT MAX(kd_detail_soal) AS kode FROM detail_soal WHERE kd_detail_soal LIKE '$ks%'";
+			$max=mysqli_fetch_array(mysqli_query($connect,$qcek));
+			$kodeurut=substr($max['kode'],strlen($ks),3)+1;
+			if ($kodeurut<10) {
+				$kodeurut="00".$kodeurut;
+			} else if ($kodeurut<100){
+				$kodeurut="0".$kodeurut;
+			}
+
+//membaca data (kolom ke-1 sd terakhir)
+			$id_soal        = $_POST['kd_soal'];
+			$kd_detail_soal = $ks.$kodeurut;
+			$soal           = $data->val($i, 2);
+			$pila   = $data->val($i, 3);
+			$pilb  = $data->val($i, 4);
+			$pilc = $data->val($i, 5);
+			$pild = $data->val($i, 6);
+			$pile = $data->val($i, 7);
+			$kunci = $data->val($i, 8);
+
+//setelah data dibaca, masukkan ke tabel pegawai sql
+			$qsoal="INSERT INTO detail_soal (kd_detail_soal,kd_soal,soal,pil_A,pil_B,pil_C,pil_D,pil_E,kunci) VALUES ('$kd_detail_soal','$id_soal','$soal','$pila','$pilb','$pilc','$pild','$pile','$kunci')";
+			$ins=mysqli_query($connect,$qsoal);
+		}
+//    hapus file xls yang udah dibaca
+		unlink($_FILES['filesoal']['name']);
+		echo "<script>alert('Berhasil menambahkan $barisreal soal'); location='../../media.php?module=buatsoal&v=add&kds=$id_soal'</script>";
+		break;
+
 		default:
 				# code...
 		break;

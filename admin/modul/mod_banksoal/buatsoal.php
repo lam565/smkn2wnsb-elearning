@@ -1,7 +1,7 @@
 <?php 
 include "../system/koneksi.php";
 
-if (!isset($_GET['kds'])) {
+if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 	header("location:?module=banksoal");
 } else {
 	
@@ -152,18 +152,24 @@ if (!isset($_GET['kds'])) {
 												</form>
 											</div>
 											<div class="tab-pane fade" id="import">
-												<form>
+												<form onSubmit="return validateForm()" enctype="multipart/form-data" method="POST" action="modul/mod_banksoal/aksi.php?act=import">
 													<div class="col-md-6 col-sm-6 col-xs-12">
 														<div class="form-group text-left">
-															<label>IMPORT SOAL</label>
-															<input class="form-control" type="file" name="impsoal">
-															<input type="submit" name="import" value="IMPORT">
+															<h3>IMPORT SOAL</h3>
+															<input type="hidden" name="kd_soal" value="<?php echo $_GET['kds']; ?>">
+															<input class="form-control" type="file" name="filesoal" id="filesoal">
+															<input type="hidden" name="kd_guru" value="<?php echo $_SESSION['kode']; ?>">
+															
+														</div>
+														<div class="form-group">
+															<input type="submit" class="btn btn-success" name="import" value="IMPORT">
 														</div>
 													</div>
 													<div class="col-md-6 col-sm-6 col-xs-12">
 														<div class="alert alert-info">
-															<p>Import file excel sesuai dengan</p>
-															<br><br><br> 
+															<h4>Import file excel</h4>
+															<p>Hanya file excel dengan extensi .xls yang dapat digunakan. Format excel dapat didownload <b><a href="files/format_soal/format_import_soal.xls">disini</a></b>.</p>
+															
 														</div>
 													</div>
 												</form>
@@ -195,11 +201,23 @@ if (!isset($_GET['kds'])) {
 													<th>aksi</th>
 												</thead>
 												<tbody>
-													<tr>
-														<td></td>
-														<td></td>
-														<td></td>
-													</tr>
+													<?php 
+													$np=1;
+													$qpert=mysqli_query($connect,"SELECT soal FROM detail_soal WHERE kd_soal='$_GET[kds]'");
+													while ($rpert=mysqli_fetch_array($qpert)){
+														?>
+														<tr>
+															<td><?php echo $np; ?></td>
+															<td class="text-left"><?php echo $rpert['soal']; ?></td>
+															<td>
+																<a href="" class="btn btn-warning">EDIT</a>
+																<a href="" class="btn btn-danger">HAPUS</a>
+															</td>
+														</tr>
+														<?php
+														$np++;
+													}
+													?>
 												</tbody>
 											</table>
 										</div>

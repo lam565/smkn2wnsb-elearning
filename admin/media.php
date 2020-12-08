@@ -47,7 +47,7 @@ if($_SESSION['login']==0){
     <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
-               
+
                 <a href="?module=home">
                     <img src="assets/img/new.jpg" width="950" height="150"/>
                 </a>
@@ -76,7 +76,7 @@ if($_SESSION['login']==0){
     <!-- MENU SECTION END-->
 
     <div class="content-wrapper">
-       <div class="container">
+     <div class="container">
         <?php include 'content.php'; ?>
     </div>
 </div>
@@ -86,10 +86,10 @@ if($_SESSION['login']==0){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
-           </div>
-       </div>
-   </div>
+             &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
+         </div>
+     </div>
+ </div>
 </section>
 <!-- FOOTER SECTION END-->
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
@@ -156,6 +156,20 @@ if($_SESSION['login']==0){
         });
         
     });
+</script>
+<script type="text/javascript">
+//    validasi form (hanya file .xls yang diijinkan)
+function validateForm()
+{
+    function hasExtension(inputID, exts) {
+        var fileName = document.getElementById(inputID).value;
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+    if(!hasExtension('filesoal', ['.xls'])){
+        alert("Hanya file XLS yang diijinkan.");
+        return false;
+    }
+}
 </script>
 
 </body>
