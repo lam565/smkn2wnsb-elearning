@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Des 2020 pada 01.53
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.2.34
+-- Waktu pembuatan: 08 Des 2020 pada 06.06
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -42,7 +43,13 @@ CREATE TABLE `detail_kurikulum` (
 
 INSERT INTO `detail_kurikulum` (`id_detail`, `kd_kurikulum`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
 (6, 3, 'bind', 'xav1', 'GR007', '1'),
-(7, 3, 'mtk', 'xav1', 'GR009', '1');
+(7, 3, 'mtk', 'xav1', 'GR009', '042020GR009001'),
+(8, 3, 'bing', 'xav1', 'GR001', '1'),
+(9, 3, 'ppkn', 'xav1', 'GR022', '1'),
+(10, 3, 'bind', 'xintel1', 'GR007', '1'),
+(11, 3, 'mtk', 'xintel1', 'GR009', '042020GR009001'),
+(12, 3, 'bing', 'xintel1', 'GR001', '1'),
+(13, 3, 'ppkn', 'xintel1', 'GR009', '042020GR009002');
 
 -- --------------------------------------------------------
 
@@ -156,6 +163,16 @@ CREATE TABLE `kerja_tugas` (
   `status_kerja` varchar(20) NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `kerja_tugas`
+--
+
+INSERT INTO `kerja_tugas` (`kd_kerja`, `kd_tugas`, `nis`, `file_kerja`, `nilai`, `status_kerja`) VALUES
+('1220207768001', '022020GR009002', '7768', '1220207768001.JPG', 90, 'N'),
+('1220207770001', '022020GR009002', '7770', 'T', 0, 'T'),
+('1220207801001', '022020GR009001', '7801', 'T', 0, 'T'),
+('1220207805001', '022020GR009002', '7805', 'T', 0, 'T');
+
 -- --------------------------------------------------------
 
 --
@@ -248,6 +265,17 @@ CREATE TABLE `materi` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `materi`
+--
+
+INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `ForL`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
+('012020GR009001', 'Materi Pertemuan 1', 'Pengenalan tentang matematika', 'link', 'https://www.youtube.com/', '2020-12-08 11:48:43', '1', 'mtk', 'xav1', 'GR009'),
+('012020GR009002', 'Materi Pertemuan 1', 'Pengenalan tentang matematika', 'link', 'https://www.youtube.com/', '2020-12-08 11:48:43', '1', 'mtk', 'xintel1', 'GR009'),
+('012020GR009003', 'Logika Matematika', 'Membahas mengenai logika matematika', 'file', 'logika matematika_27380819.pdf', '2020-12-08 11:51:23', '2 dan 3', 'mtk', 'xav1', 'GR009'),
+('012020GR009004', 'Logika Matematika', 'Membahas mengenai logika matematika', 'file', 'logika matematika_27380819.pdf', '2020-12-08 11:51:23', '2 dan 3', 'mtk', 'xintel1', 'GR009'),
+('012020GR009005', 'Ideologi Bangsa', 'Membahas ideologi bangsa indonesia', 'file', 'ideologi bangsa_94444777.pdf', '2020-12-08 11:54:00', '1', 'ppkn', 'xintel1', 'GR009');
+
 -- --------------------------------------------------------
 
 --
@@ -284,7 +312,7 @@ CREATE TABLE `rombel` (
 INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
 ('7768', 'xintel1', '2020-2021-ganjil'),
 ('7770', 'xintel1', '2020-2021-ganjil'),
-('7801', 'xan1', '2020-2021-ganjil'),
+('7801', 'xav1', '2020-2021-ganjil'),
 ('7805', 'xintel1', '2020-2021-ganjil');
 
 -- --------------------------------------------------------
@@ -299,6 +327,14 @@ CREATE TABLE `silabus` (
   `nama_file` varchar(50) NOT NULL,
   `tanggal_upload` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `silabus`
+--
+
+INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VALUES
+('042020GR009001', 'Silabus Matematika', '042020GR009001.pdf', '2020-12-08 11:42:20'),
+('042020GR009002', 'Silabus PPKN', '042020GR009002.pdf', '2020-12-08 11:43:48');
 
 -- --------------------------------------------------------
 
@@ -342,6 +378,13 @@ CREATE TABLE `soal` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `soal`
+--
+
+INSERT INTO `soal` (`kd_soal`, `nama_soal`, `acak`, `kd_mapel`, `kd_guru`) VALUES
+('142020GR009001', 'Ujian Logika Matematika', 'T', 'mtk', 'GR009');
+
 -- --------------------------------------------------------
 
 --
@@ -378,6 +421,19 @@ CREATE TABLE `timeline` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `timeline`
+--
+
+INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
+(2, 'materi', '012020GR009001', '2020-12-08 11:48:43', 'xav1', 'mtk', 'GR009'),
+(3, 'materi', '012020GR009002', '2020-12-08 11:48:43', 'xintel1', 'mtk', 'GR009'),
+(4, 'materi', '012020GR009003', '2020-12-08 11:51:23', 'xav1', 'mtk', 'GR009'),
+(5, 'materi', '012020GR009004', '2020-12-08 11:51:23', 'xintel1', 'mtk', 'GR009'),
+(6, 'materi', '012020GR009005', '2020-12-08 11:54:00', 'xintel1', 'ppkn', 'GR009'),
+(7, 'tugas', '022020GR009001', '2020-12-08 11:56:44', 'xav1', 'mtk', 'GR009'),
+(8, 'tugas', '022020GR009002', '2020-12-08 11:56:44', 'xintel1', 'mtk', 'GR009');
+
 -- --------------------------------------------------------
 
 --
@@ -396,6 +452,14 @@ CREATE TABLE `tugas` (
   `kd_mapel` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tugas`
+--
+
+INSERT INTO `tugas` (`kd_tugas`, `nama_tugas`, `deskripsi`, `batas_awal`, `batas_ahir`, `file`, `tgl_up`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
+('022020GR009001', 'Tugas 1', 'Selesaikan soal soal berikut', '2020-12-08 12:00:00', '2020-12-08 17:00:00', 'Tugas 1_33949461.pdf', '2020-12-08 11:56:44', 'xav1', 'mtk', 'GR009'),
+('022020GR009002', 'Tugas 1', 'Selesaikan soal soal berikut', '2020-12-08 12:00:00', '2020-12-08 17:00:00', 'Tugas 1_33949461.pdf', '2020-12-08 11:56:44', 'xintel1', 'mtk', 'GR009');
 
 -- --------------------------------------------------------
 
@@ -428,6 +492,14 @@ CREATE TABLE `wali_kelas` (
   `kd_kelas` varchar(10) NOT NULL,
   `kd_tajar` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `wali_kelas`
+--
+
+INSERT INTO `wali_kelas` (`kd_guru`, `kd_kelas`, `kd_tajar`) VALUES
+('GR001', 'xav1', '2020-2021-ganjil'),
+('GR007', 'xintel1', '2020-2021-ganjil');
 
 --
 -- Indexes for dumped tables
@@ -574,7 +646,7 @@ ALTER TABLE `wali_kelas`
 -- AUTO_INCREMENT untuk tabel `detail_kurikulum`
 --
 ALTER TABLE `detail_kurikulum`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_soal`
@@ -592,7 +664,7 @@ ALTER TABLE `kurikulum`
 -- AUTO_INCREMENT untuk tabel `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
