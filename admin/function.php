@@ -12,16 +12,41 @@ if (isset($_POST['act'])) {
 		$kelas = "<div class=\"form-group\">";
 		$qkls=mysqli_query($connect, $q);
 		while ($kls=mysqli_fetch_array($qkls)){
-			$kelas .= "<div class='checkbox'>
-			<label>
-			<input type='checkbox' value='$kls[kd_kelas]' name='kd_kls[]' checked='checked'/>$kls[nama_kelas]
-			</label>
-			</div>";
+			$kelas .= "
+			<input type='checkbox' value='$kls[kd_kelas]' name='kd_kls[]' checked='checked'/><label> $kls[nama_kelas] </label>
+			";
 		}		
 		$kelas .= "</div>";
 
 		echo $kelas;
 		
+		
+		break;
+
+		case 'soalmapel':
+
+		$mapel=$_POST['mp'];
+		$kd_guru=$_POST['kdg'];
+
+		$output="<select name='kd_soal' class='form-control'>
+		<option selected='selected'>Pilih Soal</option>";
+		
+		function jumSoal($kd,$conn){
+			$q=mysqli_query($conn,"SELECT kd_detail_soal FROM detail_soal WHERE kd_soal='$kd'");
+			$n=mysqli_num_rows($q);
+			return $n;
+		}
+
+		$qsoal="SELECT soal.acak, soal.kd_soal,soal.nama_soal,mapel.nama_mapel
+		FROM soal,mapel WHERE soal.kd_mapel=mapel.kd_mapel AND soal.kd_guru='$kd_guru' AND soal.kd_mapel='$mapel'";
+		$csoal=mysqli_query($connect,$qsoal);
+		while ($rsoal=mysqli_fetch_array($csoal)){
+			$j=jumSoal($rsoal['kd_soal'],$connect);
+			$output .= "<option value='$rsoal[kd_soal]'>$rsoal[nama_soal] - [$j]</option>";
+		}
+
+		$output .= "</select>";
+		echo $output;
 		
 		break;
 

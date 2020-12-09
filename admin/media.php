@@ -161,6 +161,36 @@ if($_SESSION['login']==0){
             });
 
         });
+        
+        $(document).on('change', '#cbmapel', function(){
+            var mapel = $(this).val();
+            var kd_guru = $(this).attr('data-guru');
+            $.ajax({
+                url: 'function.php',
+                type: 'post',
+                data: {
+                    act: 'kelasmapel',
+                    mp: mapel,
+                    kdg: kd_guru
+                },
+                success: function (data){
+                    $('#infokls').html(data);
+                }
+            });
+            $.ajax({
+                url: 'function.php',
+                type: 'post',
+                data: {
+                    act: 'soalmapel',
+                    mp: mapel,
+                    kdg: kd_guru
+                },
+                success: function (data){
+                    $('#daftsoal').html(data);
+                }
+            });
+
+        });
 
         $(document).on('change', '#cbbForL', function(){
             var pil = $(this).val();
