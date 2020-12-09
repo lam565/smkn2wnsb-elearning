@@ -110,7 +110,7 @@
                 break;
 
                 case 'UJIAN':
-                echo "Guru $r[nama] telah menambahkan UJIAN $r[nama_mapel]. <a href='?module=ujian&mp=$r[kd_mapel]' class='alert-link'>Buka materi</a>";
+                echo "Guru $r[nama] telah menambahkan UJIAN $r[nama_mapel]. <a href='?module=ujian&mp=$r[kd_mapel]' class='alert-link'>Buka Ujian</a>";
                 break;
 
                 default:
