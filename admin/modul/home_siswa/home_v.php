@@ -5,45 +5,12 @@
 </div>
 <div class="row">
   <div class="col-md-4 col-sm-4 col-xs-12" >
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        Detail Siswa
-      </div>
-      <?php
-      $qsw="SELECT * FROM siswa WHERE nis='$_SESSION[kode]'";
-      $rsw=mysqli_fetch_array(mysqli_query($connect,$qsw));
-      ?>
-      <div class="panel-body">
-        <div class="img text-center">
-          <img src="assets/img/user2.png">
-          <h4><?php echo $rsw['nama']; ?></h4>
-        </div>
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <td>NIS</td>
-                <td>:</td>
-                <td><?php echo $_SESSION['kode']; ?></td>
-              </tr>
-              <tr>
-                <td>JENIS KELAMIN</td>
-                <td>:</td>
-                <td><?php echo  $rsw['kelamin']=='L' ? "Laki - laki" : "Perempuan"; ?></td>
-              </tr>
-              <tr>
-                <td>KELAS</td>
-                <td>:</td>
-                <td><?php echo $nama_kelas; ?></td>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-      <div class="panel-footer">
-        2020/2021 Semester Ganjil
-      </div>
-    </div>
+    
+    <?php
+    $qsw="SELECT * FROM siswa WHERE nis='$_SESSION[kode]'";
+    $rsw=mysqli_fetch_array(mysqli_query($connect,$qsw));
+    ?>
+    
     <div class="panel panel-success">
       <div class="panel-heading">
         Daftar Mata Pelajaran

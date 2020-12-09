@@ -146,7 +146,9 @@ else{
       case 'lembarujian':
       include "modul/ujian_siswa/lembarujian.php";
       break;
-
+      case 'nilai':
+      include "modul/mod_nilai_siswa/nilai_v.php";
+      break;
       case 'forum':
       include "modul/mod_forum/forumsiswa_v.php";
       break;
