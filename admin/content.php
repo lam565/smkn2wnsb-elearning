@@ -74,8 +74,15 @@ else{
       include "modul/mod_siswa/siswa_v.php";
       break;
 
+      case 'importsw':
+      include "modul/mod_siswa/import_siswa.php";
+      break;
+
       case 'guru':
       include "modul/mod_guru/guru_v.php";
+      break;
+      case 'importgr':
+      include "modul/mod_guru/import_guru.php";
       break;
 
       case 'kelas':
