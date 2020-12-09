@@ -67,6 +67,7 @@ if (isset($_GET['act'])){
 		$pild=$_POST['d'];
 		$pile=$_POST['e'];
 		$kunci=$_POST['kunci_jawaban'];
+
 		if ($jenis=='Child'){
 			$C="-";
 			$P=$_POST['parent'];
@@ -101,11 +102,13 @@ if (isset($_GET['act'])){
 		$qsoal="INSERT INTO detail_soal VALUES ('$kdd','$kds','$soal','$pila','$pilb','$pilc','$pild','$pile','$kunci','-','$gambar','$C','$P')";
 		$ins=mysqli_query($connect,$qsoal);
 		if ($ins){
-			move_uploaded_file($_FILES["gbsoal"]["tmp_name"], $temp.$gambar);
+			if (!empty($fileupload)){
+				move_uploaded_file($_FILES["gbsoal"]["tmp_name"], $temp.$gambar);
+			}
 			if ($_POST['lanjut']) {
-				echo "<script>alert('Berhasil membuat materi'); location='../../media.php?module=buatsoal&v=add&kds=$kds'</script>";
+				echo "<script>alert('Berhasil membuat pertanyaan'); location='../../media.php?module=buatsoal&v=add&kds=$kds'</script>";
 			} else {
-				echo "<script>alert('Berhasil membuat materi'); location='../../media.php?module=buatsoal&v=tampil&kds=$kds'</script>";
+				echo "<script>alert('Berhasil membuat pertanyaan'); location='../../media.php?module=buatsoal&v=tampil&kds=$kds'</script>";
 			}
 			
 		} else {
@@ -151,29 +154,105 @@ if (isset($_GET['act'])){
 			$pild = $data->val($i, 6);
 			$pile = $data->val($i, 7);
 			$kunci = $data->val($i, 8);
+			$kunci = strtolower($kunci);
 
 //setelah data dibaca, masukkan ke tabel pegawai sql
 			$qsoal="INSERT INTO detail_soal (kd_detail_soal,kd_soal,soal,pil_A,pil_B,pil_C,pil_D,pil_E,kunci) VALUES ('$kd_detail_soal','$id_soal','$soal','$pila','$pilb','$pilc','$pild','$pile','$kunci')";
 			$ins=mysqli_query($connect,$qsoal);
 		}
-//    hapus file xls yang udah dibaca
+//hapus file xls yang udah dibaca
 		unlink($_FILES['filesoal']['name']);
-		echo "<script>alert('Berhasil menambahkan $barisreal soal'); location='../../media.php?module=buatsoal&v=add&kds=$id_soal'</script>";
+		echo "<script>alert('Berhasil menambahkan $barisreal soal'); location='../../media.php?module=buatsoal&v=tampil&kds=$id_soal'</script>";
 		break;
 
-		case 'del':
-			$kd=$_GET['kdd'];
-			$q1=mysqli_query($connect,"SELECT gambar,kd_detail_soal FROM detail_soal WHERE kd_detail_soal='$kd' ");
-			$r1=mysqli_fetch_array($q1);
-			$q="DELETE FROM detail_soal WHERE kd_detail_soal='$kd'";
-			$r=mysqli_query($connect,$q);
-			if ($r) {
-				if ($r1['gambar']!='T') {
-					unlink($r1['gambar']);
-				}
-				echo "<script>alert('Berhasil menghapus pertanyaan'); location=''../../media.php?module=banksoal</script>";
+		case 'delpert':
+		$kd=$_GET['kdd'];
+		$q1=mysqli_query($connect,"SELECT gambar,kd_detail_soal,kd_soal FROM detail_soal WHERE kd_detail_soal='$kd' ");
+		$r1=mysqli_fetch_array($q1);
+		$q="DELETE FROM detail_soal WHERE kd_detail_soal='$kd'";
+		$r=mysqli_query($connect,$q);
+		if ($r) {
+			if ($r1['gambar']!='T') {
+				unlink("../../files/soal/".$r1['gambar']);
+				echo "<script>alert('Berhasil menghapus pertanyaan'); location='../../media.php?module=buatsoal&v=tampil&kds=$r1[kd_soal]'</script>";
+			} else {
+				echo "<script>alert('Berhasil menghapus pertanyaan'); location='../../media.php?module=buatsoal&v=tampil&kds=$r1[kd_soal]'</script>";
 			}
+		}
 
+		break;
+
+		case 'tbedit':
+		$kds=$_POST['kd_soal'];
+		$kdd=$_POST['kd_detail'];
+		$soal=$_POST['pertanyaan'];
+		$jenis=$_POST['jenis'];
+		$pila=$_POST['a'];
+		$pilb=$_POST['b'];
+		$pilc=$_POST['c'];
+		$pild=$_POST['d'];
+		$pile=$_POST['e'];
+		$kunci=$_POST['kunci_jawaban'];
+
+		if ($jenis=='Child'){
+			$C="-";
+			$P=$_POST['parent'];
+		} else if ($jenis=='Parent'){
+			$C="Y";
+			$P="-";
+		} else {
+			$C="-";
+			$P="-";
+		}
+
+		$temp = "../../files/soal/";
+		if (!file_exists($temp)){
+			mkdir($temp);
+		}
+		$fileupload      = $_FILES['gbsoal']['tmp_name'];
+		$filename       = $_FILES['gbsoal']['name'];
+		$filetype       = $_FILES['gbsoal']['type'];
+
+		$qg=mysqli_query($connect,"SELECT gambar FROM detail_soal WHERE kd_detail_soal='$kdd'");
+		$gbr=mysqli_fetch_array($qg);
+
+		if ($_POST['hapus']='hapusgbr') {
+			if ($gbr['gambar']!='T'){
+				unlink("../../files/soal/".$gbr['gambar']);
+			}
+			$gambar="T";
+		} else {
+			if (!empty($fileupload)){
+				$acak = rand(00000000, 99999999);
+
+				$filext       = substr($filename, strrpos($filename, '.'));
+				$filext       = str_replace('.','',$filext);
+				$filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
+				$gambar   = $filename."_".$acak.'.'.$filext;
+
+			} else {
+				$gambar = "T";
+			}
+		}
+
+		$qsoal="UPDATE detail_soal SET soal='$soal',pil_A='$pila',pil_B='$pilb',pil_C='$pilc',pil_D='$pild',pil_E='$pile',kunci='$kunci',gambar='$gambar',C='$C',P='$P' WHERE kd_detail_soal='$kdd'";
+
+		$upd=mysqli_query($connect,$qsoal);
+
+		if ($upd){
+			if (!empty($fileupload)){
+				if ($gbr['gambar']!='T'){
+					unlink("../../files/soal/".$gbr['gambar']);
+				}
+				move_uploaded_file($_FILES["gbsoal"]["tmp_name"], $temp.$gambar);
+			}
+			
+			echo "<script>alert('Berhasil mengubah soal'); location='../../media.php?module=buatsoal&v=tampil&kds=$kds'</script>";
+			
+		} else {
+			echo "<script>alert('Gagal mengubah'); location='../../media.php?module=buatsoal&v=add&kds=$kds'</script>";
+
+		}
 		break;
 
 		default:

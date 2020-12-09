@@ -126,12 +126,14 @@ if($_SESSION['login']==0){
         $(document).on('change', '#cbbketergantungan', function(){
             var pil = $(this).val();
             var kd_soal = $(this).attr('data-soal');
+            var kd_det_soal = $(this).attr('data-detail');
             if (pil=="Child"){
                 $.ajax({
                     url: 'modul/mod_banksoal/getchild.php',
                     type: 'post',
                     data: {
-                        kds : kd_soal
+                        kds : kd_soal,
+                        kdd : kd_det_soal
                     },
                     success: function (data){
                         $('#child').html(data);

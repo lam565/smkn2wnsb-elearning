@@ -145,7 +145,7 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 														</div>
 
 														<div class="form-group">
-															<input type="submit" name="lanjut" class="btn btn-success" value="Lanjut"></button>
+															<input type="submit" name="lanjut" class="btn btn-success" value="Lanjut">
 															<input type="submit" name="simpan" class="btn btn-primary" value="Simpan">
 														</div>
 													</div>
@@ -203,15 +203,15 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 												<tbody>
 													<?php 
 													$np=1;
-													$qpert=mysqli_query($connect,"SELECT soal,kd_detail_soal FROM detail_soal WHERE kd_soal='$_GET[kds]'");
+													$qpert=mysqli_query($connect,"SELECT soal,kd_detail_soal,kd_soal FROM detail_soal WHERE kd_soal='$_GET[kds]'");
 													while ($rpert=mysqli_fetch_array($qpert)){
 														?>
 														<tr>
 															<td><?php echo $np; ?></td>
 															<td class="text-left"><?php echo $rpert['soal']; ?></td>
 															<td>
-																<a href="" class="btn btn-warning">EDIT</a>
-																<a href="modul/mod_banksoal/aksi.php?act=del&kdd=<?php echo $rpert['kd_detail_soal']; ?>" onclick="return confirm('Yakin Hapus?')" class="btn btn-danger">HAPUS</a>
+																<a href="media.php?module=<?php echo "buatsoal&v=edit&kds=$rpert[kd_soal]&kdd=$rpert[kd_detail_soal]"; ?>" class="btn btn-warning">EDIT</a>
+																<a href="modul/mod_banksoal/aksi.php?act=delpert&kdd=<?php echo $rpert['kd_detail_soal']; ?>" onclick="return confirm('Yakin Hapus?')" class="btn btn-danger">HAPUS</a>
 															</td>
 														</tr>
 														<?php
@@ -226,6 +226,102 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 								</div>	
 							</div>
 							<?php
+							break;
+
+							case 'edit':
+							?>
+							<div class="panel panel-success">
+								<div class="panel-heading">
+									UBAH PERTANYAAN
+								</div>
+								<div class="panel-body text-center">
+									<form method="post" action="modul/mod_banksoal/aksi.php?act=tbedit" enctype="multipart/form-data">
+										<div class="col-md-6">
+											<?php
+											$kdd=$_GET['kdd']; 
+											$thn=date("Y");
+											$k="44".$thn.$_SESSION['kode'];
+											$qcek="SELECT * FROM detail_soal WHERE kd_detail_soal='$kdd'";
+											$max=mysqli_fetch_array(mysqli_query($connect,$qcek));
+											$nourut=substr($max['kd_detail_soal'],strlen($k),3);
+											
+											?>
+											<div class="form-group">
+												<label>No</label>
+												<input type="text" class="form-control" name="no" disabled="disabled" value="<?php echo $nourut; ?>">
+												<input type="hidden" name="kd_soal" value="<?php echo $max['kd_soal']; ?>">
+												<input type="hidden" name="kd_detail" value="<?php echo $kdd; ?>">	
+											</div>
+											<div class="form-group">
+												<label>Jenis Ketergantungan</label>
+												<select class="form-control" name="jenis" id="cbbketergantungan" data-soal="<?php echo $max['kd_soal']; ?>" data-detail="<?php echo $max['kd_detail_soal']; ?>">
+													<option value="-" <?php if ($max['C']=='-' AND $max['P']=='-'){echo "Selected='selected'"; } else {} ?>>Normal</option>
+													<option value="Parent" <?php if ($max['C']=='Y' AND $max['P']=='-'){echo "Selected='selected'"; } else {} ?>>Parent</option>
+													<option value="Child" <?php if ($max['C']=='-' AND $max['P']!='-'){echo "Selected='selected'"; } else {} ?>>Child</option>
+												</select>
+											</div>
+											<div class="form-group" id="child"></div>
+											<div class="form-group">
+												<label>PERTANYAAN</label>
+												<textarea class="form-control" name="pertanyaan" rows="8"><?php echo $max['soal']; ?></textarea>	
+											</div>
+											<div class="form-group">
+												<label>Ganti Gambar</label>
+												<?php 
+												if ($max['gambar']!='T') {
+													echo "<img src='files/soal/$max[gambar]' width='300'>";
+												} else {
+													echo "<p>[tanpa gambar]</p>";
+												}
+												?>
+												<input class="form-control" type="file" name="gbsoal">
+											</div>
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="checkbox" id="inlineCheckbox" name="hapus" value="hapusgbr">
+												<label class="form-check-label" for="inlineCheckbox">Hapus Gambar</label>
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<div class="form-group">
+												<label>A</label>
+												<input type="text" class="form-control" name="a" placeholder="Pilihan A" value="<?php echo $max['pil_A']; ?>">	
+											</div>
+											<div class="form-group">
+												<label>B</label>
+												<input type="text" class="form-control" name="b" placeholder="Pilihan B" value="<?php echo $max['pil_B']; ?>">	
+											</div>
+											<div class="form-group">
+												<label>C</label>
+												<input type="text" class="form-control" name="c" placeholder="Pilihan C" value="<?php echo $max['pil_C']; ?>">	
+											</div>
+											<div class="form-group">
+												<label>D</label>
+												<input type="text" class="form-control" name="d" placeholder="Pilihan D" value="<?php echo $max['pil_D']; ?>">	
+											</div>
+											<div class="form-group">
+												<label>E</label>
+												<input type="text" class="form-control" name="e" placeholder="Pilihan E" value="<?php echo $max['pil_E']; ?>">	
+											</div>
+											<div class="form-group">
+												<label>KUNCI JAWABAN</label>
+												<select class="form-control" name="kunci_jawaban">
+													<option value="a" <?php echo $max['kunci']=='a' ? "Selected='selected'" : ""; ?>>A</option>
+													<option value="b" <?php echo $max['kunci']=='b' ? "Selected='selected'" : ""; ?>>B</option>
+													<option value="c" <?php echo $max['kunci']=='c' ? "Selected='selected'" : ""; ?>>C</option>
+													<option value="d" <?php echo $max['kunci']=='d' ? "Selected='selected'" : ""; ?>>D</option>
+													<option value="e" <?php echo $max['kunci']=='e' ? "Selected='selected'" : ""; ?>>E</option>
+												</select>	
+											</div>
+
+											<div class="form-group">
+												<input type="submit" name="update" class="btn btn-success" value="UPDATE">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<?php 
 							break;
 
 							default:
