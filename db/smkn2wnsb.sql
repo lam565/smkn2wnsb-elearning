@@ -1,22 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
--- https://www.phpmyadmin.net/
+-- version 4.2.11
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Des 2020 pada 06.06
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.2.27
+-- Generation Time: 09 Des 2020 pada 12.18
+-- Versi Server: 5.6.21-log
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `smkn2wnsb`
@@ -28,14 +26,14 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `detail_kurikulum`
 --
 
-CREATE TABLE `detail_kurikulum` (
-  `id_detail` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `detail_kurikulum` (
+`id_detail` int(11) NOT NULL,
   `kd_kurikulum` int(11) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL,
   `kd_silabus` varchar(30) DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `detail_kurikulum`
@@ -57,8 +55,8 @@ INSERT INTO `detail_kurikulum` (`id_detail`, `kd_kurikulum`, `kd_mapel`, `kd_kel
 -- Struktur dari tabel `detail_soal`
 --
 
-CREATE TABLE `detail_soal` (
-  `kd_detail_soal` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `detail_soal` (
+`kd_detail_soal` int(11) NOT NULL,
   `kd_soal` varchar(10) NOT NULL,
   `soal` text NOT NULL,
   `pil_A` varchar(50) NOT NULL,
@@ -79,7 +77,7 @@ CREATE TABLE `detail_soal` (
 -- Struktur dari tabel `guru`
 --
 
-CREATE TABLE `guru` (
+CREATE TABLE IF NOT EXISTS `guru` (
   `kd_guru` varchar(20) NOT NULL,
   `username` varchar(50) NOT NULL,
   `nip` varchar(50) NOT NULL DEFAULT '-',
@@ -106,7 +104,7 @@ INSERT INTO `guru` (`kd_guru`, `username`, `nip`, `nama`, `telp`, `email`, `foto
 -- Struktur dari tabel `jurusan`
 --
 
-CREATE TABLE `jurusan` (
+CREATE TABLE IF NOT EXISTS `jurusan` (
   `kd_jurusan` varchar(10) NOT NULL,
   `nama_jurusan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -129,7 +127,7 @@ INSERT INTO `jurusan` (`kd_jurusan`, `nama_jurusan`) VALUES
 -- Struktur dari tabel `kelas`
 --
 
-CREATE TABLE `kelas` (
+CREATE TABLE IF NOT EXISTS `kelas` (
   `kd_kelas` varchar(10) NOT NULL,
   `nama_kelas` varchar(10) NOT NULL,
   `tingkat` varchar(5) NOT NULL,
@@ -154,12 +152,12 @@ INSERT INTO `kelas` (`kd_kelas`, `nama_kelas`, `tingkat`, `kd_jurusan`) VALUES
 -- Struktur dari tabel `kerja_tugas`
 --
 
-CREATE TABLE `kerja_tugas` (
+CREATE TABLE IF NOT EXISTS `kerja_tugas` (
   `kd_kerja` varchar(30) NOT NULL,
   `kd_tugas` varchar(30) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `file_kerja` varchar(100) NOT NULL DEFAULT 'T',
-  `nilai` int(11) NOT NULL DEFAULT 0,
+  `nilai` int(11) NOT NULL DEFAULT '0',
   `status_kerja` varchar(20) NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -176,22 +174,52 @@ INSERT INTO `kerja_tugas` (`kd_kerja`, `kd_tugas`, `nis`, `file_kerja`, `nilai`,
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `komentar`
+--
+
+CREATE TABLE IF NOT EXISTS `komentar` (
+`id_komentar` int(200) NOT NULL,
+  `penulis_komentar` varchar(100) NOT NULL,
+  `isi_komentar` text NOT NULL,
+  `tanggal_komentar` varchar(100) NOT NULL,
+  `id_post` int(100) NOT NULL,
+  `pp_penulis` text NOT NULL,
+  `penulis_post` varchar(100) NOT NULL,
+  `lihat_komentar` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `kurikulum`
 --
 
-CREATE TABLE `kurikulum` (
-  `kd_kurikulum` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `kurikulum` (
+`kd_kurikulum` int(11) NOT NULL,
   `nama_kurikulum` varchar(30) NOT NULL,
   `aktif` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `kurikulum`
 --
 
 INSERT INTO `kurikulum` (`kd_kurikulum`, `nama_kurikulum`, `aktif`) VALUES
+(1, 'abc', 'Y'),
 (2, 'Kurikulm 2010', 'N'),
 (3, 'Kurikulum 2020', 'Y');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `lihat`
+--
+
+CREATE TABLE IF NOT EXISTS `lihat` (
+  `user_lihat` varchar(100) NOT NULL,
+  `lihat` int(5) NOT NULL,
+  `apa_lihat` varchar(200) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -199,7 +227,7 @@ INSERT INTO `kurikulum` (`kd_kurikulum`, `nama_kurikulum`, `aktif`) VALUES
 -- Struktur dari tabel `login`
 --
 
-CREATE TABLE `login` (
+CREATE TABLE IF NOT EXISTS `login` (
   `username` varchar(50) NOT NULL,
   `password` varchar(40) NOT NULL,
   `level` varchar(10) NOT NULL,
@@ -212,10 +240,10 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`username`, `password`, `level`, `last`, `status`) VALUES
-('abdullahpl001', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:07:55', 'aktif'),
+('abdullahpl001', '202cb962ac59075b964b07152d234b70', 'siswa', '2020-12-08 07:07:55', 'aktif'),
 ('admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', '2020-11-25 19:08:22', 'Aktif'),
 ('aguspk001', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:04:35', 'aktif'),
-('ainurr001', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-08 07:01:45', 'aktif'),
+('ainurr001', '9e01ff1ce03e47fab6dfee4e7ae75d0c', 'guru', '2020-12-08 07:01:45', 'aktif'),
 ('ajengs003', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:07:27', 'aktif'),
 ('azimans005', '81dc9bdb52d04dc20036dbd8313ed055', 'siswa', '2020-12-08 07:07:55', 'aktif'),
 ('dewinp022', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-08 07:01:45', 'aktif'),
@@ -228,7 +256,7 @@ INSERT INTO `login` (`username`, `password`, `level`, `last`, `status`) VALUES
 -- Struktur dari tabel `mapel`
 --
 
-CREATE TABLE `mapel` (
+CREATE TABLE IF NOT EXISTS `mapel` (
   `kd_mapel` varchar(10) NOT NULL,
   `nama_mapel` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -252,7 +280,7 @@ INSERT INTO `mapel` (`kd_mapel`, `nama_mapel`) VALUES
 -- Struktur dari tabel `materi`
 --
 
-CREATE TABLE `materi` (
+CREATE TABLE IF NOT EXISTS `materi` (
   `kd_materi` varchar(30) NOT NULL,
   `nama_materi` varchar(300) NOT NULL,
   `deskripsi` text NOT NULL,
@@ -282,7 +310,7 @@ INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `ForL`, `file`, `
 -- Struktur dari tabel `nilai_ujian`
 --
 
-CREATE TABLE `nilai_ujian` (
+CREATE TABLE IF NOT EXISTS `nilai_ujian` (
   `kd_nilai_ujian` varchar(10) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `kd_ujian` varchar(50) NOT NULL,
@@ -296,10 +324,36 @@ CREATE TABLE `nilai_ujian` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `post`
+--
+
+CREATE TABLE IF NOT EXISTS `post` (
+`id_post` int(200) NOT NULL,
+  `id_detail` int(11) NOT NULL,
+  `judul_post` varchar(200) NOT NULL,
+  `isi_post` text NOT NULL,
+  `penulis_post` varchar(100) NOT NULL,
+  `tanggal_post` varchar(100) NOT NULL,
+  `gambar_post` text NOT NULL,
+  `suka_post` int(10) NOT NULL,
+  `laporkan` varchar(20) NOT NULL,
+  `tgl_lapor` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `post`
+--
+
+INSERT INTO `post` (`id_post`, `id_detail`, `judul_post`, `isi_post`, `penulis_post`, `tanggal_post`, `gambar_post`, `suka_post`, `laporkan`, `tgl_lapor`) VALUES
+(1, 5, 'a', 'a', 'ainurr001', '5:53 09/12/2020', '', 0, '0', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `rombel`
 --
 
-CREATE TABLE `rombel` (
+CREATE TABLE IF NOT EXISTS `rombel` (
   `nis` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_tajar` varchar(20) NOT NULL
@@ -310,7 +364,7 @@ CREATE TABLE `rombel` (
 --
 
 INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
-('7768', 'xintel1', '2020-2021-ganjil'),
+('7768', 'xtkro1', '2020-2021-ganjil'),
 ('7770', 'xintel1', '2020-2021-ganjil'),
 ('7801', 'xav1', '2020-2021-ganjil'),
 ('7805', 'xintel1', '2020-2021-ganjil');
@@ -321,7 +375,7 @@ INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
 -- Struktur dari tabel `silabus`
 --
 
-CREATE TABLE `silabus` (
+CREATE TABLE IF NOT EXISTS `silabus` (
   `kd_silabus` varchar(30) NOT NULL,
   `judul` varchar(32) NOT NULL,
   `nama_file` varchar(50) NOT NULL,
@@ -342,7 +396,7 @@ INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VAL
 -- Struktur dari tabel `siswa`
 --
 
-CREATE TABLE `siswa` (
+CREATE TABLE IF NOT EXISTS `siswa` (
   `nis` varchar(10) NOT NULL,
   `nisn` varchar(10) NOT NULL DEFAULT '-',
   `nama` varchar(100) NOT NULL,
@@ -370,7 +424,7 @@ INSERT INTO `siswa` (`nis`, `nisn`, `nama`, `username`, `kelamin`, `email`, `fot
 -- Struktur dari tabel `soal`
 --
 
-CREATE TABLE `soal` (
+CREATE TABLE IF NOT EXISTS `soal` (
   `kd_soal` varchar(30) NOT NULL,
   `nama_soal` varchar(100) NOT NULL,
   `acak` varchar(5) NOT NULL DEFAULT 'T',
@@ -388,10 +442,26 @@ INSERT INTO `soal` (`kd_soal`, `nama_soal`, `acak`, `kd_mapel`, `kd_guru`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `suka_post`
+--
+
+CREATE TABLE IF NOT EXISTS `suka_post` (
+`id_suka` bigint(20) unsigned NOT NULL,
+  `user_suka` varchar(100) NOT NULL,
+  `id_post` int(200) NOT NULL,
+  `post_suka` int(5) NOT NULL,
+  `penulis_post` varchar(100) NOT NULL,
+  `tanggal_suka` varchar(100) NOT NULL,
+  `lihat_suka` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tahun_ajar`
 --
 
-CREATE TABLE `tahun_ajar` (
+CREATE TABLE IF NOT EXISTS `tahun_ajar` (
   `kd_tajar` varchar(20) NOT NULL,
   `tahun_ajar` varchar(15) NOT NULL,
   `kd_semester` int(11) NOT NULL,
@@ -411,15 +481,15 @@ INSERT INTO `tahun_ajar` (`kd_tajar`, `tahun_ajar`, `kd_semester`, `aktif`) VALU
 -- Struktur dari tabel `timeline`
 --
 
-CREATE TABLE `timeline` (
-  `id_timeline` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `timeline` (
+`id_timeline` int(11) NOT NULL,
   `jenis` varchar(30) NOT NULL,
   `id_jenis` varchar(30) NOT NULL,
   `waktu` datetime NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `timeline`
@@ -440,7 +510,7 @@ INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`,
 -- Struktur dari tabel `tugas`
 --
 
-CREATE TABLE `tugas` (
+CREATE TABLE IF NOT EXISTS `tugas` (
   `kd_tugas` varchar(30) NOT NULL,
   `nama_tugas` varchar(100) NOT NULL,
   `deskripsi` text NOT NULL,
@@ -467,7 +537,7 @@ INSERT INTO `tugas` (`kd_tugas`, `nama_tugas`, `deskripsi`, `batas_awal`, `batas
 -- Struktur dari tabel `ujian`
 --
 
-CREATE TABLE `ujian` (
+CREATE TABLE IF NOT EXISTS `ujian` (
   `kd_ujian` varchar(50) NOT NULL,
   `nama_ujian` varchar(100) NOT NULL,
   `deskripsi` text NOT NULL,
@@ -487,7 +557,7 @@ CREATE TABLE `ujian` (
 -- Struktur dari tabel `wali_kelas`
 --
 
-CREATE TABLE `wali_kelas` (
+CREATE TABLE IF NOT EXISTS `wali_kelas` (
   `kd_guru` varchar(20) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_tajar` varchar(20) NOT NULL
@@ -506,166 +576,182 @@ INSERT INTO `wali_kelas` (`kd_guru`, `kd_kelas`, `kd_tajar`) VALUES
 --
 
 --
--- Indeks untuk tabel `detail_kurikulum`
+-- Indexes for table `detail_kurikulum`
 --
 ALTER TABLE `detail_kurikulum`
-  ADD PRIMARY KEY (`id_detail`),
-  ADD KEY `kd_guru` (`kd_guru`),
-  ADD KEY `kd_kelas` (`kd_kelas`),
-  ADD KEY `kd_kurikulum` (`kd_kurikulum`),
-  ADD KEY `kd_mapel` (`kd_mapel`);
+ ADD PRIMARY KEY (`id_detail`), ADD KEY `kd_guru` (`kd_guru`), ADD KEY `kd_kelas` (`kd_kelas`), ADD KEY `kd_kurikulum` (`kd_kurikulum`), ADD KEY `kd_mapel` (`kd_mapel`);
 
 --
--- Indeks untuk tabel `detail_soal`
+-- Indexes for table `detail_soal`
 --
 ALTER TABLE `detail_soal`
-  ADD PRIMARY KEY (`kd_detail_soal`),
-  ADD KEY `kd_soal` (`kd_soal`);
+ ADD PRIMARY KEY (`kd_detail_soal`), ADD KEY `kd_soal` (`kd_soal`);
 
 --
--- Indeks untuk tabel `guru`
+-- Indexes for table `guru`
 --
 ALTER TABLE `guru`
-  ADD PRIMARY KEY (`kd_guru`),
-  ADD KEY `username` (`username`);
+ ADD PRIMARY KEY (`kd_guru`), ADD KEY `username` (`username`);
 
 --
--- Indeks untuk tabel `jurusan`
+-- Indexes for table `jurusan`
 --
 ALTER TABLE `jurusan`
-  ADD PRIMARY KEY (`kd_jurusan`);
+ ADD PRIMARY KEY (`kd_jurusan`);
 
 --
--- Indeks untuk tabel `kelas`
+-- Indexes for table `kelas`
 --
 ALTER TABLE `kelas`
-  ADD PRIMARY KEY (`kd_kelas`),
-  ADD KEY `kd_jurusan` (`kd_jurusan`);
+ ADD PRIMARY KEY (`kd_kelas`), ADD KEY `kd_jurusan` (`kd_jurusan`);
 
 --
--- Indeks untuk tabel `kerja_tugas`
+-- Indexes for table `kerja_tugas`
 --
 ALTER TABLE `kerja_tugas`
-  ADD PRIMARY KEY (`kd_kerja`);
+ ADD PRIMARY KEY (`kd_kerja`);
 
 --
--- Indeks untuk tabel `kurikulum`
+-- Indexes for table `komentar`
+--
+ALTER TABLE `komentar`
+ ADD PRIMARY KEY (`id_komentar`);
+
+--
+-- Indexes for table `kurikulum`
 --
 ALTER TABLE `kurikulum`
-  ADD PRIMARY KEY (`kd_kurikulum`);
+ ADD PRIMARY KEY (`kd_kurikulum`);
 
 --
--- Indeks untuk tabel `login`
+-- Indexes for table `login`
 --
 ALTER TABLE `login`
-  ADD PRIMARY KEY (`username`);
+ ADD PRIMARY KEY (`username`);
 
 --
--- Indeks untuk tabel `mapel`
+-- Indexes for table `mapel`
 --
 ALTER TABLE `mapel`
-  ADD PRIMARY KEY (`kd_mapel`);
+ ADD PRIMARY KEY (`kd_mapel`);
 
 --
--- Indeks untuk tabel `materi`
+-- Indexes for table `materi`
 --
 ALTER TABLE `materi`
-  ADD PRIMARY KEY (`kd_materi`);
+ ADD PRIMARY KEY (`kd_materi`);
 
 --
--- Indeks untuk tabel `nilai_ujian`
+-- Indexes for table `nilai_ujian`
 --
 ALTER TABLE `nilai_ujian`
-  ADD PRIMARY KEY (`kd_nilai_ujian`),
-  ADD KEY `nis` (`nis`);
+ ADD PRIMARY KEY (`kd_nilai_ujian`), ADD KEY `nis` (`nis`);
 
 --
--- Indeks untuk tabel `rombel`
+-- Indexes for table `post`
+--
+ALTER TABLE `post`
+ ADD PRIMARY KEY (`id_post`), ADD KEY `id_detail` (`id_detail`);
+
+--
+-- Indexes for table `rombel`
 --
 ALTER TABLE `rombel`
-  ADD KEY `ang-siswa` (`nis`),
-  ADD KEY `ang-kelas` (`kd_kelas`),
-  ADD KEY `ang-tajar` (`kd_tajar`);
+ ADD KEY `ang-siswa` (`nis`), ADD KEY `ang-kelas` (`kd_kelas`), ADD KEY `ang-tajar` (`kd_tajar`);
 
 --
--- Indeks untuk tabel `silabus`
+-- Indexes for table `silabus`
 --
 ALTER TABLE `silabus`
-  ADD PRIMARY KEY (`kd_silabus`);
+ ADD PRIMARY KEY (`kd_silabus`);
 
 --
--- Indeks untuk tabel `siswa`
+-- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
-  ADD PRIMARY KEY (`nis`),
-  ADD KEY `username` (`username`);
+ ADD PRIMARY KEY (`nis`), ADD KEY `username` (`username`);
 
 --
--- Indeks untuk tabel `soal`
+-- Indexes for table `soal`
 --
 ALTER TABLE `soal`
-  ADD PRIMARY KEY (`kd_soal`);
+ ADD PRIMARY KEY (`kd_soal`);
 
 --
--- Indeks untuk tabel `tahun_ajar`
+-- Indexes for table `suka_post`
+--
+ALTER TABLE `suka_post`
+ ADD PRIMARY KEY (`id_suka`), ADD UNIQUE KEY `id_suka` (`id_suka`);
+
+--
+-- Indexes for table `tahun_ajar`
 --
 ALTER TABLE `tahun_ajar`
-  ADD PRIMARY KEY (`kd_tajar`);
+ ADD PRIMARY KEY (`kd_tajar`);
 
 --
--- Indeks untuk tabel `timeline`
+-- Indexes for table `timeline`
 --
 ALTER TABLE `timeline`
-  ADD PRIMARY KEY (`id_timeline`);
+ ADD PRIMARY KEY (`id_timeline`);
 
 --
--- Indeks untuk tabel `tugas`
+-- Indexes for table `tugas`
 --
 ALTER TABLE `tugas`
-  ADD PRIMARY KEY (`kd_tugas`);
+ ADD PRIMARY KEY (`kd_tugas`);
 
 --
--- Indeks untuk tabel `ujian`
+-- Indexes for table `ujian`
 --
 ALTER TABLE `ujian`
-  ADD PRIMARY KEY (`kd_ujian`);
+ ADD PRIMARY KEY (`kd_ujian`);
 
 --
--- Indeks untuk tabel `wali_kelas`
+-- Indexes for table `wali_kelas`
 --
 ALTER TABLE `wali_kelas`
-  ADD KEY `kd_guru` (`kd_guru`),
-  ADD KEY `kd_kelas` (`kd_kelas`),
-  ADD KEY `kd_tajar` (`kd_tajar`);
+ ADD KEY `kd_guru` (`kd_guru`), ADD KEY `kd_kelas` (`kd_kelas`), ADD KEY `kd_tajar` (`kd_tajar`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `detail_kurikulum`
+-- AUTO_INCREMENT for table `detail_kurikulum`
 --
 ALTER TABLE `detail_kurikulum`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
+MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
--- AUTO_INCREMENT untuk tabel `detail_soal`
+-- AUTO_INCREMENT for table `detail_soal`
 --
 ALTER TABLE `detail_soal`
-  MODIFY `kd_detail_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+MODIFY `kd_detail_soal` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT untuk tabel `kurikulum`
+-- AUTO_INCREMENT for table `komentar`
+--
+ALTER TABLE `komentar`
+MODIFY `id_komentar` int(200) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `kurikulum`
 --
 ALTER TABLE `kurikulum`
-  MODIFY `kd_kurikulum` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+MODIFY `kd_kurikulum` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT untuk tabel `timeline`
+-- AUTO_INCREMENT for table `post`
+--
+ALTER TABLE `post`
+MODIFY `id_post` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `suka_post`
+--
+ALTER TABLE `suka_post`
+MODIFY `id_suka` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `timeline`
 --
 ALTER TABLE `timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
@@ -674,57 +760,56 @@ ALTER TABLE `timeline`
 -- Ketidakleluasaan untuk tabel `detail_kurikulum`
 --
 ALTER TABLE `detail_kurikulum`
-  ADD CONSTRAINT `detail_kurikulum_ibfk_1` FOREIGN KEY (`kd_guru`) REFERENCES `guru` (`kd_guru`),
-  ADD CONSTRAINT `detail_kurikulum_ibfk_2` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
-  ADD CONSTRAINT `detail_kurikulum_ibfk_3` FOREIGN KEY (`kd_kurikulum`) REFERENCES `kurikulum` (`kd_kurikulum`),
-  ADD CONSTRAINT `detail_kurikulum_ibfk_4` FOREIGN KEY (`kd_mapel`) REFERENCES `mapel` (`kd_mapel`);
+ADD CONSTRAINT `detail_kurikulum_ibfk_1` FOREIGN KEY (`kd_guru`) REFERENCES `guru` (`kd_guru`),
+ADD CONSTRAINT `detail_kurikulum_ibfk_2` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
+ADD CONSTRAINT `detail_kurikulum_ibfk_3` FOREIGN KEY (`kd_kurikulum`) REFERENCES `kurikulum` (`kd_kurikulum`),
+ADD CONSTRAINT `detail_kurikulum_ibfk_4` FOREIGN KEY (`kd_mapel`) REFERENCES `mapel` (`kd_mapel`);
 
 --
 -- Ketidakleluasaan untuk tabel `detail_soal`
 --
 ALTER TABLE `detail_soal`
-  ADD CONSTRAINT `detail_soal_ibfk_1` FOREIGN KEY (`kd_soal`) REFERENCES `soal` (`kd_soal`);
+ADD CONSTRAINT `detail_soal_ibfk_1` FOREIGN KEY (`kd_soal`) REFERENCES `soal` (`kd_soal`);
 
 --
 -- Ketidakleluasaan untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  ADD CONSTRAINT `guru_ibfk_1` FOREIGN KEY (`username`) REFERENCES `login` (`username`);
+ADD CONSTRAINT `guru_ibfk_1` FOREIGN KEY (`username`) REFERENCES `login` (`username`);
 
 --
 -- Ketidakleluasaan untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
-  ADD CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`kd_jurusan`) REFERENCES `jurusan` (`kd_jurusan`);
+ADD CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`kd_jurusan`) REFERENCES `jurusan` (`kd_jurusan`);
 
 --
 -- Ketidakleluasaan untuk tabel `nilai_ujian`
 --
 ALTER TABLE `nilai_ujian`
-  ADD CONSTRAINT `nilai_ujian_ibfk_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`);
+ADD CONSTRAINT `nilai_ujian_ibfk_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`);
 
 --
 -- Ketidakleluasaan untuk tabel `rombel`
 --
 ALTER TABLE `rombel`
-  ADD CONSTRAINT `ang-kelas` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
-  ADD CONSTRAINT `ang-siswa` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`),
-  ADD CONSTRAINT `ang-tajar` FOREIGN KEY (`kd_tajar`) REFERENCES `tahun_ajar` (`kd_tajar`);
+ADD CONSTRAINT `ang-kelas` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
+ADD CONSTRAINT `ang-siswa` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`),
+ADD CONSTRAINT `ang-tajar` FOREIGN KEY (`kd_tajar`) REFERENCES `tahun_ajar` (`kd_tajar`);
 
 --
 -- Ketidakleluasaan untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`username`) REFERENCES `login` (`username`);
+ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`username`) REFERENCES `login` (`username`);
 
 --
 -- Ketidakleluasaan untuk tabel `wali_kelas`
 --
 ALTER TABLE `wali_kelas`
-  ADD CONSTRAINT `wali_kelas_ibfk_1` FOREIGN KEY (`kd_guru`) REFERENCES `guru` (`kd_guru`),
-  ADD CONSTRAINT `wali_kelas_ibfk_2` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
-  ADD CONSTRAINT `wali_kelas_ibfk_3` FOREIGN KEY (`kd_tajar`) REFERENCES `tahun_ajar` (`kd_tajar`);
-COMMIT;
+ADD CONSTRAINT `wali_kelas_ibfk_1` FOREIGN KEY (`kd_guru`) REFERENCES `guru` (`kd_guru`),
+ADD CONSTRAINT `wali_kelas_ibfk_2` FOREIGN KEY (`kd_kelas`) REFERENCES `kelas` (`kd_kelas`),
+ADD CONSTRAINT `wali_kelas_ibfk_3` FOREIGN KEY (`kd_tajar`) REFERENCES `tahun_ajar` (`kd_tajar`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
