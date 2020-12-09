@@ -35,7 +35,7 @@
         <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=home" ><b>Beranda</b></a></li>
         <li class="<?php if ($_GET['module'] == 'materi') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=materi&mp=all" ><b>MATERI</b></a></li>
         <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tugas&mp=all" ><b>TUGAS</b></a></li>
-        <li class="<?php if ($_GET['module'] == 'nilai') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=nilai&mp=all" ><b>NILAI</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'nilai') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=ujian&mp=all" ><b>UJIAN</b></a></li>
         <li class="<?php if ($_GET['module'] == 'anggota') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=anggota" ><b>ANGGOTA</b></a></li>
         <li class="<?php if ($_GET['module'] == 'forum') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=forum"><b>FORUM KELAS</b></a></li>
         <?php

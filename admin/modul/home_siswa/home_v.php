@@ -103,15 +103,19 @@
               <h4><i class='fa fa-briefcase'></i> $j</h4>";
               switch ($j) {
                 case 'TUGAS':
-                  echo "Guru $r[nama] telah menambahkan TUGAS $r[nama_mapel] pada $r[tgl_up]. <a href='?module=detailtugas&kd=$r[kd_tugas]' class='alert-link'>Buka Tugas</a>";
-                  break;
+                echo "Guru $r[nama] telah menambahkan TUGAS $r[nama_mapel] pada $r[tgl_up]. <a href='?module=detailtugas&kd=$r[kd_tugas]' class='alert-link'>Buka Tugas</a>";
+                break;
                 case 'MATERI':
-                  echo "Guru $r[nama] telah menambahkan MATERI $r[nama_mapel] pada $r[tgl_up]. <a href='?module=materi&mp=$r[kd_mapel]' class='alert-link'>Buka materi</a>";
-                  break;
+                echo "Guru $r[nama] telah menambahkan MATERI $r[nama_mapel] pada $r[tgl_up]. <a href='?module=materi&mp=$r[kd_mapel]' class='alert-link'>Buka materi</a>";
+                break;
+
+                case 'UJIAN':
+                echo "Guru $r[nama] telah menambahkan UJIAN $r[nama_mapel]. <a href='?module=ujian&mp=$r[kd_mapel]' class='alert-link'>Buka materi</a>";
+                break;
 
                 default:
                   # code...
-                  break;
+                break;
               }
               
               echo "</div>";

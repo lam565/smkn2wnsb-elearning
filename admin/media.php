@@ -44,48 +44,48 @@ if($_SESSION['login']==0){
 
 </head>
 <body>
-   <div class="navbar navbar-inverse set-radius-zero" >
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">
+ <div class="navbar navbar-inverse set-radius-zero" >
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
 
-                    <img src="assets/img/new_logo.png" width="150" height="110"/>
-					SMKN 2 WONOSOBO
-					
-                </a>
+                <img src="assets/img/new_logo.png" width="150" height="110"/>
+                SMKN 2 WONOSOBO
+                
+            </a>
 
-            </div>
+        </div>
 
-            <div class="right-div">
-                <a href="../logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
-            </div>
-        </div><br><br>
-    </div>
-    <!-- LOGO HEADER END-->
-    <section class="menu-section">
-        <div class="container">
-            <div class="row ">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse ">
-                        <?php 
-                        include "navigasi.php";
-                        ?>
-                    </div>
+        <div class="right-div">
+            <a href="../logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
+        </div>
+    </div><br><br>
+</div>
+<!-- LOGO HEADER END-->
+<section class="menu-section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse ">
+                    <?php 
+                    include "navigasi.php";
+                    ?>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- MENU SECTION END-->
-
-    <div class="content-wrapper">
-       <div class="container">
-        <?php include 'content.php'; ?>
     </div>
+</section>
+<!-- MENU SECTION END-->
+
+<div class="content-wrapper">
+ <div class="container">
+    <?php include 'content.php'; ?>
+</div>
 </div>
 <!-- CONTENT-WRAPPER SECTION END-->
 
@@ -93,10 +93,10 @@ if($_SESSION['login']==0){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
-           </div>
-       </div>
-   </div>
+             &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
+         </div>
+     </div>
+ </div>
 </section>
 <!-- FOOTER SECTION END-->
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
@@ -228,6 +228,71 @@ function validateForm()
         return false;
     }
 }
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+/** Membuat Waktu Mulai Hitung Mundur Dengan 
+* var detik = 0,
+* var menit = 1,
+* var jam = 1
+*/
+var detik = document.getElementById("detik").value;
+var menit = document.getElementById("menit").value;
+var jam   = document.getElementById("jam").value;
+
+/**
+* Membuat function hitung() sebagai Penghitungan Waktu
+*/
+function hitung() {
+/** setTimout(hitung, 1000) digunakan untuk 
+* mengulang atau merefresh halaman selama 1000 (1 detik) 
+*/
+setTimeout(hitung,1000);
+
+/** Jika waktu kurang dari 10 menit maka Timer akan berubah menjadi warna merah */
+if(menit < 10 && jam == 0){
+    var peringatan = 'style="color:red"';
+};
+
+/** Menampilkan Waktu Timer pada Tag #Timer di HTML yang tersedia */
+$('#timer').html(
+    '<h3 align="center"'+peringatan+'>' + jam + ' jam : ' + menit + ' menit : ' + detik + ' detik</h3>'
+    );
+
+/** Melakukan Hitung Mundur dengan Mengurangi variabel detik - 1 */
+detik --;
+
+/** Jika var detik < 0
+* var detik akan dikembalikan ke 59
+* Menit akan Berkurang 1
+*/
+if(detik < 0) {
+    detik = 59;
+    menit --;
+
+/** Jika menit < 0
+* Maka menit akan dikembali ke 59
+* Jam akan Berkurang 1
+*/
+if(menit < 0) {
+    menit = 59;
+    jam --;
+
+/** Jika var jam < 0
+* clearInterval() Memberhentikan Interval dan submit secara otomatis
+*/
+if(jam < 0) {                                                                 
+    clearInterval(); 
+    var frmSoal = document.getElementById("frmSoal");
+    frmSoal.submit();                           
+} 
+} 
+} 
+}           
+/** Menjalankan Function Hitung Waktu Mundur */
+hitung();
+}); 
+// ]]>
 </script>
 
 </body>

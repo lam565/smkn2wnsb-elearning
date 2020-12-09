@@ -42,14 +42,14 @@ else{
       include "modul/mod_tugas/detailtugas.php";
       break;
       
-	  case 'forum':
+      case 'forum':
       include "modul/mod_forum/forum_v.php";
       break;
-	  
-	  case 'tampil_forum':
+
+      case 'tampil_forum':
       include "modul/mod_forum/tampil_forum.php";
       break;
-	  
+
       case 'laporan':
       include "modul/mod_laporan/laporan_v.php";
       break;
@@ -60,59 +60,59 @@ else{
       break;
     }
     break;
-   case 'admin':
+    case 'admin':
     switch ($modul) {
       case 'homeadm':
       include "modul/mod_homeadm/homeadm_v.php";
       break;
-	  
-	  case 'akun':
+
+      case 'akun':
       include "modul/mod_akun/akun_v.php";
       break;
-	  
-	  case 'siswa':
+
+      case 'siswa':
       include "modul/mod_siswa/siswa_v.php";
       break;
-	  
-	  case 'guru':
+
+      case 'guru':
       include "modul/mod_guru/guru_v.php";
       break;
-	  
-	  case 'kelas':
+
+      case 'kelas':
       include "modul/mod_kelas/kelas_v.php";
       break;
-	  
-	  case 'mapel':
+
+      case 'mapel':
       include "modul/mod_mapel/mapel_v.php";
       break;
-	  
-	  case 'rombel':
+
+      case 'rombel':
       include "modul/mod_rombel/rombel_v.php";
       break;
-	  
-	  
-	  
-	   case 'tahun':
+
+
+
+      case 'tahun':
       include "modul/mod_tahun_ajar/tahun_v.php";
       break;
-	  
-	   case 'kurikulum':
+
+      case 'kurikulum':
       include "modul/mod_kurikulum/kurikulum_v.php";
       break;
-	  
-	   case 'detkurikulum':
+
+      case 'detkurikulum':
       include "modul/mod_detailkurikulum/detkurikulum_v.php";
       break;
-	  
-	  case 'pelaporan':
+
+      case 'pelaporan':
       include "modul/mod_pelaporan/pelaporan_v.php";
       break;
-	  
-	  case 'gfsiswa':
+
+      case 'gfsiswa':
       include "modul/mod_gfsiswa/gfsiswa_v.php";
       break;
 
-     default:
+      default:
       //notfound modul
       include "modul/mod_404.php";
       break;
@@ -137,8 +137,17 @@ else{
       case 'detailtugas':
       include "modul/mod_tugas_siswa/detail_tugas.php";
       break;
-	  
-	   case 'forum':
+      case 'ujian':
+      include "modul/ujian_siswa/ujian_v.php";
+      break;
+      case 'detailujian':
+      include "modul/ujian_siswa/detail_ujian.php";
+      break;
+      case 'lembarujian':
+      include "modul/ujian_siswa/lembarujian.php";
+      break;
+
+      case 'forum':
       include "modul/mod_forum/forumsiswa_v.php";
       break;
 
