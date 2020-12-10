@@ -115,17 +115,10 @@ if ($totalkomentar >= 0) {
         <small id="komentar_<?php echo $datakomentar["id_komentar"];?>"><?php echo $datakomentar["tanggal_komentar"];?></small><br>
         <b>
         <a href="./?p=user&user=<?php echo $datakomentar["penulis_komentar"];?>">
-        <?php
-        if ($datakomentar["pp_penulis"] == '') {
-        ?>
+        
         <img src="./assets/img/user/user.jpg" style="width:25px;height:25px;border-radius:100%;">
-        <?php
-        }
-        else{
-        ?>
-        <img src="./assets/img/user/<?php echo $datakomentar["pp_penulis"];?>" style="width:25px;height:25px;border-radius:100%;">
-        <?php
-        }
+       <?php
+        
         $dataygngomen = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username = '$datakomentar[penulis_komentar]'"));
         ?>
         <?php echo $dataygngomen["username"];?></a> :</b> <?php echo $datakomentar["isi_komentar"];?>

@@ -49,7 +49,7 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                   <div class="col-md-3 col-sm-3 col-xs-6">
                       <div class="alert alert-info back-widget-set text-center">
                             <img src="assets/img/siswa.png" width="100" height="100"/>
-							 <h3><a href="web-grup/media.php">Tampil</a></h3>
+							 
                             <h3><a href="web-grup/?p=beranda&id_det_kurikulum=<?=$row['id_detail']?>"><?=$row['nama_mapel']?><br><?=$row['kd_kelas']?></a></h3>
                           
                         </div>

@@ -36,12 +36,12 @@ if (@$_SESSION["username"] == $useruser) {
             $date = date("G:i d/m/Y");
 
             if ($pindah) {
-                mysqli_query($connection, "INSERT INTO post VALUES('','5','$judul','$isi','$useruser','$date','$dt$alamat_gambar','0','0','')");
-                echo "<div class='alert alert-info'>Postingan Telah Ditambahkan. <a href='./?p=user&user=$data2[username]#post'>Lihat Semua Postingan Kamu</a></div>";
+                mysqli_query($connection, "INSERT INTO post VALUES('','$_GET[id_det_kurikulum]','$judul','$isi','$useruser','$date','$dt$alamat_gambar','0','0','')");
+                echo "<div class='alert alert-info'>Postingan Telah Ditambahkan. <a href='./?p=beranda&id_det_kurikulum=$_GET[id_det_kurikulum]'>Lihat Semua Postingan Kamu</a></div>";
             }
             else{
-                mysqli_query($connection, "INSERT INTO post VALUES('','5','$judul','$isi','$useruser','$date','','0','0','')");
-                echo "<div class='alert alert-info'>Postingan Telah Ditambahkan. <a href='./?p=user&user=$data2[username]#post'>Lihat Semua Postingan Kamu</a></div>";
+                mysqli_query($connection, "INSERT INTO post VALUES('','$_GET[id_det_kurikulum]','$judul','$isi','$useruser','$date','','0','0','')");
+                echo "<div class='alert alert-info'>Postingan Telah Ditambahkan. <a href='./?p=beranda&id_det_kurikulum=$_GET[id_det_kurikulum]'>Lihat Semua Postingan Kamu</a></div>";
             }
             }
             ?>
@@ -62,7 +62,7 @@ if (@$_SESSION["username"] == $useruser) {
 }
 else{
 ?>
-<script>window.location='.?p=posting&profil=<?php echo $data2["username"];?>';</script>
+<script>window.location='.?p=beranda&id_det_kurikulum=<?php echo $_GET['id_det_kurikulum'];?>';</script>
             <?php
 }
             ?>

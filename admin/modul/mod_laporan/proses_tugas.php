@@ -5,7 +5,7 @@ header("Content-type: application/vnd-ms-excel");
 header("Content-Disposition: attachment; filename=nama_filenya.xls");
 ?>
 
-<h3>LAPORAN UJIAN ONLINE PERPERIODE</h3>
+<h3>LAPORAN NILAI TUGAS PERPERIODE</h3>
 <?php
 
 $dbHost="localhost";
@@ -35,9 +35,10 @@ mysqli_select_db($connection,'smkn2wnsb');
 <table border="1" cellpadding="5">
 	<tr>
 		<th>NO</th>
-		<th>NIS</th>
-		<th>NAMA SISWA</th>
-		<th>NILAI</th>		
+										<th>NIS</th>
+										<th>NAMA SISWA</th>
+										<th>NILAI</th>
+										<th>NAMA TUGAS</th>	
 	</tr>
 	<?php
 	// Load file koneksi.php
@@ -46,16 +47,16 @@ mysqli_select_db($connection,'smkn2wnsb');
 
 	
 	// Buat query untuk menampilkan semua data siswa
-	$sql = mysqli_query($connection, "SELECT * FROM nilai_ujian,ujian,mapel,kelas,siswa,guru
-								WHERE nilai_ujian.kd_ujian=ujian.kd_ujian 
-								and ujian.kd_mapel=mapel.kd_mapel 
-								and ujian.kd_guru=tugas.kd_guru
-								and kelas.kd_kelas=ujian.kd_kelas
-								and nilai_ujian.nis=siswa.nis
+	$sql = mysqli_query($connection, "SELECT * FROM tugas,kerja_tugas,mapel,kelas,siswa,guru
+								WHERE tugas.kd_tugas=kerja_tugas.kd_tugas 
+								and tugas.kd_mapel=mapel.kd_mapel 
+								and tugas.kd_guru=tugas.kd_guru
+								and kelas.kd_kelas=tugas.kd_kelas
+								and kerja_tugas.nis=siswa.nis
 								and tugas.kd_guru='$row3[kd_guru]'
-								and ujian.kd_kelas='$_GET[kd_kelas]'
-								and ujian.kd_mapel='$_GET[kd_mapel]'
-								and nilai_ujian.tgl_mengerjakan BETWEEN '$_GET[from]' AND '$_GET[to]'");
+								and tugas.kd_kelas='$_GET[kd_kelas]'
+								and tugas.kd_mapel='$_GET[kd_mapel]'
+								and tugas.tgl_up BETWEEN '$_GET[from]' AND '$_GET[to]'");
 	
 	$no=1;// Untuk penomoran tabel, di awal set dengan 1
 	while($data = mysqli_fetch_array($sql)){ // Ambil semua data dari hasil eksekusi $sql
@@ -64,6 +65,7 @@ mysqli_select_db($connection,'smkn2wnsb');
 		echo "<td>".$data['nis']."</td>";
 		echo "<td>".$data['nama']."</td>";
 		echo "<td>".$data['nilai']."</td>";
+		echo "<td>".$data['nama_tugas']."</td>";
 		
 		echo "</tr>";
 		

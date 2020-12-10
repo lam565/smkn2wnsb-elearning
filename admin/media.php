@@ -54,10 +54,10 @@ if($_SESSION['login']==0){
             </button>
             <a class="navbar-brand" href="index.html">
 
-                <img src="assets/img/new_logo.png" width="150" height="110"/>
-                SMKN 2 WONOSOBO
-                
-            </a>
+                    <img src="assets/img/new_logo.png" width="150" height="110"/>
+					<h5 style="color:red;"><b>SMKN 2 WONOSOBO</b></h5>
+					
+                </a>
 
         </div>
 

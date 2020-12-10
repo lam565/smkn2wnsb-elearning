@@ -16,7 +16,7 @@ if (@$_POST) {
         $userkomentarnya = $_SESSION["username"];
         date_default_timezone_set("Asia/Jakarta");
         $sekarangtanggalberapa = date("G:i d/m/Y");
-        mysqli_query($connection, "INSERT INTO komentar VALUES ('','$userkomentarnya','$komentari','$sekarangtanggalberapa','$idpost','$data2[pp_user]','$datapost[penulis_post]','1')");
+        mysqli_query($connection, "INSERT INTO komentar VALUES ('','$userkomentarnya','$komentari','$sekarangtanggalberapa','$idpost','$datapost[penulis_post]','1')");
         if ($datapost["penulis_post"] == $userkomentarnya) {
         echo "<script>history.go(-1);</script>";
         }else{

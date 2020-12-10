@@ -12,6 +12,7 @@ a {
 <!-- CSS/ -->
 
 <?php
+error_reporting(1);
 include "config.php";
 
 if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION['login']==0){
@@ -32,145 +33,16 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 
         </div>
 	   <div class="row">
-                 <div class="col-md-4 col-sm-4 col-xs-12">
- <div class="panel panel-default">
-                        <div class="panel-heading">
-                           Ujian Online
-                        </div>
-                        <div class="panel-body text-center recent-users-sec">
-<form role="form">
-                                       
-                                <div class="form-group">
-<label class="control-label col-md-3 col-sm-3 col-xs-12"> Bulan
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-											<?php
-											$sekarang=getdate();
-											
-											?>
-<select class="form-control" name="bln" id="bln">
-<?php
-if ($sekarang["month"]=="January")
-{
-echo '<option value="1" selected>Januari</option>';
-}else
-{
-echo '<option value="1">Januari</option>';
-}
-
-if ($sekarang["month"]=="February")
-{
-echo '<option value="2" selected>Februari</option>';
-}else
-{
-echo '<option value="2">Februari</option>';
-}
-
-if ($sekarang["month"]=="March")
-{
-echo '<option value="3" selected>Maret</option>';
-}else
-{
-echo '<option value="3">Maret</option>';
-}
-
-if ($sekarang["month"]=="April")
-{
-echo '<option value="4" selected>April</option>';
-}else
-{
-echo '<option value="4">April</option>';
-}
-
-if ($sekarang["month"]=="May")
-{
-echo '<option value="5" selected>Mei</option>';
-}else
-{
-echo '<option value="5">Mei</option>';
-}
-
-if ($sekarang["month"]=="June")
-{
-echo '<option value="6" selected>Juni</option>';
-}else
-{
-echo '<option value="6">Juni</option>';
-}
-
-if ($sekarang["month"]=="July")
-{
-echo '<option value="7" selected>Juli</option>';
-}else
-{
-echo '<option value="7">Juli</option>';
-}
-
-if ($sekarang["month"]=="August")
-{
-echo '<option value="8" selected>Agustus</option>';
-}else
-{
-echo '<option value="8">Agustus</option>';
-}
-
-if ($sekarang["month"]=="September")
-{
-echo '<option value="9" selected>September</option>';
-}else
-{
-echo '<option value="9">September</option>';
-}
-
-if ($sekarang["month"]=="Oktober")
-{
-echo '<option value="10" selected>Oktober</option>';
-}else
-{
-echo '<option value="10">Oktober</option>';
-}
-
-if ($sekarang["month"]=="November")
-{
-echo '<option value="11" selected>November</option>';
-}else
-{
-echo '<option value="11">November</option>';
-}
-
-if ($sekarang["month"]=="Desember")
-{
-echo '<option value="12" selected>Desember</option>';
-}else
-{
-echo '<option value="12">Desember</option>';
-}
-?>
-
-</select>
-</div>
-</div>
-                               
-                                       <br><br>
-                                        <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tahun
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input id="thn" class="form-control col-md-7 col-xs-12" name="thn" placeholder="Inputkan Tahun" value="<?php echo $sekarang['year']?>" required="required">
-                                            </div>
-                                        </div>
-										<br>
-										
-										                                        <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Laporan
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input id="thn" class="form-control col-md-7 col-xs-12" name="thn" placeholder="Ujian Online" >
-                                            </div>
-                                        </div>
-										
-										<br><br>
-                                        <div class="form-group">
+    
+<form class="form-inline hidden-print" action="<?=$_SERVER["REQUEST_URI"]?>" method="post">
+	<label>Periode</label>
+	<input type="date" class="form-control" name="start">
+	<label>s/d</label>
+	<input type="date" class="form-control" name="stop">
+	
+	
+	
+	<div class="form-group">
                                             <label>Kelas </label>
                                             <select class="form-control" name="kd_kelas">
 												<option>Kelas</option>
@@ -191,57 +63,154 @@ echo '<option value="12">Desember</option>';
 												<?php $query3 = $connection->query("SELECT * FROM guru where username='$_SESSION[username]'"); 
 												$data3 = $query3->fetch_assoc(); 
 												?>
-												<?php $query5 = $connection->query("SELECT * FROM detail_kurikulum where kd_guru='$data3[kd_guru]'"); while ($data5 = $query5->fetch_assoc()): ?>
-													<option value="<?=$data5["kd_mapel"]?>"><?=$data5["kd_mapel"]?></option>
+												<?php $query5 = $connection->query("SELECT * FROM detail_kurikulum,mapel where detail_kurikulum.kd_mapel=mapel.kd_mapel and detail_kurikulum.kd_guru='$data3[kd_guru]' group by mapel.nama_mapel"); while ($data5 = $query5->fetch_assoc()): ?>
+													<option value="<?=$data5["kd_mapel"]?>"><?=$data5["nama_mapel"]?></option>
 												<?php endwhile; ?>
 											</select>
                                         </div>
-                                        
-                                       
-                                        <button type="submit" class="btn btn-success">Simpan </button>
-                                        <button type="reset" class="btn btn-primary">Reset</button>
+										
+											<div class="form-group">
+                                            <label>Jenis Laporan</label>
+                                            <select class="form-control" name="jenis">
+											<option value="UO">Jenis Laporan</option>
+												<option value="UO">Ujian Online</option>
+												<option value="NT">Nilai Tugas</option>
+												
+											</select>
+                                        </div>
+										
+	<button type="submit" class="btn btn-primary btn-sm">Tampilkan</button>
+</form>
+<br>
+<?php if ($_POST['jenis']=='UO'){ ?>
+<?php if ($_POST): ?>
+	<div class="panel panel-info">
+	<?php
+	$query1 = $connection->query("SELECT * FROM mapel
+	WHERE kd_mapel='$_POST[kd_mapel]'"); 
+	$row1 = $query1->fetch_assoc();
+	?>
+	<?php
+	$query2 = $connection->query("SELECT * FROM kelas
+	WHERE kd_kelas='$_POST[kd_kelas]'"); 
+	$row2 = $query2->fetch_assoc();
+	?>
+	<?php
+	$query3 = $connection->query("SELECT * FROM guru
+	WHERE username='$_SESSION[username]'"); 
+	$row3 = $query3->fetch_assoc();
+	?>
+		<div class="panel-heading"><h3 class="text-center">LAPORAN UJIAN ONLINE PERPERIODE</h3><br><h4 class="text-center">Mata Pelajaran: <?=$row1["nama_mapel"]?> (<?=$row2["nama_kelas"]?>)<br>Guru Pengampu: <?=$row3["nama"]?><br><br><?=$_POST["start"]." s/d ".$_POST["stop"]?></h4></div>
+		<div class="panel-body">
+				<table class="table table-condensed">
+						<thead>
+								<tr>
+										<th>NO</th>
+										<th>NIS</th>
+										<th>NAMA SISWA</th>
+										<th>NILAI</th>
+										
+										<th class="hidden-print"></th>
+								</tr>
+						</thead>
+						<tbody>
+								<?php $no = 1; ?>
+								<?php if ($query = $connection->query("SELECT * FROM nilai_ujian,ujian,mapel,kelas,siswa,guru
+								WHERE nilai_ujian.kd_ujian=ujian.kd_ujian 
+								and ujian.kd_mapel=mapel.kd_mapel 
+								and ujian.kd_guru=tugas.kd_guru
+								and kelas.kd_kelas=ujian.kd_kelas
+								and nilai_ujian.nis=siswa.nis
+								and tugas.kd_guru='$row3[kd_guru]'
+								and ujian.kd_kelas='$_POST[kd_kelas]'
+								and ujian.kd_mapel='$_POST[kd_mapel]'
+								and nilai_ujian.tgl_mengerjakan BETWEEN '$_POST[start]' AND '$_POST[stop]'")): ?>
+										<?php while($row = $query->fetch_assoc()): ?>
+										<tr>
+												<td><?=$no++?></td>
+												<td><?=$row['nis']?></td>
+												<td><?=$row['nama']?></td>
+												<td><?=$row['nilai']?></td>
+												
+										</tr>
+										<?php endwhile ?>
+								<?php endif ?>
+						</tbody>
+				</table>
+		</div>
+    <div class="panel-footer hidden-print">
+        <a onClick="window.print();return false" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i></a>
+		<a href="modul/mod_laporan/proses.php?kd_kelas=<?=$_POST['kd_kelas'];?>&kd_mapel=<?=$_POST['kd_mapel'];?>&kd_guru=<?=$_POST['kd_guru'];?>&from=<?=$_POST['start'];?>&to=<?=$_POST['stop'];?>" class="btn btn-primary"><i class="glyphicon glyphicon-download"></i></a>
+    </div>
+	</div>
+<?php endif; ?>
+<?php } ?>
 
-                                    </form>
-                        </div>
-     </div>
-             </div>
-                  <div class="col-md-8 col-sm-8 col-xs-12">
-                      <div class="panel panel-success">
-                        <div class="panel-heading">
-                           Hasil Ujian Online
-                        </div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>ID Ujian</th>
-                                           
-                                             <th>NIS</th>
-											 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-									<?php if ($query = $connection->query("SELECT * FROM nilai_ujian")): ?>
-	                        <?php while($row = $query->fetch_assoc()): ?>
-                                        <tr>
-										<td></td>
-                                            <td><?=$row['kd_nilai_ujian']?></td>
-                                            <td><?=$row['nis']?></td>
-                                            
-											 
-                                           
-                                        </tr>
-										<a href="media.php?module=cetak">cetak</a>
-                                        <?php endwhile ?>
-	                    <?php endif ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-             </div>
+<?php if ($_POST['jenis']=='NT'){ ?>
+<?php if ($_POST): ?>
+	<div class="panel panel-info">
+	<?php
+	$query1 = $connection->query("SELECT * FROM mapel
+	WHERE kd_mapel='$_POST[kd_mapel]'"); 
+	$row1 = $query1->fetch_assoc();
+	?>
+	<?php
+	$query2 = $connection->query("SELECT * FROM kelas
+	WHERE kd_kelas='$_POST[kd_kelas]'"); 
+	$row2 = $query2->fetch_assoc();
+	?>
+	<?php
+	$query3 = $connection->query("SELECT * FROM guru
+	WHERE username='$_SESSION[username]'"); 
+	$row3 = $query3->fetch_assoc();
+	?>
+		<div class="panel-heading"><h3 class="text-center">LAPORAN NILAI TUGAS PERPERIODE</h3><br><h4 class="text-center">Mata Pelajaran: <?=$row1["nama_mapel"]?> (<?=$row2["nama_kelas"]?>)<br>Guru Pengampu: <?=$row3["nama"]?><br><br><?=$_POST["start"]." s/d ".$_POST["stop"]?></h4></div>
+		<div class="panel-body">
+				<table class="table table-condensed">
+						<thead>
+								<tr>
+										<th>NO</th>
+										<th>NIS</th>
+										<th>NAMA SISWA</th>
+										<th>NILAI</th>
+										<th>NAMA TUGAS</th>
+										
+										<th class="hidden-print"></th>
+								</tr>
+						</thead>
+						<tbody>
+								<?php $no = 1; ?>
+								<?php if ($query = $connection->query("SELECT * FROM tugas,kerja_tugas,mapel,kelas,siswa,guru
+								WHERE tugas.kd_tugas=kerja_tugas.kd_tugas 
+								and tugas.kd_mapel=mapel.kd_mapel 
+								and tugas.kd_guru=tugas.kd_guru
+								and kelas.kd_kelas=tugas.kd_kelas
+								and kerja_tugas.nis=siswa.nis
+								and tugas.kd_guru='$row3[kd_guru]'
+								and tugas.kd_kelas='$_POST[kd_kelas]'
+								and tugas.kd_mapel='$_POST[kd_mapel]'
+								and tugas.tgl_up BETWEEN '$_POST[start]' AND '$_POST[stop]'")): ?>
+										<?php while($row = $query->fetch_assoc()): ?>
+										<tr>
+												<td><?=$no++?></td>
+												<td><?=$row['nis']?></td>
+												<td><?=$row['nama']?></td>
+												<td><?=$row['nilai']?></td>
+												
+										</tr>
+										<?php endwhile ?>
+								<?php endif ?>
+						</tbody>
+				</table>
+		</div>
+    <div class="panel-footer hidden-print">
+        <a onClick="window.print();return false" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i></a>
+		<a href="modul/mod_laporan/proses_tugas.php?kd_kelas=<?=$_POST['kd_kelas'];?>&kd_guru=<?=$_POST['kd_guru'];?>&kd_mapel=<?=$_POST['kd_mapel'];?>&from=<?=$_POST['start'];?>&to=<?=$_POST['stop'];?>" class="btn btn-primary"><i class="glyphicon glyphicon-download"></i></a>
+    </div>
+	</div>
+<?php endif; ?>
+<?php } ?>
+
              
              </div>
  </div>

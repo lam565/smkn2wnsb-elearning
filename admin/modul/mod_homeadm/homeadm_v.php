@@ -37,29 +37,29 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                  <div class="col-md-3 col-sm-3 col-xs-6">
                       <div class="alert alert-info back-widget-set text-center">
                             <img src="assets/img/siswa.png" width="100" height="100"/>
-                            <h3>500+&nbsp; <i class="fa fa-dollar"></i></h3>
-                          <a href="media.php?module=gfsiswa"> Data Siswa</a>
+                           
+                          <a href="media.php?module=siswa"> Data Siswa</a>
                         </div>
                     </div>
               <div class="col-md-3 col-sm-3 col-xs-6">
                       <div class="alert alert-success back-widget-set text-center">
                              <img src="assets/img/kelas.png" width="100" height="100"/>
-                            <h3>300+ Tasks</h3>
-                            Data Kelas
+                            
+                             <a href="media.php?module=siswa"> Data Kelas</a>
                         </div>
                     </div>
                <div class="col-md-3 col-sm-3 col-xs-6">
                       <div class="alert alert-warning back-widget-set text-center">
                              <img src="assets/img/jurusan.jpeg" width="100" height="100"/>
-                            <h3>56+ Calls</h3>
-                           Data Jurusan
+                           
+                            <a href="media.php?module=siswa"> Data Jurusan</a>
                         </div>
                     </div>
                <div class="col-md-3 col-sm-3 col-xs-6">
                       <div class="alert alert-danger back-widget-set text-center">
                             <img src="assets/img/guru.png" width="100" height="100"/>
-                            <h3>30+ Issues </h3>
-                            Data Guru
+                            
+                             <a href="media.php?module=siswa"> Data Guru</a>
                         </div>
                     </div>
 

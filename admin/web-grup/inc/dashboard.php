@@ -15,8 +15,8 @@ else{
 <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-head-line">Beranda</h1>
-                        <h1 class="page-subhead-line"><li class="fa fa-folder"></li> Halo! 
+                        
+                        <h3 class="page-subhead-line"><li class="fa fa-folder"></li> Halo! 
                         <?php
                         date_default_timezone_set("Asia/Jakarta");
                         $d = time();
@@ -38,7 +38,7 @@ else{
                         <?php
                         if (@$_SESSION["username"]) {
                         ?>
-                        <b><?php echo $data2["username"];?> (<?php echo $data2["username"];?>)</b>! <a href="./?p=posting&profil=<?php echo $data2["username"];?>"><li class="fa fa-pencil"></li> Buat Postingan</a> Di Forum Kelas
+                        <b><?php echo $data2["username"];?> (<?php echo $data2["username"];?>)</b>! <a href="./?p=posting&profil=<?php echo $data2["username"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><li class="fa fa-pencil"></li> Buat Postingan</a> Di Forum Kelas
                         <?php
                         }
                         else{
@@ -47,7 +47,7 @@ else{
                             <?php
                         }
                         ?>
-                        </h1>
+                        </h3>
 
                        
                     </div>
@@ -67,32 +67,18 @@ else{
                     ?>
 					
                 <?php
-				$sqlpost1 = mysqli_query($connection, "SELECT*FROM login where username='$_SESSION[username]'");
-                $datasqlpost1 = mysqli_fetch_array($sqlpost1);
-				if($datasqlpost1['level']=='guru'){
+				
                 $sqlpost = mysqli_query($connection, "SELECT*FROM post,detail_kurikulum where post.id_detail=detail_kurikulum.id_detail and post.id_detail='$_GET[id_det_kurikulum]' ORDER BY post.id_post DESC");
-                }else{
-				$sqlpost = mysqli_query($connection, "SELECT*FROM post,detail_kurikulum where post.id_detail=detail_kurikulum.id_detail and post.id_detail='$_GET[id_det_kurikulum]' ORDER BY post.id_post DESC");
-                	
-				}
+                
 				while ($datasqlpost = mysqli_fetch_array($sqlpost)) {
                     $datauserpost = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username='$datasqlpost[penulis_post]'"));
                 ?>
                 <div class="alert alert-info" id="post<?php echo $datasqlpost["id_post"];?>">
                 <span style="float:right;"><?php echo $datasqlpost["tanggal_post"];?></span>
                 <a href="./?p=post&id=<?php echo $datasqlpost["id_post"];?>&post_by=<?php echo $datasqlpost["penulis_post"];?>"><h2><b><?php echo $datasqlpost["judul_post"];?></b></h2></a>
-                <?php
-                if ($datauserpost["pp_user"] == '') {
-                ?>
+                
                 <a href="./?p=user&user=<?php echo $datasqlpost["penulis_post"];?>"><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $datauserpost["username"];?></b></a>
-                <?php
-                }
-                else{
-                ?>
-                <a href="./?p=user&user=<?php echo $datasqlpost["penulis_post"];?>"><img src="./assets/img/user/<?php echo $datauserpost["pp_user"];?>" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $datauserpost["username"];?></b></a>
-                <?php
-            }
-                ?>
+                
                 <span style="float:right"><i class="fa fa-comment"></i> : <?php $totalkomentarpost = mysqli_num_rows(mysqli_query($connection,"SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]'")); echo $totalkomentarpost;?></span>
                 <hr>
  
@@ -120,16 +106,11 @@ else{
                     
                     while ($datakomentarnya = mysqli_fetch_array($komentarnya)) {
                     $ygomen = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username = '$datakomentarnya[penulis_komentar]'"));
-                    if ($ygomen["pp_user"] == '') {
                     ?>
                     <img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a href="./?p=user&user=<?php echo $datakomentarnya["penulis_komentar"];?>"><?php echo $ygomen["username"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
+                    
                     <?php
-                    }
-                    else{
-                    ?>
-                    <img src="./assets/img/user/<?php echo $ygomen["pp_user"];?>" style="width:20px;height:20px;border-radius:100%"><b><a href="./?p=user&user=<?php echo $datakomentarnya["penulis_komentar"];?>"><?php echo $ygomen["username"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
-                    <?php
-                    }
+                    
                 }
                 $lala = mysqli_query($connection, "SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]'");
                     if (mysqli_num_rows($lala) >= 4) {
@@ -142,7 +123,7 @@ else{
                     <span>
                     <br>
                     <?php
-                    $datasukapost = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM suka_post WHERE id_post='$datasqlpost[id_post]' AND user_suka='ari'"));
+                    $datasukapost = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM suka_post WHERE id_post='$datasqlpost[id_post]' AND user_suka='$_SESSION[username]'"));
                     if ($datasukapost["post_suka"] == 1) {
         ?>
 					<?php
@@ -195,24 +176,7 @@ else{
                     });
                 });
                 </script>
-				<?php
-					$sql2 = $connection->query("SELECT * FROM post
-					WHERE id_detail='$_GET[id_det_kurikulum]'");
-					$row2 = $sql2->fetch_assoc();
-					?>
-					<?php
-					if($row2['laporkan']=='1'){ 
-					?>
-					- <button disabled="disabled" class="btn btn-danger btn" onclick="window.location='./inc/laporkan.php?id=<?php echo $datasqlpost["id_post"];?>&u=<?php echo $datasqlpost["penulis_post"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>';"><i class="fa fa-exclamation-circle"></i> Laporkan</button></span>
-                    <?php
-					}
-					else{
-					?>
-					- <button  class="btn btn-info btn" onclick="window.location='./inc/laporkan.php?id=<?php echo $datasqlpost["id_post"];?>&u=<?php echo $datasqlpost["penulis_post"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>';"><i class="fa fa-exclamation-circle"></i> Laporkan</button></span>				
-					<?php
-					}
-					?>
-					-  
+				
 					<?php
 					$sql1 = $connection->query("SELECT * FROM post
 					WHERE id_detail='$_GET[id_det_kurikulum]'");
