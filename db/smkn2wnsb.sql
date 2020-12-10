@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 09 Des 2020 pada 12.18
+-- Generation Time: 10 Des 2020 pada 01.24
 -- Versi Server: 5.6.21-log
 -- PHP Version: 5.6.3
 
@@ -140,11 +140,48 @@ CREATE TABLE IF NOT EXISTS `kelas` (
 
 INSERT INTO `kelas` (`kd_kelas`, `nama_kelas`, `tingkat`, `kd_jurusan`) VALUES
 ('xakl1', 'X AKL 1', 'X', 'akl'),
+('xakl2', 'X AKL 2', 'x', 'akl'),
+('xakl3', 'X AKL 3', 'x', 'akl'),
 ('xan1', 'X AN 1', 'X', 'an'),
+('xan2', 'X AN 2', 'X', 'an'),
 ('xav1', 'X AV 1', 'X', 'av'),
+('xav2', 'X AV 2', 'X', 'av'),
 ('xdpib1', 'X DPIB 1', 'X', 'dpib'),
+('xdpib2', 'X DPIB 2', 'X', 'dpib'),
+('xiakl1', 'XI AKL 1', 'XI', 'akl'),
+('xiakl2', 'XI AKL 2', 'XI', 'akl'),
+('xiakl3', 'XI AKL 3', 'XI', 'akl'),
+('xian', 'XI AN ', 'XI', 'an'),
+('xiav2', 'XI AV 2', 'XI', 'av'),
+('xidpib1', 'XI DPIB 1', 'XI', 'dpib'),
+('xidpib2', 'XI DPIB 2', 'XI', 'dpib'),
+('xidpib3', 'XI DPIB 3', 'XI', 'dpib'),
+('xiiakl1', 'XII AKL 1', 'XII', 'akl'),
+('xiiakl2', 'XII AKL 2', 'XII', 'akl'),
+('xiiakl3', 'XII AKL 3', 'XII', 'akl'),
+('xiian', 'XII AN', 'XII', 'an'),
+('xiiav1', 'XI AV 1', 'XI', 'av'),
+('xiiav2', 'XII AV 2', 'XII', 'av'),
+('xiidpib1', 'XII DPIB 1', 'XII', 'dpib'),
+('xiidpib2', 'XII DPIB 2', 'XII', 'dpib'),
+('xiidpib3', 'XII DPIB 3', 'XII', 'dpib'),
+('xiiintel1', 'XII INTEL ', 'XII', 'intel'),
+('xiintel1', 'XI INTEL 1', 'XI', 'intel'),
+('xiintel2', 'XI INTEL 2', 'XI', 'intel'),
+('xiitkro1', 'XII TKRO 1', 'XII', 'tkro'),
+('xiitkro2', 'XII TKRO 2', 'XII', 'tkro'),
+('xiitkro3', 'XII TKRO 3', 'XII', 'tkro'),
+('xiitkro4', 'XII TKRO 4', 'XII', 'tkro'),
 ('xintel1', 'X INTEL 1', 'X', 'intel'),
-('xtkro1', 'X TKRO 1', 'X', 'tkro');
+('xintel2', 'X INTEL 2', 'X', 'intel'),
+('xitkro1', 'XI TKRO 1', 'XI', 'tkro'),
+('xitkro2', 'XI TKRO 2', 'XI', 'tkro'),
+('xitkro3', 'XI TKRO 3', 'XI', 'tkro'),
+('xitkro4', 'XI TKRO 4', 'XI', 'tkro'),
+('xtkro1', 'X TKRO 1', 'X', 'tkro'),
+('xtkro2', 'X TKRO 2', 'X', 'tkro'),
+('xtkro3', 'X TKRO 3', 'X', 'tkro'),
+('xtkro4', 'X TKRO 4', 'X', 'tkro');
 
 -- --------------------------------------------------------
 
@@ -183,10 +220,29 @@ CREATE TABLE IF NOT EXISTS `komentar` (
   `isi_komentar` text NOT NULL,
   `tanggal_komentar` varchar(100) NOT NULL,
   `id_post` int(100) NOT NULL,
-  `pp_penulis` text NOT NULL,
   `penulis_post` varchar(100) NOT NULL,
   `lihat_komentar` int(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `komentar`
+--
+
+INSERT INTO `komentar` (`id_komentar`, `penulis_komentar`, `isi_komentar`, `tanggal_komentar`, `id_post`, `penulis_post`, `lihat_komentar`) VALUES
+(1, 'ainurr001', 'abc', '18:34 09/12/2020', 2, 'ainurr001', 1),
+(2, 'ainurr001', 'aku', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(3, 'ainurr001', 'akuu', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(4, 'ainurr001', 'akuuu', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(5, 'ainurr001', 'ana', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(6, 'ainurr001', 'anai', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(7, 'ainurr001', 'anaii', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(8, 'ainurr001', 'anaiik', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(9, 'ainurr001', 'anaiikk', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(10, 'ainurr001', 'anaiikkk', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(11, 'ainurr001', 'anaiikkkk', '18:39 09/12/2020', 2, 'ainurr001', 1),
+(12, 'ainurr001', 'baik', '18:50 09/12/2020', 2, 'ainurr001', 1),
+(13, 'ainurr001', 'pp', '18:57 09/12/2020', 2, 'ainurr001', 1),
+(14, 'ainurr001', 'yang', '19:00 09/12/2020', 2, 'ainurr001', 1);
 
 -- --------------------------------------------------------
 
@@ -266,13 +322,64 @@ CREATE TABLE IF NOT EXISTS `mapel` (
 --
 
 INSERT INTO `mapel` (`kd_mapel`, `nama_mapel`) VALUES
+('ad', 'Akuntansi Dasar'),
+('admp', 'Administrasi Pajak'),
+('ak', 'Akuntansi Keuangan'),
+('an2d', 'Animasi 2D'),
+('an3d', 'Animasi 3D'),
+('apa', 'Aplikasi Pengolah Angka / Speadsheet'),
+('apl', 'Aplikasi Perangkat Lunak dan Perancang Interior Gedung'),
 ('bind', 'Bahasa Indonesia'),
 ('bing', 'Bahasa Inggris'),
+('bjw', 'Bahasa Jawa'),
 ('bk', 'Bimbingan dan Konseling(BK)'),
+('dkbtpt', 'Dasar-dasar Konstruksi Bangunan dan Teknik Pengukuran Tanah'),
+('dle', 'Dasar Listrik dan Elektronika'),
+('dp', 'Digital Processing'),
+('dsr', 'Dasar-dasar Seni Rupa'),
+('ebk', 'Estimasi Biaya Konstruksi'),
+('ep', 'Etika Profesi'),
+('fsk', 'Fisika'),
+('ga', 'Gambar Animasi'),
+('gt', 'Gambar Teknik '),
+('gto', 'Gambar Teknik Otomotif'),
+('iml', 'Instalasi Motor Listrik'),
+('ipa', 'Ilmu Pengetahuan Alam'),
+('ipl', 'Instalasi Penerangan Listrik'),
+('itl', 'Instalasi Tenaga Listrik'),
+('ka', 'Komputer Akuntansi'),
+('kbgt', 'Kerja Bengkel dan Gambar Teknik '),
+('kjj', 'Konstruksi Jalan dan Jembatan'),
+('kmi', 'Kimia'),
+('kug', 'Konstruksi dan Utilitas Gedung'),
+('mm', 'Mikroprosesor dan Mikrocontroler'),
+('mt', 'Mekanika Teknik'),
 ('mtk', 'Matematika'),
 ('pabp', 'Pendidikan Agama dan Budi Pekerti'),
+('palip', 'Praktikum Akuntansi Lembaga, Instansi Pemerintah'),
+('papjdm', 'Praktikum Akuntansi Perusahaan Jasa, Dagang dan Manufaktur'),
+('pd', 'Perbankan Dasar'),
+('pde', 'Pekerjaan Dasar Elektromekanik'),
+('pdto', 'Pekerjaan Dasar Teknik Otomtoif'),
+('pisav', 'Perencanaan dan Instalasi Sistem Audio Video'),
+('pjok', 'Pendidikan Jasmanai Olahraga dan Kesehatan'),
+('pkk', 'Produk Kreatif dan Kewirausahaan'),
+('pkkr', 'Pemeliharaan Kelistrikan  Kendaraan Ringan'),
+('pkw', 'Produk Kreatif dan Kewirausahaan'),
+('pmkr', 'Pemeliharaan Mesin Kendaraan Ringan'),
 ('ppkn', 'Pendidikan Pancasila dan Kewarganegaraan'),
-('sjr', 'Sejarah Indonesia');
+('ppl', 'Perbaikan Peralatan Listrik'),
+('pppav', 'Perawatan dan Perbaikan Peralatan Audio dan Video'),
+('pre', 'Penerapan Rangkaian Elektronika'),
+('psptkr', 'Pemeliharaan Mesin Kendaraan Ringan'),
+('psrt', 'Penerapan Sistem Radio dan Televisi'),
+('sb', 'Seni Budaya'),
+('sjr', 'Sejarah Indonesia'),
+('skd', 'Simulasi dan Komunikasi Digital'),
+('skt', 'Sketsa'),
+('tdo', 'Teknologi Dasar otomotif'),
+('tpmm', 'Teknik Pemrograman, Mikroprosesor dan Mikrocontroler'),
+('vdg', 'Videografi');
 
 -- --------------------------------------------------------
 
@@ -338,14 +445,22 @@ CREATE TABLE IF NOT EXISTS `post` (
   `suka_post` int(10) NOT NULL,
   `laporkan` varchar(20) NOT NULL,
   `tgl_lapor` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `post`
 --
 
 INSERT INTO `post` (`id_post`, `id_detail`, `judul_post`, `isi_post`, `penulis_post`, `tanggal_post`, `gambar_post`, `suka_post`, `laporkan`, `tgl_lapor`) VALUES
-(1, 5, 'a', 'a', 'ainurr001', '5:53 09/12/2020', '', 0, '0', '0000-00-00 00:00:00');
+(1, 5, 'a', 'a', 'ainurr001', '5:53 09/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
+(2, 12, 'abc', 'aaaa', 'ainurr001', '18:26 09/12/2020', '', 1, '', '0000-00-00 00:00:00'),
+(3, 12, 'bbb', 'aaa', 'ainurr001', '19:40 09/12/2020', '', 0, '1', '2020-12-10 04:49:50'),
+(4, 12, 'hij', 'klm', 'ainurr001', '19:48 09/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
+(5, 12, 'k', 'l', 'ainurr001', '19:50 09/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
+(6, 12, 'yy', 'yul', 'ainurr001', '20:00 09/12/2020', '', 2, '0', '0000-00-00 00:00:00'),
+(7, 12, 'l', 'pop', 'ainurr001', '20:04 09/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
+(8, 12, 'jj', 'jk', 'ainurr001', '20:11 09/12/2020', '20201209_201155biola.jpg', 0, '0', '0000-00-00 00:00:00'),
+(9, 12, 'test', 'test', 'aguspk001', '4:48 10/12/2020', '', 0, '1', '2020-12-10 04:49:44');
 
 -- --------------------------------------------------------
 
@@ -354,20 +469,21 @@ INSERT INTO `post` (`id_post`, `id_detail`, `judul_post`, `isi_post`, `penulis_p
 --
 
 CREATE TABLE IF NOT EXISTS `rombel` (
+`id` int(11) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_tajar` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `rombel`
 --
 
-INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
-('7768', 'xtkro1', '2020-2021-ganjil'),
-('7770', 'xintel1', '2020-2021-ganjil'),
-('7801', 'xav1', '2020-2021-ganjil'),
-('7805', 'xintel1', '2020-2021-ganjil');
+INSERT INTO `rombel` (`id`, `nis`, `kd_kelas`, `kd_tajar`) VALUES
+(1, '7768', 'xintel1', '2020-2021-ganjil'),
+(2, '7770', 'xintel1', '2020-2021-ganjil'),
+(3, '7801', 'xav1', '2020-2021-ganjil'),
+(4, '7805', 'xintel1', '2020-2021-ganjil');
 
 -- --------------------------------------------------------
 
@@ -453,7 +569,17 @@ CREATE TABLE IF NOT EXISTS `suka_post` (
   `penulis_post` varchar(100) NOT NULL,
   `tanggal_suka` varchar(100) NOT NULL,
   `lihat_suka` int(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `suka_post`
+--
+
+INSERT INTO `suka_post` (`id_suka`, `user_suka`, `id_post`, `post_suka`, `penulis_post`, `tanggal_suka`, `lihat_suka`) VALUES
+(1, 'ainurr001', 2, 1, 'ainurr001', '18:34 09/12/2020', 1),
+(2, 'ainurr001', 2, 1, 'ainurr001', '19:44 09/12/2020', 1),
+(3, 'ainurr001', 6, 1, 'ainurr001', '20:03 09/12/2020', 1),
+(4, 'aguspk001', 6, 1, 'ainurr001', '4:39 10/12/2020', 1);
 
 -- --------------------------------------------------------
 
@@ -657,7 +783,7 @@ ALTER TABLE `post`
 -- Indexes for table `rombel`
 --
 ALTER TABLE `rombel`
- ADD KEY `ang-siswa` (`nis`), ADD KEY `ang-kelas` (`kd_kelas`), ADD KEY `ang-tajar` (`kd_tajar`);
+ ADD PRIMARY KEY (`id`), ADD KEY `ang-siswa` (`nis`), ADD KEY `ang-kelas` (`kd_kelas`), ADD KEY `ang-tajar` (`kd_tajar`);
 
 --
 -- Indexes for table `silabus`
@@ -731,7 +857,7 @@ MODIFY `kd_detail_soal` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `komentar`
 --
 ALTER TABLE `komentar`
-MODIFY `id_komentar` int(200) NOT NULL AUTO_INCREMENT;
+MODIFY `id_komentar` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `kurikulum`
 --
@@ -741,12 +867,17 @@ MODIFY `kd_kurikulum` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-MODIFY `id_post` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id_post` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `rombel`
+--
+ALTER TABLE `rombel`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `suka_post`
 --
 ALTER TABLE `suka_post`
-MODIFY `id_suka` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id_suka` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `timeline`
 --
