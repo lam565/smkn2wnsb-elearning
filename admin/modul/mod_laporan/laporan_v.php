@@ -118,10 +118,10 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 								<?php if ($query = $connection->query("SELECT * FROM nilai_ujian,ujian,mapel,kelas,siswa,guru
 								WHERE nilai_ujian.kd_ujian=ujian.kd_ujian 
 								and ujian.kd_mapel=mapel.kd_mapel 
-								and ujian.kd_guru=tugas.kd_guru
+								and ujian.kd_guru=guru.kd_guru
 								and kelas.kd_kelas=ujian.kd_kelas
 								and nilai_ujian.nis=siswa.nis
-								and tugas.kd_guru='$row3[kd_guru]'
+								and ujian.kd_guru='$row3[kd_guru]'
 								and ujian.kd_kelas='$_POST[kd_kelas]'
 								and ujian.kd_mapel='$_POST[kd_mapel]'
 								and nilai_ujian.tgl_mengerjakan BETWEEN '$_POST[start]' AND '$_POST[stop]'")): ?>
