@@ -20,7 +20,7 @@ else{
     </div>
     <div class="row">
       <div class="alert alert-info">
-        <h4>SELAMAT DATANG BPK/IBU GURU</h4>
+        <h4>SELAMAT DATANG BPK/IBU GURU <?php echo $_SESSION['kode']; ?></h4>
         <p>Pada kurikulum saat ini anda mengajar :</p> 
       </div>
     </div>
@@ -30,14 +30,15 @@ else{
 
       <?php
       $qbacakurikulum="SELECT kls.kd_kelas,kls.nama_kelas,g.kd_guru,g.nama,m.nama_mapel 
-      FROM kurikulum as k, detail_kurikulum as dk, guru as g, kelas as kls, mapel as m 
-      WHERE k.kd_kurikulum=dk.kd_kurikulum AND g.kd_guru=dk.kd_guru AND kls.kd_kelas=dk.kd_kelas AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND g.username='$_SESSION[username]'";
+      FROM pengajaran as p, guru as g, kelas as kls, mapel as m 
+      WHERE g.kd_guru=p.kd_guru AND kls.kd_kelas=p.kd_kelas AND m.kd_mapel=p.kd_mapel AND g.username='$_SESSION[username]'";
 
       $datakurikulum=mysqli_query($connect,$qbacakurikulum);
       while ($rkur=mysqli_fetch_array($datakurikulum)){
         echo "<div class=\"col-md-3 col-sm-3 col-xs-6\">
         <div class=\"alert alert-info back-widget-set text-center\">
         <i class=\"fa fa-book fa-5x\"></i>
+        <p>$rkur[nama_mapel]</p>
         <h3>$rkur[nama_kelas]</h3>
         
         </div>

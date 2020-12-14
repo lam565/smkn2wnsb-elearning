@@ -58,7 +58,7 @@ if (isset($_POST['act'])) {
 		$output="<div class='checkbox'>";
 		while ($result=mysqli_fetch_array($query)) {
 			$output .= "<label>
-			<input type='checkbox' value='$result[kd_kelas]' />$result[kd_kelas] 
+			<input type='checkbox' name='kd_kls[]' value='$result[kd_kelas]' />$result[nama_kelas] 
 			</label>";
 		}
 		$output .= "</div>";

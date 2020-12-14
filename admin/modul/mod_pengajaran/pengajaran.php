@@ -36,7 +36,7 @@ else{
          MANAJEMEN PENGAJAR
        </div>
        <div class="panel-body text-center recent-users-sec">
-        <form action="" method="POST" role="form">
+        <form action="modul/mod_pengajaran/aksi.php?act=add" method="POST" role="form">
 
          <div class="form-group">
           <label> Mata Pelajaran</label>
@@ -64,17 +64,28 @@ else{
     <div class="form-group">
       <label>Kelas </label>
       <div id="kelasajar">
-        
+
       </div>        
     </div>
-  <div class="form-group">
-    <label>Guru </label>
+    <div class="form-group">
+      <label>Guru </label>
+      <select class="form-control" name="kd_guru">
+        <option>Pilih Guru Pengajar</option>
+        <?php 
+        $query=mysqli_query($connect,"SELECT kd_guru,nama FROM guru WHERE status='Aktif' ORDER BY nama");
+        $c=mysqli_num_rows($query);
+        if ($c>0) {
+          while ($rsl=mysqli_fetch_array($query)){
+            echo "<option value='$rsl[kd_guru]'>$rsl[nama]</option>";
+          }
+        }
+        ?>
+      </select>
+    </div>
 
-  </div>
+    <input type="submit" name="submit" value="Tambah" class="btn btn-info">
 
-  <button type="submit" class="btn btn-btn-block">Simpan</button>
-
-</form>
+  </form>
 </div>
 </div>
 </div>
@@ -84,6 +95,27 @@ else{
      TABEL PENGAJAR
    </div>
    <div class="panel-body">
+    <form action="" method="get">
+      <div class="form-group col-sm-4 col-md-2 col-xs-12">
+        <label>Filter</label>
+        <input type="hidden" name="module" value="pengajaran">
+      </div>
+      <div class="form-group col-sm-6 col-md-8 col-xs-12">
+        <select name='fkelas' class="form-control">
+          <option value="all">Semua</option>
+          <?php 
+          $query=mysqli_query($connect,"SELECT kd_kelas,nama_kelas FROM kelas ORDER BY tingkat");
+          
+          while ($result=mysqli_fetch_array($query)) {
+            echo "<option value='$result[kd_kelas]'>$result[nama_kelas]</option>";
+          }
+           ?>
+         </select>
+       </div>
+       <div class="form-group col-sm-2 col-md-2 col-xs-12">
+        <input type="submit" class="btn btn-info btn-sm" value="Saring">
+      </div>
+    </form>
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover">
         <thead>
@@ -97,22 +129,28 @@ else{
         </thead>
         <tbody>
 
-         <?php 
+         <?php
+         $fkelas="";
+         if (isset($_GET['fkelas'])){
+          if ($_GET['fkelas']=='all'){
+            $fkelas="";
+          } else {
+            $fkelas=" AND pengajaran.kd_kelas='$_GET[fkelas]' ";
+          }
+          
+         } 
          $no=1;
-         if ($query = $connection->query("SELECT * FROM pengajaran,mapel,kelas,guru where pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_kelas=kelas.kd_kelas ORDER BY pengajaran.kd_mapel")): ?>
+         if ($query = $connection->query("SELECT * FROM pengajaran,mapel,kelas,guru where pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_guru=guru.kd_guru".$fkelas." ORDER BY pengajaran.kd_kelas")): ?>
            <?php while($row = $query->fetch_assoc()): ?>
             <tr>
-              <td></td>
               <td><?=$no; ?></td>
-              <td><?=$row['kd_kurikulum']?></td>
               <td><?=$row['nama_mapel']?></td>
               <td><?=$row['nama_kelas']?></td>
               <td><?=$row['nama']?></td>
-
               <td class="hidden-print">
                <div class="btn-group">
-                <a href="?module=detkurikulum&action=update&key=<?=$row['id_detail']?>&key2=<?=$row['kd_kurikulum']?>" class="btn btn-warning btn-xs">Edit</a>
-                <a href="?module=detkurikulum&action=delete&key=<?=$row['id_detail']?>&key2=<?=$row['kd_kurikulum']?>" class="btn btn-danger btn-xs">Hapus</a>
+                <a href="?module=pengajaran&eid=<?php echo $row['kd_pengajaran'] ?>" class="btn btn-warning btn-xs">Edit</a>
+                <a href="modul/mod_pengajaran/aksi.php?act=del&kd=<?php echo $row['kd_pengajaran'] ?>" class="btn btn-danger btn-xs">Hapus</a>
               </div>
             </td>
 

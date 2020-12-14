@@ -58,31 +58,7 @@ else{
                             ?>
                         </select>
                     </div>
-
-                    <!-- y
-                    <div class="form-group">
-                        <label>Kelas</label>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" checked="" />Semua
-                            </label>
-                        </div>
-
-                        <?php
-                        $qkelas="SELECT kls.kd_kelas,kls.nama_kelas 
-                        FROM kurikulum as k, detail_kurikulum as dk, guru as g, kelas as kls 
-                        WHERE k.kd_kurikulum=dk.kd_kurikulum AND g.kd_guru=dk.kd_guru AND kls.kd_kelas=dk.kd_kelas AND k.Aktif='Y' AND g.username='$_SESSION[username]' ";
-
-                        $datakelas=mysqli_query($connect,$qkelas);
-                        while ($kelas=mysqli_fetch_array($datakelas)){
-                            echo "<div class=\"checkbox\"> <label>
-                            <input type=\"checkbox\" value=\"$kelas[kd_kelas]\" />$kelas[nama_kelas]
-                            </label></div>";
-                        }
-                        ?>
-
-                    </div>
-                -->
+                    
                 <div class="form-group">
                     <label>Judul Silabus</label>
                     <input type="hidden" name="kd_guru" value="<?php echo $_SESSION['kode']; ?>">
@@ -119,8 +95,8 @@ else{
             <tbody>                
                 <?php
                 $sql="SELECT silabus.judul, silabus.nama_file,kelas.nama_kelas, mapel.nama_mapel, silabus.tanggal_upload 
-                FROM detail_kurikulum as dk, kurikulum, mapel, silabus, kelas 
-                WHERE dk.kd_kurikulum=kurikulum.kd_kurikulum AND dk.kd_silabus=silabus.kd_silabus AND dk.kd_kelas=kelas.kd_kelas AND dk.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND dk.kd_mapel=mapel.kd_mapel AND dk.kd_guru='$_SESSION[kode]'";
+                FROM pengajaran, mapel, silabus, kelas 
+                WHERE pengajaran.kd_silabus=silabus.kd_silabus AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_guru='$_SESSION[kode]'";
                 $silabus=mysqli_query($connect,$sql);
                 $n=1;
                 while ($rsilabus=mysqli_fetch_array($silabus)) {

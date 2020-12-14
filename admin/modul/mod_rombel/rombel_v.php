@@ -31,7 +31,7 @@ else{
    if ($update) {
     $sql = "UPDATE rombel SET kd_kelas='$_POST[kd_kelas]',kd_tajar='$_POST[kd_tajar]' WHERE nis='$_GET[key]'";
   } else {
-    $sql = "INSERT INTO rombel VALUES ('1', '$_POST[kd_kelas]', '$_POST[kd_tajar]')";
+    $sql = "INSERT INTO rombel VALUES ('$_POST[nis]', '$_POST[kd_kelas]', '$_POST[kd_tajar]')";
   }
   if ($connection->query($sql)) {
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=rombel'</script>";
