@@ -50,6 +50,22 @@ if (isset($_POST['act'])) {
 		
 		break;
 
+		case 'kelasajar':
+		$mapel=$_POST['mp'];
+		$jurusan=$_POST['jrs'];
+
+		$query=mysqli_query($connect,"SELECT kd_kelas,nama_kelas FROM kelas WHERE kd_jurusan='$jurusan' ORDER BY tingkat");
+		$output="<div class='checkbox'>";
+		while ($result=mysqli_fetch_array($query)) {
+			$output .= "<label>
+			<input type='checkbox' value='$result[kd_kelas]' />$result[kd_kelas] 
+			</label>";
+		}
+		$output .= "</div>";
+		echo $output;
+
+		break;
+
 		default:
 		echo "alert('Terjadi Kesalahan!')";
 		break;

@@ -161,6 +161,29 @@ if($_SESSION['login']==0){
             });
 
         });
+
+        $(document).on('change', '#cbbmapelajar', function(){
+            var mapel = $(this).val();
+            $('#cbbjurusan').attr('data-mapel',mapel)
+        });
+
+        $(document).on('change', '#cbbjurusan', function(){
+            var jurusan = $(this).val();
+            var kd_mapel = $(this).attr('data-mapel');
+            $.ajax({
+                url: 'function.php',
+                type: 'post',
+                data: {
+                    act: 'kelasajar',
+                    mp: kd_mapel,
+                    jrs: jurusan
+                },
+                success: function (data){
+                    $('#kelasajar').html(data);
+                }
+            });
+
+        });
         
         $(document).on('change', '#cbmapel', function(){
             var mapel = $(this).val();

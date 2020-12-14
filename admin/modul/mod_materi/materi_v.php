@@ -136,7 +136,7 @@ else{
                             <td>$rmateri[nama_materi]</td>";
                             echo "<td>$rmateri[nama_kelas]</td>";
                             echo "<td>$rmateri[nama_mapel]</td>
-                            <td>$rmateri[file]</td>
+                            <td><a href='files/materi/$rmateri[file]'>$rmateri[file]</a></td>
                             <td>$rmateri[tgl_up]</td>
                             <td><a href='modul/mod_materi/hapus_materi.php?id=$rmateri[kd_materi]' class='btn btn-warning' onclick='return confirm(\"Yakin Hapus?\")'>Hapus<a></td>
 

@@ -59,7 +59,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                  <div class="col-md-4 col-sm-4 col-xs-12">
  <div class="panel panel-<?= ($update) ? "warning" : "info" ?>">
                         <div class="panel-heading">
-                           <?= ($update) ? "EDIT" : "TAMBAH" ?> KURIKULUM
+                           <?= ($update) ? "EDIT" : "TAMBAH" ?> PENGAJARAN
                         </div>
                         <div class="panel-body text-center recent-users-sec">
 						<form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" role="form">

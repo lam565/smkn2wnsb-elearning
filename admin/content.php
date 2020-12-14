@@ -103,12 +103,8 @@ else{
       include "modul/mod_tahun_ajar/tahun_v.php";
       break;
 
-      case 'kurikulum':
-      include "modul/mod_kurikulum/kurikulum_v.php";
-      break;
-
-      case 'detkurikulum':
-      include "modul/mod_detailkurikulum/detkurikulum_v.php";
+      case 'pengajaran':
+      include "modul/mod_pengajaran/pengajaran.php";
       break;
 
       case 'pelaporan':
