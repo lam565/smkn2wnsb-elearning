@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Des 2020 pada 04.45
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.4.10
+-- Waktu pembuatan: 14 Des 2020 pada 10.55
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -37,7 +38,7 @@ CREATE TABLE `detail_soal` (
   `pil_D` varchar(100) NOT NULL,
   `pil_E` varchar(100) NOT NULL,
   `kunci` varchar(5) NOT NULL,
-  `keterangan` text NOT NULL DEFAULT '-',
+  `keterangan` text,
   `gambar` varchar(100) NOT NULL DEFAULT 'T',
   `C` varchar(30) NOT NULL DEFAULT '-',
   `P` varchar(30) NOT NULL DEFAULT '-'
@@ -219,7 +220,7 @@ CREATE TABLE `kerja_tugas` (
   `kd_tugas` varchar(30) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `file_kerja` varchar(100) NOT NULL DEFAULT 'T',
-  `nilai` int(11) NOT NULL DEFAULT 0,
+  `nilai` int(11) NOT NULL DEFAULT '0',
   `status_kerja` varchar(20) NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -472,8 +473,17 @@ CREATE TABLE `pengajaran` (
   `kd_mapel` varchar(10) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL,
-  `kd_silabus` varchar(30) NOT NULL
+  `kd_silabus` varchar(30) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `pengajaran`
+--
+
+INSERT INTO `pengajaran` (`kd_pengajaran`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
+(2, 'bing', 'xakl1', 'GR090', '1'),
+(3, 'bind', 'xakl1', 'GR036', '1'),
+(4, 'bind', 'xan1', 'GR036', '1');
 
 -- --------------------------------------------------------
 
@@ -506,6 +516,14 @@ CREATE TABLE `rombel` (
   `kd_tajar` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `rombel`
+--
+
+INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
+('8170', 'xakl1', '2020-2021-ganjil'),
+('8168', 'xakl1', '2020-2021-ganjil');
+
 -- --------------------------------------------------------
 
 --
@@ -518,6 +536,13 @@ CREATE TABLE `silabus` (
   `nama_file` varchar(50) NOT NULL,
   `tanggal_upload` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `silabus`
+--
+
+INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VALUES
+('1', 'Belum Upload Silabus', 'silabus-default.pdf', '2020-12-14 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -753,7 +778,8 @@ ALTER TABLE `nilai_ujian`
 -- Indeks untuk tabel `pengajaran`
 --
 ALTER TABLE `pengajaran`
-  ADD PRIMARY KEY (`kd_pengajaran`);
+  ADD PRIMARY KEY (`kd_pengajaran`),
+  ADD KEY `kd_silabus` (`kd_silabus`);
 
 --
 -- Indeks untuk tabel `silabus`
@@ -780,24 +806,6 @@ ALTER TABLE `tahun_ajar`
   ADD PRIMARY KEY (`kd_tajar`);
 
 --
--- Indeks untuk tabel `timeline`
---
-ALTER TABLE `timeline`
-  ADD PRIMARY KEY (`id_timeline`);
-
---
--- Indeks untuk tabel `tugas`
---
-ALTER TABLE `tugas`
-  ADD PRIMARY KEY (`kd_tugas`);
-
---
--- Indeks untuk tabel `ujian`
---
-ALTER TABLE `ujian`
-  ADD PRIMARY KEY (`kd_ujian`);
-
---
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -805,13 +813,17 @@ ALTER TABLE `ujian`
 -- AUTO_INCREMENT untuk tabel `pengajaran`
 --
 ALTER TABLE `pengajaran`
-  MODIFY `kd_pengajaran` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `kd_pengajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `timeline`
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
-ALTER TABLE `timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Ketidakleluasaan untuk tabel `pengajaran`
+--
+ALTER TABLE `pengajaran`
+  ADD CONSTRAINT `pengajaran_ibfk_1` FOREIGN KEY (`kd_silabus`) REFERENCES `silabus` (`kd_silabus`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
