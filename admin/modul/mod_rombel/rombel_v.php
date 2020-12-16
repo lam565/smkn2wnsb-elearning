@@ -64,9 +64,14 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
       <form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" role="form">
        
        <div class="form-group">
-        <label>NIS</label>
-        <input class="form-control" name="nis" placeholder="Masukkan NIS Siswa" type="text" <?= (!$update) ?: 'value="'.$row["nis"].'"' ?>/>
-      </div>
+        <label>Siswa </label>
+        <select class="form-control" name="nis">
+            <option>--Pilih Siswa--</option>
+            <?php $query = $connection->query("SELECT * FROM siswa"); while ($data = $query->fetch_assoc()): ?>
+            <option value="<?=$data["nis"]?>" <?= (!$update) ?: (($data["nis"] != $data["nis"]) ?: 'selected="on"') ?>><?=$data["nis"]?>--<?=$data["nama"]?></option>
+        <?php endwhile; ?>
+    </select>
+</div>
       
       
        <div class="form-group">
@@ -108,7 +113,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
    </div>
    <div class="panel-body">
     <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover">
+      <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
           <tr>
             <th>#</th>
@@ -122,13 +127,15 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
         <tbody>
          <?php $no = 1; ?>
          <?php if ($query = $connection->query("
-		 SELECT * FROM rombel,kelas,tahun_ajar 
+		 SELECT * FROM rombel,kelas,tahun_ajar,siswa 
 		 where rombel.kd_kelas=kelas.kd_kelas
+		 and siswa.nis=rombel.nis
 		 and rombel.kd_tajar=tahun_ajar.kd_tajar")): ?>
            <?php while($row = $query->fetch_assoc()): ?>
             <tr>
               <td></td>
               <td><?=$row['nis']?></td>
+			   <td><?=$row['nama']?></td>
               <td><?=$row['nama_kelas']?></td>
               <td><?=$row['tahun_ajar']?></td>
               

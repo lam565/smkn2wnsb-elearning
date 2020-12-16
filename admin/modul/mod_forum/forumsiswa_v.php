@@ -40,9 +40,9 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 	   <div class="row">
 	  
 	<?php
-	$sql = $connection->query("SELECT * FROM siswa,rombel,detail_kurikulum,mapel,kelas 
+	$sql = $connection->query("SELECT * FROM siswa,rombel,pengajaran,mapel,kelas 
 	WHERE 
-	siswa.nis=rombel.nis and kelas.kd_kelas=rombel.kd_kelas and mapel.kd_mapel=detail_kurikulum.kd_mapel and kelas.kd_kelas=detail_kurikulum.kd_kelas
+	siswa.nis=rombel.nis and kelas.kd_kelas=rombel.kd_kelas and mapel.kd_mapel=pengajaran.kd_mapel and kelas.kd_kelas=pengajaran.kd_kelas
 	and siswa.nis='$row1[nis]'");
 	while($row = $sql->fetch_assoc()):
 
@@ -50,7 +50,7 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
                   <div class="col-md-3 col-sm-3 col-xs-6">
                       <div class="alert alert-info back-widget-set text-center">
                             <img src="assets/img/siswa.png" width="100" height="100"/>
-                            <h3><a href="web-grup/?p=beranda&id_det_kurikulum=<?=$row['id_detail']?>"><?=$row['nama_mapel']?></a></h3>
+                            <h3><a href="web-grup/?p=beranda&id_det_kurikulum=<?=$row['kd_pengajaran']?>"><?=$row['nama_mapel']?></a></h3>
                           
                         </div>
                     </div>

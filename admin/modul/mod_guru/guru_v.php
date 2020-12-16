@@ -32,9 +32,13 @@ else{
     $sql = "UPDATE guru SET username='$_POST[username]',nip='$_POST[nip]',nama='$_POST[nama]',telp='$_POST[telp]',
     email='$_POST[email]',status='$_POST[status]' WHERE kd_guru='$_GET[key]'";
   } else {
+	  $tg=date('Y-m-d H:i:s');
     $sql = "INSERT INTO guru VALUES ('$_POST[kd_guru]', '$_POST[username]', 
     '$_POST[nip]','$_POST[nama]','$_POST[telp]','$_POST[email]',
     '','$_POST[status]')";
+	
+	$sql = "INSERT INTO login VALUES ('$_POST[username]', '1234', 
+    'guru','$tg','$_POST[status]')";
   }
   if ($connection->query($sql)) {
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=guru'</script>";
@@ -136,7 +140,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
    <div class="panel-body">
     <a href="?module=importgr" class="btn btn-success btn-sm">IMPORT DARI EXCEL</a>
     <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover">
+     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
           <tr>
             <th>#</th>

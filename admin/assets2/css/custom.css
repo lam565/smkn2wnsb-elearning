@@ -71,7 +71,7 @@ body.nav-sm ul.nav.child_menu {
     padding: 10px;
     width: 210px;
     z-index: 4000;
-    background: #3E5367;
+    background: #C3C;
     display: none;
 }
 
@@ -190,7 +190,7 @@ body.nav-sm .menu_section h3 {
     /*background: #F4F6F9;
     border-bottom: 1px solid #E6E9ED;*/
     
-    background: #EDEDED;
+    background:#0080C0;
     border-bottom: 1px solid #D9DEE4;
     margin-bottom: 10px;
     width: 100%;
@@ -204,7 +204,7 @@ body.nav-md .container.body .col-md-3.left_col {
 }
 
 body .container.body .right_col {
-    background: #F7F7F7;
+    background:#008080;
 }
 
 body.nav-md .container.body .right_col {
@@ -215,7 +215,7 @@ body.nav-md .container.body .right_col {
 .nav_title {
     width: 230px;
     float: left;
-    background: #2A3F54;
+    background:#933;
     border-radius: 0;
     height: 57px;
 }
@@ -369,8 +369,8 @@ dark,
 }
 
 body {
-    color: #73879C;
-    background: #2A3F54;
+    color: #dfe9ea;
+    background:#804040;
     /*#ECF0F1; #FCFCFC*/
     
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
@@ -884,7 +884,7 @@ li.current-page a {
 .x_content canvas {}
 
 footer {
-    background: #fff;
+    background: #69F;
     padding: 5px 20px 0;
     height: 45px;
     margin: 0 -17px;
@@ -1060,8 +1060,8 @@ h2 {
     margin-bottom: 10px;
     padding: 10px 17px;
     display: inline-block;
-    background: #fff;
-    border: 1px solid #E6E9ED;
+    background:#008080;
+    border: 1px solid black;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
@@ -1203,7 +1203,7 @@ legend {
 }
 
 .profile_left {
-    background: white;
+    background:#008080;
 }
 /* *********  /contacts  ********************************** */
 /* *********  /custom accordion  **************************** */
@@ -1772,7 +1772,7 @@ ul.to_do {
 }
 
 ul.to_do li {
-    background: #f3f3f3;
+    background: #33CCCC;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -3489,14 +3489,14 @@ ul.bar_tabs {
     /* border: 1px solid #ff0000; */
     
     overflow: visible;
-    background: #F5F7FA;
+    background:#39F ;
     height: 25px;
     margin: 21px 0 14px;
     padding-left: 14px;
     position: relative;
     z-index: 1;
     width: 100%;
-    border-bottom: 1px solid #E6E9ED;
+    border-bottom: 1px solid #000000;
 }
 
 ul.bar_tabs > li {
@@ -3522,7 +3522,7 @@ ul.bar_tabs > li.active a {
 
 ul.bar_tabs > li a {
     padding: 10px 17px;
-    background: #F5F7FA;
+    background: #80FFFF;
     margin: 0;
     border-radius: 0;
 }
@@ -6097,6 +6097,7 @@ header{width:100%;}
 
 body {
   overflow-x: hidden;
+  background:#004040;
 }
 
 

@@ -9,16 +9,25 @@
 $cekpengguna = mysqli_num_rows($userquery);
 if (@$_SESSION["username"] == $useruser) {
 ?>
-<div id="page-inner">
- <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-head-line">Tambah Postingan</h1>
-                        <h1 class="page-subhead-line"><li class="fa fa-pencil fa-spin"></li> Menambah Postingan </h1>
-                  
-            </div>
-            </div>
 
-            <form method="post" action="" enctype="multipart/form-data">
+
+           
+			<div class="row">
+                        <div class="col-md-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+								<?php
+								$s = mysqli_query($connection, "SELECT*FROM pengajaran where kd_pengajaran='$_GET[id_det_kurikulum]'");           
+								$d = mysqli_fetch_array($s);
+								?>
+                                    <h2>Forum Kelas: <?php echo $d["kd_kelas"];?> | Mata Pelajaran:<?php echo $d["kd_mapel"];?></h2>
+                                    
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="col-md-9 col-sm-12 col-xs-12">
+                                        <div id="page-inner">
+                 <form method="post" action="" enctype="multipart/form-data">
             <?php
             if (@$_POST["submit"]) {
             date_default_timezone_set("Asia/Jakarta");
@@ -47,18 +56,66 @@ if (@$_SESSION["username"] == $useruser) {
             ?>
             <div>
                 <input type="file" name="gambar">
-                <label>Tambah Gambar (*Tidak Wajib)</label>
-            </div>
+                <label>Tambah Gambar/File (*Tidak Wajib)</label>
+            </div><hr>
             <div style="margin-top:20px;">
-                <input title="Masukan Judul Postingan" required type="text" name="judul" placeholder="Masukan Judul..." style="border:none;height:100px;width:100%;font-size:40px;">
+                <input title="Masukan Judul Postingan" required type="text" name="judul" placeholder="Masukan Judul..." style="border:none;height:50px;width:100%;font-size:20px;">
                 <hr>
                 <div style="margin-top:20px;">
-                    <textarea title="Masukan Isi Postingan" name="isi" rows="20" style="border:none;font-size:17px;width:100%;" placeholder="Isi..."></textarea>
-                </div><br>
+                    <textarea class="form-control"  name="isi" id="text-editor" rows="8"></textarea>
+					<script>CKEDITOR.replace('text-editor');</script>
+				</div><br>
                 <div><input type="submit" name="submit" value="Posting" class="btn btn-primary" style="width:100%;"></div>
             </form>
-            </div>
-<?php
+
+                </div>
+				</div>
+                                       
+
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div>
+                                            <div class="x_title">
+                                                <h2>Anggota</h2>
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <ul class="list-unstyled top_profiles scroll-view">
+                                              <?php
+												$sx = mysqli_query($connection, "SELECT*FROM siswa,kelas,pengajaran,rombel 
+												where pengajaran.kd_kelas=kelas.kd_kelas
+												and siswa.nis=rombel.nis
+												and rombel.kd_kelas=kelas.kd_kelas and
+												pengajaran.kd_pengajaran='$_GET[id_det_kurikulum]'");           
+												while($dx = mysqli_fetch_array($sx)){
+											?>
+                                                <li class="media event">
+                                                    <a class="pull-left border-green profile_thumb">
+                                                        <i class="fa fa-user green"></i>
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a class="title" href="#"><?php echo $dx["nama"];?></a>
+                                                        <p>NIS:<?php echo $dx["nis"];?></p>
+                                                       
+                                                        </p>
+                                                    </div>
+                                                </li>
+												<?php
+												}
+												?>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<?php
 }
 else{
 ?>

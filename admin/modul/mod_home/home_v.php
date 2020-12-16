@@ -21,7 +21,7 @@ else{
     <?php 
     $qguru = mysqli_query($connect,"SELECT * FROM guru WHERE kd_guru='$_SESSION[kode]'");
     $guru = mysqli_fetch_array($qguru);
-    //$guru['kelamin']=='L' ? $panggilan = "Bapak" : $panggilan = "Ibu"; 
+    
     ?>
     <div class="row">
       <div class="alert alert-info">

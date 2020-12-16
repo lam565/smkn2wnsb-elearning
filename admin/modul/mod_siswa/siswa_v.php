@@ -174,7 +174,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
    <div class="panel-body">
     <a href="?module=importsw" class="btn btn-success btn-sm">IMPORT DARI EXCEL</a>
     <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover">
+     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
           <tr>
             <th>#</th>

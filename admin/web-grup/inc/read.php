@@ -1,4 +1,33 @@
 <?php
+if ($_SESSION["username"]) {
+    
+?>
+<title><?php echo $data2["username"];?> | </title>
+<?php
+}
+else{
+    ?>
+<title>Beranda</title>
+
+    <?php
+}
+?>
+
+
+           
+			<div class="row">
+                        <div class="col-md-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+								<div class="filter">
+                                        
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="col-md-9 col-sm-12 col-xs-12">
+                                        <div id="page-inner">
+                <?php
 $idpost = @$_GET["id"];
 $querypost = mysqli_query($connection, "SELECT*FROM post WHERE id_post='$idpost' AND penulis_post='$_GET[post_by]'");
 $datapost = mysqli_fetch_array($querypost);
@@ -12,7 +41,7 @@ else{
 <div id="page-inner">
 <div class="alert alert-info">
     <h2><?php echo $datapost["judul_post"];?></h2>
-    Penulis : <a href="./?p=user&user=<?php echo $datapost["penulis_post"];?>">@<?php echo $datapost["penulis_post"];?></a> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> 
+    Penulis : <a>@<?php echo $datapost["penulis_post"];?></a> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> 
 
     <?php
     $datasukapost = @mysqli_fetch_array(mysqli_query($db, "SELECT*FROM suka_post WHERE id_post='$idpost' AND user_suka='$_SESSION[username]'"));
@@ -114,7 +143,7 @@ if ($totalkomentar >= 0) {
     ?>
         <small id="komentar_<?php echo $datakomentar["id_komentar"];?>"><?php echo $datakomentar["tanggal_komentar"];?></small><br>
         <b>
-        <a href="./?p=user&user=<?php echo $datakomentar["penulis_komentar"];?>">
+        <a>
         
         <img src="./assets/img/user/user.jpg" style="width:25px;height:25px;border-radius:100%;">
        <?php
@@ -153,7 +182,54 @@ else{
     ?>
     </div>
 </div>
-            </div>
+           
             <?php
 }
             ?>
+
+                </div>
+                                       
+
+                                    </div>
+
+                                   <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div>
+                                            <div class="x_title">
+                                                <h2>Anggota</h2>
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <ul class="list-unstyled top_profiles scroll-view">
+                                              <?php
+												$sx = mysqli_query($connection, "SELECT*FROM siswa,kelas,pengajaran,rombel 
+												where pengajaran.kd_kelas=kelas.kd_kelas
+												and siswa.nis=rombel.nis
+												and rombel.kd_kelas=kelas.kd_kelas and
+												pengajaran.kd_pengajaran='$_GET[id_det_kurikulum]'");           
+												while($dx = mysqli_fetch_array($sx)){
+											?>
+                                                <li class="media event">
+                                                    <a class="pull-left border-green profile_thumb">
+                                                        <i class="fa fa-user green"></i>
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a class="title" href="#"><?php echo $dx["nama"];?></a>
+                                                        <p>NIS:<?php echo $dx["nis"];?></p>
+                                                       
+                                                        </p>
+                                                    </div>
+                                                </li>
+												<?php
+												}
+												?>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>

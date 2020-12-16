@@ -49,7 +49,7 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 												<?php $query1 = $connection->query("SELECT * FROM guru where username='$_SESSION[username]'"); 
 												$data1 = $query1->fetch_assoc(); 
 												?>
-												<?php $query2 = $connection->query("SELECT * FROM detail_kurikulum where kd_guru='$data1[kd_guru]'"); while ($data2 = $query2->fetch_assoc()): ?>
+												<?php $query2 = $connection->query("SELECT * FROM pengajaran where kd_guru='$data1[kd_guru]'"); while ($data2 = $query2->fetch_assoc()): ?>
 													<option value="<?=$data2["kd_kelas"]?>"><?=$data2["kd_kelas"]?></option>
 												<?php endwhile; ?>
 											</select>
@@ -63,7 +63,7 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 												<?php $query3 = $connection->query("SELECT * FROM guru where username='$_SESSION[username]'"); 
 												$data3 = $query3->fetch_assoc(); 
 												?>
-												<?php $query5 = $connection->query("SELECT * FROM detail_kurikulum,mapel where detail_kurikulum.kd_mapel=mapel.kd_mapel and detail_kurikulum.kd_guru='$data3[kd_guru]' group by mapel.nama_mapel"); while ($data5 = $query5->fetch_assoc()): ?>
+												<?php $query5 = $connection->query("SELECT * FROM pengajaran,mapel where pengajaran.kd_mapel=mapel.kd_mapel and pengajaran.kd_guru='$data3[kd_guru]' group by mapel.nama_mapel"); while ($data5 = $query5->fetch_assoc()): ?>
 													<option value="<?=$data5["kd_mapel"]?>"><?=$data5["nama_mapel"]?></option>
 												<?php endwhile; ?>
 											</select>
@@ -107,8 +107,9 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 								<tr>
 										<th>NO</th>
 										<th>NIS</th>
-										<th>NAMA SISWA</th>
+										
 										<th>NILAI</th>
+										<th>NAMA UJIAN</th>
 										
 										<th class="hidden-print"></th>
 								</tr>
@@ -129,8 +130,9 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 										<tr>
 												<td><?=$no++?></td>
 												<td><?=$row['nis']?></td>
-												<td><?=$row['nama']?></td>
+												
 												<td><?=$row['nilai']?></td>
+												<td><?=$row['nama_ujian']?></td>
 												
 										</tr>
 										<?php endwhile ?>
@@ -171,7 +173,7 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 								<tr>
 										<th>NO</th>
 										<th>NIS</th>
-										<th>NAMA SISWA</th>
+										
 										<th>NILAI</th>
 										<th>NAMA TUGAS</th>
 										
@@ -189,13 +191,15 @@ echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../
 								and tugas.kd_guru='$row3[kd_guru]'
 								and tugas.kd_kelas='$_POST[kd_kelas]'
 								and tugas.kd_mapel='$_POST[kd_mapel]'
-								and tugas.tgl_up BETWEEN '$_POST[start]' AND '$_POST[stop]'")): ?>
+								and tugas.tgl_up BETWEEN '$_POST[start]' AND '$_POST[stop]'
+								group by siswa.nis")): ?>
 										<?php while($row = $query->fetch_assoc()): ?>
 										<tr>
 												<td><?=$no++?></td>
 												<td><?=$row['nis']?></td>
-												<td><?=$row['nama']?></td>
+												
 												<td><?=$row['nilai']?></td>
+												<td><?=$row['nama_tugas']?></td>
 												
 										</tr>
 										<?php endwhile ?>

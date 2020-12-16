@@ -30,6 +30,8 @@ $dataliatkomen = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM lihat
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 	<script src="./assets/js/ngomen.js"></script>
+	<link href="../assets2/css/custom.css" rel="stylesheet">
+	 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 
 </head>
 <body>

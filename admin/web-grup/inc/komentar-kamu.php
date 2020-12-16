@@ -70,7 +70,7 @@ if (@$_SESSION["username"] == $useruser) {
         <img src="./assets/img/user/<?php echo $datakomentar["pp_user"];?>" style="width:25px;height:25px;border-radius:100%;">
         <?php
         }
-        ?>@<?php echo $datakomennya["penulis_komentar"];?></a></b> Ngomenin Postingan <b><a href="./?p=post&id=<?php echo $datapostnya["id_post"];?>&post_by=<?php echo $datapostnya["penulis_post"];?>#komentar_<?php echo $datakomennya["id_komentar"];?>"><?php echo $judulpostnya;?></a></b> Kamu</div>
+        ?>@<?php echo $datakomennya["penulis_komentar"];?></a></b> Komentari Postingan <b><a href="./?p=post&id=<?php echo $datapostnya["id_post"];?>&post_by=<?php echo $datapostnya["penulis_post"];?>#komentar_<?php echo $datakomennya["id_komentar"];?>"><?php echo $judulpostnya;?></a></b> Kamu</div>
                 <?php
             }
             }

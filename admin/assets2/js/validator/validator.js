@@ -15,8 +15,8 @@ var validator = (function($){
 	/* general text messages
 	*/
 	message = {
-		invalid			: 'invalid input',
-		empty			: 'data belum terisi',
+		invalid			: 'inputan harus huruf',
+		empty			: 'Maaf,Data Belum Terisi',
 		min				: 'input is too short',
 		max				: 'input is too long',
 		number_min		: 'too low',

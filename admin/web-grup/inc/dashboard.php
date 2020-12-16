@@ -12,7 +12,24 @@ else{
     <?php
 }
 ?>
-<div id="page-inner">
+
+
+           
+			<div class="row">
+                        <div class="col-md-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+								<?php
+								$s = mysqli_query($connection, "SELECT*FROM pengajaran where kd_pengajaran='$_GET[id_det_kurikulum]'");           
+								$d = mysqli_fetch_array($s);
+								?>
+                                    <h2>Forum Kelas: <?php echo $d["kd_kelas"];?> | Mata Pelajaran:<?php echo $d["kd_mapel"];?></h2>
+                                    
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="col-md-9 col-sm-12 col-xs-12">
+                                        <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
                         
@@ -68,16 +85,16 @@ else{
 					
                 <?php
 				
-                $sqlpost = mysqli_query($connection, "SELECT*FROM post,detail_kurikulum where post.id_detail=detail_kurikulum.id_detail and post.id_detail='$_GET[id_det_kurikulum]' ORDER BY post.id_post DESC");
+                $sqlpost = mysqli_query($connection, "SELECT*FROM post,pengajaran where post.kd_pengajaran=pengajaran.kd_pengajaran and post.kd_pengajaran='$_GET[id_det_kurikulum]' ORDER BY post.id_post DESC");
                 
 				while ($datasqlpost = mysqli_fetch_array($sqlpost)) {
                     $datauserpost = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username='$datasqlpost[penulis_post]'"));
                 ?>
                 <div class="alert alert-info" id="post<?php echo $datasqlpost["id_post"];?>">
                 <span style="float:right;"><?php echo $datasqlpost["tanggal_post"];?></span>
-                <a href="./?p=post&id=<?php echo $datasqlpost["id_post"];?>&post_by=<?php echo $datasqlpost["penulis_post"];?>"><h2><b><?php echo $datasqlpost["judul_post"];?></b></h2></a>
+                <a href="./?p=post&id=<?php echo $datasqlpost["id_post"];?>&post_by=<?php echo $datasqlpost["penulis_post"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><h2><b><?php echo $datasqlpost["judul_post"];?></b></h2></a>
                 
-                <a href="./?p=user&user=<?php echo $datasqlpost["penulis_post"];?>"><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $datauserpost["username"];?></b></a>
+                <a ><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $datauserpost["username"];?></b></a>
                 
                 <span style="float:right"><i class="fa fa-comment"></i> : <?php $totalkomentarpost = mysqli_num_rows(mysqli_query($connection,"SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]'")); echo $totalkomentarpost;?></span>
                 <hr>
@@ -85,7 +102,7 @@ else{
                     <?php
                     if ($datasqlpost["gambar_post"] !== '') {
                     ?>
-                    <center><a href="./assets/img/post/<?php echo $datasqlpost["gambar_post"];?>"><img src="./assets/img/post/<?php echo $datasqlpost["gambar_post"];?>" class="img img-thumbnail"></a></center>
+                    <center><a href="./assets/img/post/<?php echo $datasqlpost["gambar_post"];?>"><i class="fa fa-paperclip"></i> <?php echo $datasqlpost["gambar_post"];?></a></center>
                     <?php
                     }
                     else{
@@ -107,7 +124,7 @@ else{
                     while ($datakomentarnya = mysqli_fetch_array($komentarnya)) {
                     $ygomen = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username = '$datakomentarnya[penulis_komentar]'"));
                     ?>
-                    <img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a href="./?p=user&user=<?php echo $datakomentarnya["penulis_komentar"];?>"><?php echo $ygomen["username"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
+                    <img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $ygomen["username"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
                     
                     <?php
                     
@@ -128,7 +145,7 @@ else{
         ?>
 					<?php
 					$sql3 = $connection->query("SELECT * FROM post
-					WHERE id_detail='$_GET[id_det_kurikulum]'");
+					WHERE kd_pengajaran='$_GET[id_det_kurikulum]'");
 					$row3 = $sql3->fetch_assoc();
 					?>
 					<?php
@@ -149,7 +166,7 @@ else{
     ?>
 	<?php
 					$sql5 = $connection->query("SELECT * FROM post
-					WHERE id_detail='$_GET[id_det_kurikulum]'");
+					WHERE kd_pengajaran='$_GET[id_det_kurikulum]'");
 					$row5 = $sql5->fetch_assoc();
 					?>
 	<?php
@@ -179,7 +196,7 @@ else{
 				
 					<?php
 					$sql1 = $connection->query("SELECT * FROM post
-					WHERE id_detail='$_GET[id_det_kurikulum]'");
+					WHERE kd_pengajaran='$_GET[id_det_kurikulum]'");
 					$row1 = $sql1->fetch_assoc();
 					?>
 					<?php
@@ -206,7 +223,7 @@ else{
                     }
                     else{
                     ?>
-                    <a href="./login?post=<?php echo $url;?>?p=post&id=<?php echo$datasqlpost["id_post"];?>&post_by=<?php echo $datasqlpost["penulis_post"];?>"><i class="fa fa-sign-in"></i> Masuk Untuk Ngomen Atau Ngasih Jempol</a>
+                    <a href="./login?post=<?php echo $url;?>?p=post&id=<?php echo$datasqlpost["id_post"];?>&post_by=<?php echo $datasqlpost["penulis_post"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><i class="fa fa-sign-in"></i> Masuk Untuk Ngomen Atau Ngasih Jempol</a>
                     <?php
                     }
                     ?>
@@ -217,5 +234,48 @@ else{
                 ?>
 
                 </div>
+                                       
 
-            </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div>
+                                            <div class="x_title">
+                                                <h2>Anggota</h2>
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <ul class="list-unstyled top_profiles scroll-view">
+                                              <?php
+												$sx = mysqli_query($connection, "SELECT*FROM siswa,kelas,pengajaran,rombel 
+												where pengajaran.kd_kelas=kelas.kd_kelas
+												and siswa.nis=rombel.nis
+												and rombel.kd_kelas=kelas.kd_kelas and
+												pengajaran.kd_pengajaran='$_GET[id_det_kurikulum]'");           
+												while($dx = mysqli_fetch_array($sx)){
+											?>
+                                                <li class="media event">
+                                                    <a class="pull-left border-green profile_thumb">
+                                                        <i class="fa fa-user green"></i>
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a class="title" href="#"><?php echo $dx["nama"];?></a>
+                                                        <p>NIS:<?php echo $dx["nis"];?></p>
+                                                       
+                                                        </p>
+                                                    </div>
+                                                </li>
+												<?php
+												}
+												?>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
