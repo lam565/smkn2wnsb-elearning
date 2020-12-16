@@ -54,12 +54,26 @@ if (isset($_POST['act'])) {
 		$mapel=$_POST['mp'];
 		$jurusan=$_POST['jrs'];
 
+		function cekPengajar($kon,$mapel,$kelas,$nkls){
+			$query = mysqli_query($kon,"SELECT * FROM pengajaran as p,kelas,guru,mapel WHERE p.kd_guru=guru.kd_guru AND p.kd_kelas=kelas.kd_kelas AND p.kd_mapel=mapel.kd_mapel AND p.kd_mapel='$mapel' AND p.kd_kelas='$kelas'");
+			$jum = mysqli_num_rows($query);
+			$pengajar = mysqli_fetch_array($query);
+			if ($jum>0){
+				$out = "<label>
+				<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $pengajar[nama] 
+				</label>";
+			} else {
+				$out = "<label>
+				<input type='checkbox' name='kd_kls[]' value='$kelas' />$nkls
+				</label>";
+			}
+			return $out;
+		}
+
 		$query=mysqli_query($connect,"SELECT kd_kelas,nama_kelas FROM kelas WHERE kd_jurusan='$jurusan' ORDER BY tingkat");
 		$output="<div class='checkbox'>";
 		while ($result=mysqli_fetch_array($query)) {
-			$output .= "<label>
-			<input type='checkbox' name='kd_kls[]' value='$result[kd_kelas]' />$result[nama_kelas] 
-			</label>";
+			$output .= cekPengajar($connect,$mapel,$result['kd_kelas'],$result['nama_kelas']);
 		}
 		$output .= "</div>";
 		echo $output;
