@@ -33,6 +33,9 @@ else{
       case 'ujian':
       include "modul/mod_ujian/ujian_v.php";
       break;
+      case 'detnilujian':
+      include "modul/mod_ujian/detail_nilai_ujian.php";
+      break;
       
       case 'tugas':
       include "modul/mod_tugas/tugas_v.php";

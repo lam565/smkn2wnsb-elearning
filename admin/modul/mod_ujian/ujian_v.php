@@ -353,7 +353,7 @@ else {
                                                 echo "<td>$rsoal[nama_kelas]</td>";
                                                 echo "<td>$js</td>";
                                                 echo "<td>$rsoal[tgl_ujian]</td>";
-                                                echo "<td>$j</td>";
+                                                echo "<td>$j <a class='btn btn-success btn-xs' href='?module=detnilujian&kd=$rsoal[kd_ujian]'>Lihat Nilai Siswa</a></td>";
                                                 echo "<td><a href='?module=ujian&eid=$rsoal[kd_ujian]' class='btn btn-primary btn-xs'>Edit</a><a href='modul/mod_ujian/aksi.php?act=del&kdu=$rsoal[kd_ujian]' class='btn btn-warning btn-xs'>Hapus</a></td>";
                                                 echo "</tr>";
                                                 $no++;

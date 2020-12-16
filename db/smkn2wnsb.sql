@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Des 2020 pada 10.55
--- Versi server: 10.1.37-MariaDB
--- Versi PHP: 7.3.0
+-- Waktu pembuatan: 16 Des 2020 pada 04.02
+-- Versi server: 10.4.14-MariaDB
+-- Versi PHP: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -38,11 +37,20 @@ CREATE TABLE `detail_soal` (
   `pil_D` varchar(100) NOT NULL,
   `pil_E` varchar(100) NOT NULL,
   `kunci` varchar(5) NOT NULL,
-  `keterangan` text,
+  `keterangan` text DEFAULT NULL,
   `gambar` varchar(100) NOT NULL DEFAULT 'T',
   `C` varchar(30) NOT NULL DEFAULT '-',
   `P` varchar(30) NOT NULL DEFAULT '-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `detail_soal`
+--
+
+INSERT INTO `detail_soal` (`kd_detail_soal`, `kd_soal`, `soal`, `pil_A`, `pil_B`, `pil_C`, `pil_D`, `pil_E`, `kunci`, `keterangan`, `gambar`, `C`, `P`) VALUES
+('442020GR090002', '142020GR090001', 'Pertanyaan 4', 'pil a', 'pil b', 'pil c', 'pil d', 'pil e', 'e', NULL, 'T', '-', '-'),
+('442020GR090003', '142020GR090001', 'Pertanyaan 5', 'daksdhkasdh', 'sdafawfafs', 'fawea', 'fwafaf awa awd aw f', 'awwfawfa aawfaf', 'd', '-', 'T', '-', '-'),
+('442020GR090004', '142020GR090001', 'Pertanyaan Lanjutan ya?', 'selanjutnya a', 'selanjutnya  b', 'selanjutnya  c', 'selanjutnya d', 'selanjutnya e', 'b', '-', 'T', '-', '-');
 
 -- --------------------------------------------------------
 
@@ -220,9 +228,17 @@ CREATE TABLE `kerja_tugas` (
   `kd_tugas` varchar(30) NOT NULL,
   `nis` varchar(10) NOT NULL,
   `file_kerja` varchar(100) NOT NULL DEFAULT 'T',
-  `nilai` int(11) NOT NULL DEFAULT '0',
+  `nilai` int(11) NOT NULL DEFAULT 0,
   `status_kerja` varchar(20) NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kerja_tugas`
+--
+
+INSERT INTO `kerja_tugas` (`kd_kerja`, `kd_tugas`, `nis`, `file_kerja`, `nilai`, `status_kerja`) VALUES
+('1220208168001', '022020GR090001', '8168', '1220208168001.png', 90, 'N'),
+('1220208170001', '022020GR090001', '8170', 'T', 0, 'T');
 
 -- --------------------------------------------------------
 
@@ -446,6 +462,14 @@ CREATE TABLE `materi` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `materi`
+--
+
+INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `ForL`, `file`, `tgl_up`, `pertemuan`, `kd_mapel`, `kd_kelas`, `kd_guru`) VALUES
+('012020GR090002', 'Listening', 'Listening Section', 'link', 'https://youtube.com', '2020-12-16 05:35:51', '3', 'bing', 'xakl1', 'GR090'),
+('012020GR090003', 'Prohibition', 'Integer ultrices lobortis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin semper, ante vitae sollicitudin posuere, metus quam iaculis nibh, vitae scelerisque nunc massa eget pede.', 'file', 'prohibition_76831564.pdf', '2020-12-16 08:45:49', '1 dan 2', 'bing', 'xakl1', 'GR090');
+
 -- --------------------------------------------------------
 
 --
@@ -461,6 +485,13 @@ CREATE TABLE `nilai_ujian` (
   `salah` int(11) NOT NULL,
   `benar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `nilai_ujian`
+--
+
+INSERT INTO `nilai_ujian` (`kd_nilai_ujian`, `nis`, `kd_ujian`, `tgl_mengerjakan`, `nilai`, `salah`, `benar`) VALUES
+('0820208168001', '8168', '072020GR090001', '2020-12-16 09:48:50', 33, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -481,7 +512,7 @@ CREATE TABLE `pengajaran` (
 --
 
 INSERT INTO `pengajaran` (`kd_pengajaran`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
-(2, 'bing', 'xakl1', 'GR090', '1'),
+(2, 'bing', 'xakl1', 'GR090', '042020GR090004'),
 (3, 'bind', 'xakl1', 'GR036', '1'),
 (4, 'bind', 'xan1', 'GR036', '1');
 
@@ -542,6 +573,10 @@ CREATE TABLE `silabus` (
 --
 
 INSERT INTO `silabus` (`kd_silabus`, `judul`, `nama_file`, `tanggal_upload`) VALUES
+('042020GR090001', 'Silabus Bahasa Inggris', '042020GR090001.pdf', '2020-12-16 05:09:15'),
+('042020GR090002', 'Silabus Bahasa Inggris upd', '042020GR090002.pdf', '2020-12-16 05:11:51'),
+('042020GR090003', 'Silabus Bahasa Inggris 2', '042020GR090003.docx', '2020-12-16 05:12:26'),
+('042020GR090004', 'Silabus Bahasa Inggris 2020', '042020GR090004.pdf', '2020-12-16 05:17:33'),
 ('1', 'Belum Upload Silabus', 'silabus-default.pdf', '2020-12-14 00:00:00');
 
 -- --------------------------------------------------------
@@ -616,6 +651,13 @@ CREATE TABLE `soal` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `soal`
+--
+
+INSERT INTO `soal` (`kd_soal`, `nama_soal`, `acak`, `kd_mapel`, `kd_guru`) VALUES
+('142020GR090001', 'Soal Bahasa Inggris 1', 'T', 'bing', 'GR090');
+
 -- --------------------------------------------------------
 
 --
@@ -668,6 +710,16 @@ CREATE TABLE `timeline` (
   `kd_guru` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `timeline`
+--
+
+INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
+(2, 'materi', '012020GR090002', '2020-12-16 05:35:51', 'xakl1', 'bing', 'GR090'),
+(3, 'tugas', '022020GR090001', '2020-12-16 06:07:49', 'xakl1', 'bing', 'GR090'),
+(5, 'ujian', '072020GR090001', '2020-12-16 08:03:52', 'xakl1', 'bing', 'GR090'),
+(6, 'materi', '012020GR090003', '2020-12-16 08:45:49', 'xakl1', 'bing', 'GR090');
+
 -- --------------------------------------------------------
 
 --
@@ -683,8 +735,16 @@ CREATE TABLE `tugas` (
   `file` varchar(50) NOT NULL,
   `tgl_up` datetime NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
-  `kd_mapel` varchar(10) NOT NULL
+  `kd_mapel` varchar(10) NOT NULL,
+  `kd_guru` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tugas`
+--
+
+INSERT INTO `tugas` (`kd_tugas`, `nama_tugas`, `deskripsi`, `batas_awal`, `batas_ahir`, `file`, `tgl_up`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
+('022020GR090001', 'Tugas 1', 'Integer ultrices lobortis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin semper, ante vitae sollicitudin posuere, metus quam iaculis nibh, vitae scelerisque nunc massa eget pede. Sed velit urna, interdum vel, ultricies vel, faucibus at, quam. Donec elit est, consectetuer eget, consequat quis, tempus quis, wisi.', '2020-12-16 08:00:00', '2020-12-17 23:59:00', 'Tugas 1_83469434.pdf', '2020-12-16 06:07:49', 'xakl1', 'bing', 'GR090');
 
 -- --------------------------------------------------------
 
@@ -702,8 +762,16 @@ CREATE TABLE `ujian` (
   `detik` int(11) NOT NULL,
   `kd_soal` varchar(50) NOT NULL,
   `kd_kelas` varchar(10) NOT NULL,
-  `kd_mapel` varchar(10) NOT NULL
+  `kd_mapel` varchar(10) NOT NULL,
+  `kd_guru` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `ujian`
+--
+
+INSERT INTO `ujian` (`kd_ujian`, `nama_ujian`, `deskripsi`, `tgl_ujian`, `jam`, `menit`, `detik`, `kd_soal`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
+('072020GR090001', 'Ujian Bahasa Inggris 1', 'Ujian bahasa inggris untuk kelas X AKL, kerjakan dengan benar ya.', '2020-12-16 09:00:00', 2, 0, 0, '142020GR090001', 'xakl1', 'bing', 'GR090');
 
 -- --------------------------------------------------------
 
@@ -806,6 +874,12 @@ ALTER TABLE `tahun_ajar`
   ADD PRIMARY KEY (`kd_tajar`);
 
 --
+-- Indeks untuk tabel `timeline`
+--
+ALTER TABLE `timeline`
+  ADD PRIMARY KEY (`id_timeline`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -814,6 +888,12 @@ ALTER TABLE `tahun_ajar`
 --
 ALTER TABLE `pengajaran`
   MODIFY `kd_pengajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `timeline`
+--
+ALTER TABLE `timeline`
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
