@@ -65,7 +65,9 @@
                   <td>$rmat[nama_mapel]</td>
                   <td>$rmat[nama]</td>";
                   if ($rmat['ForL']=='file') {
-                    echo "<td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]' class='btn btn-info btn-xs'>Download</a> | <a href='#' class='pmateri btn btn-info btn-xs' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>";  
+                    echo "<td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]' class='btn btn-info btn-xs'>Download</a>";//echo "| <a href='#' class='pmateri btn btn-info btn-xs' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a>";
+                     
+                     echo "</td>";  
                   } else {
                     echo "<td class='center'><a href='$rmat[file]' target='_blank' class='btn btn-info btn-xs'>Lihat</a></td>";
                   }
@@ -84,7 +86,11 @@
                   <td>$rmat[nama_mapel]</td>
                   <td>$rmat[nama]</td>";
                   if ($rmat['ForL']=='file') {
-                    echo "<td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]' class='btn btn-info btn-xs'>Download</a> | <a href='#' class='pmateri btn btn-info btn-xs' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a></td>";  
+                    echo "<td class='center'><a href='modul/mod_materi_siswa/download.php?materi=$rmat[file]' class='btn btn-info btn-xs'>Download</a>"; 
+                    
+                    //echo "| <a href='#' class='pmateri btn btn-info btn-xs' data-id='$rmat[file]' data-judul='$rmat[nama_materi]'>Preview</a>";
+                     
+                     echo "</td>";  
                   } else {
                     echo "<td class='center'><a href='$rmat[file]' target='_blank' class='btn btn-info btn-xs'>Lihat</a></td>";
                   }

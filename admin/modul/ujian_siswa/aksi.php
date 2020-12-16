@@ -1,5 +1,6 @@
 <?php 
 include "../../../system/koneksi.php";
+date_default_timezone_set("Asia/Bangkok");
 
 $pilihan=$_POST["pil"];
 $kd_detail_soal=$_POST['id'];

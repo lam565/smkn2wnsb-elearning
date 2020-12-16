@@ -68,10 +68,10 @@ else{
 														$cek="-";
 													} else if ($rkerja['status_kerja']=='K'){
 														$st='Sudah';
-														$cek="<a href='?module=detailtugas&kd=$kd_tugas&eid=$rkerja[kd_kerja]'>Cek</a>";
+														$cek="<a class='btn btn-warning btn-xs' href='?module=detailtugas&kd=$kd_tugas&eid=$rkerja[kd_kerja]'>Cek</a>";
 													} else if ($rkerja['status_kerja']=='N'){
 														$st='Dinilai';
-														$cek="<a href='?module=detailtugas&kd=$kd_tugas&eid=$rkerja[kd_kerja]'>Cek</a>";
+														$cek="<a class='btn btn-success btn-xs' href='?module=detailtugas&kd=$kd_tugas&eid=$rkerja[kd_kerja]'>Cek</a>";
 													}
 													echo "<tr>";
 													echo "<td>$n</td>

@@ -21,10 +21,9 @@
 				<a href="?module=nilai&mp=all" class="btn <?php echo $_GET['mp']=='all' ? "btn-default" : "btn-primary"; ?> btn-sm form-control">Semua</a>
 
 				<?php
-				$qmapel=mysqli_query($connect,"SELECT mapel.kd_mapel, mapel.nama_mapel 
-					FROM mapel, detail_kurikulum as dk, kurikulum
-					WHERE dk.kd_kurikulum=kurikulum.kd_kurikulum AND kurikulum.aktif='Y' AND
-					dk.kd_mapel=mapel.kd_mapel AND dk.kd_kelas='$kode_kelas'");
+				$qmapel=mysqli_query($connect,"SELECT mapel.kd_mapel, mapel.nama_mapel
+					FROM mapel, pengajaran as p
+					WHERE p.kd_mapel=mapel.kd_mapel AND p.kd_kelas='$kode_kelas'");
 				while ($rmp=mysqli_fetch_array($qmapel)){
 					$mapel==$rmp['kd_mapel'] ? $cbtn="btn-default" : $cbtn="btn-primary";
 					echo "<a href='?module=nilai&mp=$rmp[kd_mapel]' class='btn $cbtn btn-sm form-control'>$rmp[nama_mapel]</a>  ";

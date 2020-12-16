@@ -183,7 +183,7 @@ if (isset($_GET['act'])){
 				if ($ex){
 					echo "<script>alert('Berhasil menambah nilai Sementara'); location='../../media.php?module=detailtugas&kd=$kdt&st=T&eid=$kd'</script>";
 				} else {
-					echo "<script>alert('Berhasil menambah nilai Sementara'); location='../../media.php?module=tugas'</script>";
+					echo "<script>alert('gagal'); location='../../media.php?module=tugas'</script>";
 				}
 			} else if (isset($_POST['simpan'])){
 				$nil=$_POST['nilai'];
@@ -193,9 +193,9 @@ if (isset($_GET['act'])){
 				$qn="UPDATE kerja_tugas SET nilai='$nil',status_kerja='N' WHERE kd_kerja='$kd'";
 				$ex=mysqli_query($connect,$qn);
 				if ($ex){
-					echo "<script>alert('Berhasil menambah nilai Sementara'); location='../../media.php?module=detailtugas&kd=$kdt&st=T&eid=$kd'</script>";
+					echo "<script>alert('Berhasil menambah nilai'); location='../../media.php?module=detailtugas&kd=$kdt&st=T&eid=$kd'</script>";
 				} else {
-					echo "<script>alert('Berhasil memberikan nilai'); location='../../media.php?module=tugas'</script>";
+					echo "<script>alert('Gagal'); location='../../media.php?module=tugas'</script>";
 				}
 			}
 		break;

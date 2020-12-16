@@ -1,10 +1,12 @@
 <?php 
 include "../../../system/koneksi.php";
+date_default_timezone_set("Asia/Bangkok");
 
 if (isset($_GET['act'])){
 	switch ($_GET['act']) {
 		case 'tbjawab':
 		$kd=$_POST['kd_kerja'];
+		$kdt=$_POST['kd_tugas'];
 		$temp = "../../files/kerja_tugas/";
 		if (!file_exists($temp)){
 			mkdir($temp);
@@ -29,10 +31,9 @@ if (isset($_GET['act'])){
 
 			if (mysqli_query($connect,$qup)) {
 				move_uploaded_file($_FILES["ftugas"]["tmp_name"], $temp.$newfilename);
-				echo "<script>alert('Berhasil Mengumpulkan Tugas')</script>";
-				header("location:../../media.php?module=detailtugas&kd=$kd");
+				echo "<script>alert('Berhasil menambah tugas'); location='../../media.php?module=detailtugas&kd=$kdt'</script>";
 			} else {
-				echo "<script>alert('Terjadi Kesalahan'); location='location:../../media.php?module=detailtugas&kd=$kd'</script>";
+				echo "<script>alert('Terjadi Kesalahan'); location='location:../../media.php?module=detailtugas&kd=$kd';</script>";
 			}
 		}
 		break;

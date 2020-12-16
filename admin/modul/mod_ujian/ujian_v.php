@@ -39,7 +39,7 @@ else {
                         $eujian=mysqli_fetch_array(mysqli_query($connect,$qed));
 
                         ?>
-                        <div class="panel panel-default">
+                        <div class="panel panel-info">
                             <div class="panel-heading">
                                 Ubah Ujian Online
                             </div>
@@ -189,7 +189,7 @@ else {
                     } else {
 
                         ?>
-                        <div class="panel panel-default">
+                        <div class="panel panel-info">
                             <div class="panel-heading">
                                 Tambah Ujian Online
                             </div>

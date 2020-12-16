@@ -52,7 +52,8 @@ $rtugas=mysqli_fetch_array($qtugas);
 						echo  "<div class='alert alert-danger'>Anda Belum Mengumpulkan Tugas
 						</div>";
 					} else if ($rtugas['status_kerja']=='K'){
-						echo  "<div class='alert alert-warning'>Jawaban Anda Sedang Dikoreksi</div>";
+						echo  "<img src='files/kerja_tugas/$rtugas[file_kerja]' width=100><hr>
+						<div class='alert alert-warning'>Jawaban Anda Sedang Dikoreksi</div>";
 					} else if ($rtugas['status_kerja']=='N') {
 						echo  "<div class='alert alert-success'>Anda mendapat nilai: $rtugas[nilai]</div>";
 					}
@@ -60,7 +61,8 @@ $rtugas=mysqli_fetch_array($qtugas);
 					<h4>Upload Jawaban:</h4>
 					<div class="form-group">
 						<input class="form-control" type="FILE" name="ftugas">
-						<input type="hidden" name="kd_kerja" value="<?php echo $rtugas['kd_kerja'] ?>">	
+						<input type="hidden" name="kd_kerja" value="<?php echo $rtugas['kd_kerja'] ?>">
+						<input type="hidden" name="kd_tugas" value="<?php echo $kd ?>">	
 					</div>
 					<?php
 					date_default_timezone_set('Asia/Jakarta');
