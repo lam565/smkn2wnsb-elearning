@@ -7,8 +7,8 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 	
 	$id=$_GET['kds'];
 	$qw="SELECT soal.*, mapel.nama_mapel, kelas.nama_kelas, mapel.kd_mapel 
-	FROM kurikulum, soal, detail_kurikulum as dk, mapel, kelas 
-	WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=soal.kd_mapel AND soal.kd_mapel=mapel.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND soal.kd_guru=dk.kd_guru AND soal.kd_guru='$_SESSION[kode]' AND soal.kd_soal='$id'";
+	FROM soal, pengajaran as p, mapel, kelas 
+	WHERE p.kd_mapel=soal.kd_mapel AND soal.kd_mapel=mapel.kd_mapel AND p.kd_kelas=kelas.kd_kelas AND soal.kd_guru=p.kd_guru AND soal.kd_soal='$id'";
 	$soal=mysqli_query($connect,$qw);
 	$esoal=mysqli_fetch_array($soal);
 

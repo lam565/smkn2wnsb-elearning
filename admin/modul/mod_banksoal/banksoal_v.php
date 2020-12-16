@@ -26,8 +26,8 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 		if (isset($_GET['eid'])){
 			$id=$_GET['eid'];
 			$qw="SELECT soal.*, mapel.nama_mapel, kelas.nama_kelas, mapel.kd_mapel 
-			FROM kurikulum, soal, detail_kurikulum as dk, mapel, kelas 
-			WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=soal.kd_mapel AND soal.kd_mapel=mapel.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND soal.kd_guru=dk.kd_guru AND soal.kd_guru='$_SESSION[kode]' AND soal.kd_soal='$id'";
+			FROM pengajaran as p, mapel, kelas, soal 
+			WHERE p.kd_mapel=soal.kd_mapel AND soal.kd_mapel=mapel.kd_mapel AND p.kd_kelas=kelas.kd_kelas AND soal.kd_guru=p.kd_guru AND soal.kd_soal='$id'";
 			$soal=mysqli_query($connect,$qw);
 			$esoal=mysqli_fetch_array($soal);
 
@@ -47,9 +47,9 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 										<option selected="selected">Pilih Mata Pelajaran</option>
 										<?php
 										$qmapel="SELECT m.nama_mapel,m.kd_mapel 
-										FROM kurikulum as k, detail_kurikulum as dk, mapel as m 
-										WHERE k.kd_kurikulum=dk.kd_kurikulum AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND dk.kd_guru='$_SESSION[kode]' 
-										GROUP BY dk.kd_mapel";
+										FROM pengajaran as p, mapel as m 
+										WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+										GROUP BY p.kd_mapel";
 
 										$datamapel=mysqli_query($connect,$qmapel);
 										while ($mapel=mysqli_fetch_array($datamapel)){
@@ -70,12 +70,12 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 									<input class="form-control" type="hidden" name="kd_soal" value="<?php echo $id; ?>" />
 								</div>
 								<div class="form-group">
-										<label>Jenis Soal</label>
-										<select class="form-control" name="jenis_soal">
-											<option value="T" <?php echo $esoal['acak']=='T' ? "selected='selected'" : ""; ?>>Tidak Acak</option>
-											<option value="Y" <?php echo $esoal['acak']=='Y' ? "selected='selected'" : ""; ?>>Acak</option>
-										</select>
-									</div>
+									<label>Jenis Soal</label>
+									<select class="form-control" name="jenis_soal">
+										<option value="T" <?php echo $esoal['acak']=='T' ? "selected='selected'" : ""; ?>>Tidak Acak</option>
+										<option value="Y" <?php echo $esoal['acak']=='Y' ? "selected='selected'" : ""; ?>>Acak</option>
+									</select>
+								</div>
 								<button type="submit" class="btn btn-success">Update </button>
 							</form>
 						</div>
@@ -101,9 +101,9 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 											<option selected="selected">Pilih Mata Pelajaran</option>
 											<?php
 											$qmapel="SELECT m.nama_mapel,m.kd_mapel 
-											FROM kurikulum as k, detail_kurikulum as dk, mapel as m 
-											WHERE k.kd_kurikulum=dk.kd_kurikulum AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND dk.kd_guru='$_SESSION[kode]' 
-											GROUP BY dk.kd_mapel";
+											FROM pengajaran as p, mapel as m 
+											WHERE p.kd_mapel=m.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+											GROUP BY p.kd_mapel";
 
 											$datamapel=mysqli_query($connect,$qmapel);
 											while ($mapel=mysqli_fetch_array($datamapel)){
@@ -154,29 +154,29 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 									</thead>
 									<tbody>
 										<?php 
-											function jumSoal($kd,$conn){
-												$q=mysqli_query($conn,"SELECT kd_detail_soal FROM detail_soal WHERE kd_soal='$kd'");
-												$n=mysqli_num_rows($q);
-												return $n;
-											}
+										function jumSoal($kd,$conn){
+											$q=mysqli_query($conn,"SELECT kd_detail_soal FROM detail_soal WHERE kd_soal='$kd'");
+											$n=mysqli_num_rows($q);
+											return $n;
+										}
 
-											$qsoal="SELECT soal.acak, soal.kd_soal,soal.nama_soal,mapel.nama_mapel
-											FROM soal,mapel WHERE soal.kd_mapel=mapel.kd_mapel AND soal.kd_guru='$_SESSION[kode]'";
-											$csoal=mysqli_query($connect,$qsoal);
-											$no=1;
-											while ($rsoal=mysqli_fetch_array($csoal)){
-												$j=jumSoal($rsoal['kd_soal'],$connect);
-												echo "<tr>";
-												echo "<td>$no</td>
-												<td>$rsoal[nama_soal]</td>
-												<td>$rsoal[nama_mapel]</td><td>";
-												echo $rsoal['acak']=='Y' ? "YA" : "TIDAK";
-												echo "</td><td>$j</td>
-												<td> <a class='btn btn-primary' href='?module=buatsoal&v=tampil&kds=$rsoal[kd_soal]'>+Soal </a>  <a class='btn btn-primary' href='?module=banksoal&eid=$rsoal[kd_soal]'>Edit </a> <a href='modul/mod_banksoal/aksi.php?act=del&kd=$rsoal[kd_soal]' class='btn btn-primary'>Hapus</a></td>";
-												echo "</tr>";
-												$no++;
-											}
-										 ?>
+										$qsoal="SELECT soal.acak, soal.kd_soal,soal.nama_soal,mapel.nama_mapel
+										FROM soal,mapel WHERE soal.kd_mapel=mapel.kd_mapel ";
+										$csoal=mysqli_query($connect,$qsoal);
+										$no=1;
+										while ($rsoal=mysqli_fetch_array($csoal)){
+											$j=jumSoal($rsoal['kd_soal'],$connect);
+											echo "<tr>";
+											echo "<td>$no</td>
+											<td>$rsoal[nama_soal]</td>
+											<td>$rsoal[nama_mapel]</td><td>";
+											echo $rsoal['acak']=='Y' ? "YA" : "TIDAK";
+											echo "</td><td>$j</td>
+											<td> <a class='btn btn-primary' href='?module=buatsoal&v=tampil&kds=$rsoal[kd_soal]'>+Soal </a>  <a class='btn btn-primary' href='?module=banksoal&eid=$rsoal[kd_soal]'>Edit </a> <a href='modul/mod_banksoal/aksi.php?act=del&kd=$rsoal[kd_soal]' class='btn btn-primary'>Hapus</a></td>";
+											echo "</tr>";
+											$no++;
+										}
+										?>
 									</tbody>
 								</table>
 							</div>

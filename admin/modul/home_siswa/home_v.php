@@ -20,8 +20,8 @@
 
           <?php
           $qmp="SELECT mapel.kd_mapel, mapel.nama_mapel 
-          FROM kurikulum, detail_kurikulum as dk, mapel, kelas 
-          WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND dk.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=dk.kd_kelas AND dk.kd_kelas='$kode_kelas'";
+          FROM pengajaran as p, mapel, kelas 
+          WHERE p.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=p.kd_kelas AND p.kd_kelas='$kode_kelas'";
           $mp=mysqli_query($connect,$qmp);
           $o=1;
           while ($rmp=mysqli_fetch_array($mp)){
@@ -90,10 +90,9 @@
           }
 
           $qt="SELECT timeline.jenis, timeline.id_jenis 
-          FROM timeline, kurikulum, detail_kurikulum as dk, guru, mapel, kelas 
-          WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND 
-          dk.kd_guru=guru.kd_guru AND 
-          dk.kd_mapel=timeline.kd_mapel AND dk.kd_kelas=kelas.kd_kelas AND dk.kd_kelas=timeline.kd_kelas AND dk.kd_mapel=mapel.kd_mapel AND timeline.kd_kelas='$kode_kelas' ORDER BY timeline.waktu DESC";
+          FROM timeline, pengajaran as p, guru, mapel, kelas 
+          WHERE p.kd_guru=guru.kd_guru AND 
+          p.kd_mapel=timeline.kd_mapel AND p.kd_kelas=kelas.kd_kelas AND p.kd_kelas=timeline.kd_kelas AND p.kd_mapel=mapel.kd_mapel AND timeline.kd_kelas='$kode_kelas' ORDER BY timeline.waktu DESC";
           $tlguru=mysqli_query($connect,$qt);
           while ($rTL=mysqli_fetch_array($tlguru)){
             getTL($rTL['jenis'],$rTL['id_jenis'],$connect);

@@ -23,7 +23,7 @@ else{
 
 
     <div class="content-wrapper">
-       <div class="container">
+     <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">MANAJEMEN MATERI PELAJARAN</h4>
@@ -32,23 +32,23 @@ else{
 
         </div>
         <div class="row">
-           <div class="col-md-4 col-sm-4 col-xs-12">
+         <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                 Upload Materi
-             </div>
-             <div class="panel-body text-center recent-users-sec">
+                   Upload Materi
+               </div>
+               <div class="panel-body text-center recent-users-sec">
                 <form role="form" name="fupmateri" method="POST" action="modul/mod_materi/simpan_materi.php" enctype="multipart/form-data">
-                   <div class="form-group">
+                 <div class="form-group">
                     <label>Mata Pelajaran</label>
                     <select name="mapel" class="form-control" id="cbbmapel" data-guru="<?php echo $_SESSION['kode'] ?>">
                         <option selected="selected">Pilih Mata Pelajaran</option>
                         <?php
 
                         $qmapel="SELECT m.nama_mapel,m.kd_mapel 
-                        FROM kurikulum as k, detail_kurikulum as dk, mapel as m 
-                        WHERE k.kd_kurikulum=dk.kd_kurikulum AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND dk.kd_guru='$_SESSION[kode]' 
-                        GROUP BY dk.kd_mapel";
+                        FROM pengajaran as p, mapel as m 
+                        WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+                        GROUP BY p.kd_mapel";
 
                         $datamapel=mysqli_query($connect,$qmapel);
                         while ($mapel=mysqli_fetch_array($datamapel)){
@@ -102,9 +102,9 @@ else{
 <div class="col-md-8 col-sm-8 col-xs-12">
   <div class="panel panel-success">
     <div class="panel-heading">
-     Hasil Upload Materi
- </div>
- <div class="panel-body">
+       Hasil Upload Materi
+   </div>
+   <div class="panel-body">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead>
@@ -122,9 +122,9 @@ else{
             <tbody>
                 <div id="bag-data">
                     <?php 
-                    $q="SELECT materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas 
-                    FROM kurikulum, materi, detail_kurikulum as dk, mapel, kelas 
-                    WHERE kurikulum.kd_kurikulum=dk.kd_kurikulum AND kurikulum.aktif='Y' AND dk.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND dk.kd_kelas=kelas.kd_kelas AND materi.kd_guru=dk.kd_guru AND materi.kd_guru='$_SESSION[kode]'";
+                    $q="SELECT materi.ForL, materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas 
+                    FROM materi, pengajaran as p, mapel, kelas 
+                    WHERE p.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND p.kd_kelas=kelas.kd_kelas AND materi.kd_guru=p.kd_guru";
                     $materi=mysqli_query($connect,$q);
                     if (mysqli_num_rows($materi)>0){
                         $n=1;
@@ -135,16 +135,21 @@ else{
                             <td>$rmateri[pertemuan]</td>
                             <td>$rmateri[nama_materi]</td>";
                             echo "<td>$rmateri[nama_kelas]</td>";
-                            echo "<td>$rmateri[nama_mapel]</td>
-                            <td><a href='files/materi/$rmateri[file]'>$rmateri[file]</a></td>
-                            <td>$rmateri[tgl_up]</td>
-                            <td><a href='modul/mod_materi/hapus_materi.php?id=$rmateri[kd_materi]' class='btn btn-warning' onclick='return confirm(\"Yakin Hapus?\")'>Hapus<a></td>
+                            echo "<td>$rmateri[nama_mapel]</td>";
+                            if ($rmateri['ForL']=='file') {
+                                echo "<td><a href='files/materi/$rmateri[file]' class='btn btn-info btn-xs' target='_blank'>Lihat Materi</a></td>";
+                            } else {
+                                echo "<td><a href='$rmateri[file]' class='btn btn-primary btn-xs' target='_blank'>Lihat Materi</a></td>";
+                            }
+                            
+                            echo "<td>$rmateri[tgl_up]</td>
+                            <td><a href='modul/mod_materi/hapus_materi.php?id=$rmateri[kd_materi]' class='btn btn-warning btn-xs' onclick='return confirm(\"Yakin Hapus?\")'>Hapus<a></td>
 
                             </tr>";
                             $n++;
                         }
                     } else {
-                        echo "<tr><td colspan='7'>Belum ada materi diupload</td></tr>";
+                        echo "<tr><td colspan='8'>Belum ada materi diupload</td></tr>";
                     }
                     ?>
                 </div>

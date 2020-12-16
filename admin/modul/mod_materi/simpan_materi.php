@@ -59,7 +59,7 @@ if ($forl=='file') {
 		}
 		if ($s=='scs') {
 			move_uploaded_file($_FILES["filemateri"]["tmp_name"], $temp.$newfilename);
-			header("location:../../media.php?module=materi");
+			echo "<script>alert('Berhasil diupload Materi'); location='../../media.php?module=materi'</script>";
 		} else {
 			echo "Terjadi Kesalahan!";
 		}

@@ -216,7 +216,7 @@ if (isset($_GET['act'])){
 		$qg=mysqli_query($connect,"SELECT gambar FROM detail_soal WHERE kd_detail_soal='$kdd'");
 		$gbr=mysqli_fetch_array($qg);
 
-		if ($_POST['hapus']='hapusgbr') {
+		if (isset($_POST['hapus'])) {
 			if ($gbr['gambar']!='T'){
 				unlink("../../files/soal/".$gbr['gambar']);
 			}

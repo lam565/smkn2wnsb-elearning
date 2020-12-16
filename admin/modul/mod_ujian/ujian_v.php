@@ -59,9 +59,9 @@ else {
                                             <option selected="selected">Pilih Mata Pelajaran</option>
                                             <?php
                                             $qmapel="SELECT m.nama_mapel,m.kd_mapel 
-                                            FROM kurikulum as k, detail_kurikulum as dk, mapel as m 
-                                            WHERE k.kd_kurikulum=dk.kd_kurikulum AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND dk.kd_guru='$_SESSION[kode]' 
-                                            GROUP BY dk.kd_mapel";
+                                            FROM pengajaran as p, mapel as m 
+                                            WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+                                            GROUP BY p.kd_mapel";
 
                                             $datamapel=mysqli_query($connect,$qmapel);
                                             while ($mapel=mysqli_fetch_array($datamapel)){
@@ -208,9 +208,9 @@ else {
                                             <option selected="selected">Pilih Mata Pelajaran</option>
                                             <?php
                                             $qmapel="SELECT m.nama_mapel,m.kd_mapel 
-                                            FROM kurikulum as k, detail_kurikulum as dk, mapel as m 
-                                            WHERE k.kd_kurikulum=dk.kd_kurikulum AND m.kd_mapel=dk.kd_mapel AND k.Aktif='Y' AND dk.kd_guru='$_SESSION[kode]' 
-                                            GROUP BY dk.kd_mapel";
+                                            FROM pengajaran as p, mapel as m 
+                                            WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+                                            GROUP BY p.kd_mapel";
 
                                             $datamapel=mysqli_query($connect,$qmapel);
                                             while ($mapel=mysqli_fetch_array($datamapel)){

@@ -13,7 +13,7 @@
 		$delt="DELETE FROM timeline WHERE timeline.jenis='materi' AND timeline.id_jenis='$kd'";
 		mysqli_query($connect,$delt);
 		unlink($file);
-		header("location:../../media.php?module=materi");
+		echo "<script>alert('Berhasil hapus Materi'); location='../../media.php?module=materi'</script>";
 		
 	}
  ?>

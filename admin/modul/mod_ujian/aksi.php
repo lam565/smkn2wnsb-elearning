@@ -60,7 +60,7 @@ if (isset($_GET['act'])){
 		$kd_guru=$_POST['kd_guru'];
 		$tglup=date("Y-m-d H:i:s");
 
-		$qupdate="UPDATE ujian SET nama_ujian='$nama_ujian',deskripsi='$deskripsi',tgl_ujian='$deskripsi',jam='$jam',menit='$menit',detik='$detik',kd_soal='$kd_soal',kd_kelas='$kd_kelas',kd_mapel='$kd_mapel',kd_guru='$kd_guru' WHERE kd_ujian='$kd_ujian'";
+		$qupdate="UPDATE ujian SET nama_ujian='$nama_ujian',deskripsi='$deskripsi',tgl_ujian='$tgl_ujian',jam='$jam',menit='$menit',detik='$detik',kd_soal='$kd_soal',kd_kelas='$kd_kelas',kd_mapel='$kd_mapel',kd_guru='$kd_guru' WHERE kd_ujian='$kd_ujian'";
 		$updt=mysqli_query($connect,$qupdate);
 		if ($updt){
 			echo "<script>alert('Berhasil mengubah data ujian'); location='../../media.php?module=ujian'</script>";
