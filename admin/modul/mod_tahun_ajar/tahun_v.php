@@ -65,24 +65,24 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                        
                                  <div class="form-group">
                                             <label>ID</label>
-                                            <input class="form-control" name="kd_tajar" type="text" <?= (!$update) ?: 'value="'.$row["kd_tajar"].'"' ?>/>
+                                            <input class="form-control" name="kd_tajar"  type="text" <?= (!$update) ?: 'value="'.$row["kd_tajar"].'"' ?>/>
                                         </div>
                                
                                        
                                         <div class="form-group">
                                             <label>Tahun Ajar </label>
-                                            <input class="form-control" name="tahun_ajar" type="text" <?= (!$update) ?: 'value="'.$row["tahun_ajar"].'"' ?>/>
+                                            <input class="form-control" name="tahun_ajar" placeholder="Masukkan Tahun Ajar" type="text" <?= (!$update) ?: 'value="'.$row["tahun_ajar"].'"' ?>/>
                                         </div>
 										
 										 <div class="form-group">
                                             <label>Semester </label>
-                                            <input class="form-control" name="kd_semester" type="text" <?= (!$update) ?: 'value="'.$row["kd_semester"].'"' ?>/>
+                                            <input class="form-control" name="kd_semester"  placeholder="Masukkan Semester" type="text" <?= (!$update) ?: 'value="'.$row["kd_semester"].'"' ?>/>
                                         </div>
 										
 										<div class="form-group">
                                             <label>Status </label>
                                             <select class="form-control" name="aktif">
-												
+												<option value="T">--Pilih Status--</option>
 												<?php $query5 = $connection->query("SELECT * FROM tahun_ajar"); while ($data5 = $query5->fetch_assoc()): ?>
 												<?php if($data5["aktif"]=='Y'){ ?>
 												<option value="Y" <?= (!$update) ?: (($data5["aktif"] != $data5["aktif"]) ?: 'selected="on"') ?>>Aktif</option>
@@ -123,7 +123,8 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ID</th>
+											<th>No</th>
+                                            <th>ID Tahun Ajaran</th>
 											 <th>Tahun Ajaran</th>
 											<th>Semester</th>
 											<th>Aktif</th>
@@ -136,6 +137,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 	                        <?php while($row = $query->fetch_assoc()): ?>
                                         <tr>
                                             <td></td>
+											<td><?=$no++?></td>
                                             <td><?=$row['kd_tajar']?></td>
                                             <td><?=$row['tahun_ajar']?></td>
                                             <td><?=$row['kd_semester']?></td>

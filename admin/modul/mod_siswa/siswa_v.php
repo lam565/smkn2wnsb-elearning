@@ -29,12 +29,12 @@ else{
  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
    if ($update) {
-    $sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]', 
+    $sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]',password='$_POST[password]', 
     kelamin='$_POST[kelamin]',email='$_POST[email]',telp='$_POST[telp]',
     status='$_POST[status]' WHERE nis='$_GET[key]'";
   } else {
     $sql = "INSERT INTO siswa VALUES ('$_POST[nis]', '$_POST[nisn]', '$_POST[nama]',
-    '$_POST[username]', '$_POST[kelamin]', '$_POST[email]', '', '$_POST[telp]', '$_POST[status]')";
+    '$_POST[username]', '$_POST[password]', '$_POST[kelamin]', '$_POST[email]', '', '$_POST[telp]', '$_POST[status]')";
 
   }
 
@@ -72,26 +72,30 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 
        <div class="form-group">
         <label>NIS</label>
-        <input class="form-control" name="nis" type="text" <?= (!$update) ?: 'value="'.$row["nis"].'"' ?>/>
+        <input class="form-control" placeholder="Masukkan NIS" name="nis" type="text" <?= (!$update) ?: 'value="'.$row["nis"].'"' ?>/>
       </div>
       <div class="form-group">
         <label>NISN</label>
-        <input class="form-control" name="nisn" type="text" <?= (!$update) ?: 'value="'.$row["nisn"].'"' ?>/>
+        <input class="form-control" placeholder="Masukkan NISN" name="nisn" type="text" <?= (!$update) ?: 'value="'.$row["nisn"].'"' ?>/>
       </div>
 
 
       <div class="form-group">
         <label>Nama Siswa </label>
-        <input class="form-control" name="nama" type="text" <?= (!$update) ?: 'value="'.$row["nama"].'"' ?>/>
+        <input class="form-control" placeholder="Masukkan Nama Siswa" name="nama" type="text" <?= (!$update) ?: 'value="'.$row["nama"].'"' ?>/>
       </div>
       <div class="form-group">
         <label>Username </label>
-        <input class="form-control" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
+        <input class="form-control" placeholder="Masukkan Username" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
+      </div>
+	  <div class="form-group">
+        <label>Password </label>
+        <input class="form-control" placeholder="Masukkan Password" name="password" type="text" <?= (!$update) ?: 'value="'.$row["password"].'"' ?>/>
       </div>
       <div class="form-group">
         <label>Jenis Kelamin</label>
         <select class="form-control" name="kelamin">
-
+			<option>--Pilih Jenis Kelamin--</option>
           <?php $query5 = $connection->query("SELECT * FROM siswa group by kelamin"); while ($data5 = $query5->fetch_assoc()): ?>
 
           <option value="<?=$data5["kelamin"]?>" <?= (!$update) ?: (($data5["kelamin"] != $data5["kelamin"]) ?: 'selected="on"') ?>><?=$data5["kelamin"]?></option>
@@ -106,32 +110,47 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 
     <div class="form-group">
       <label>E-Mail</label>
-      <input class="form-control" name="email" type="text" <?= (!$update) ?: 'value="'.$row["email"].'"' ?>/>
+      <input class="form-control" placeholder="Masukkan E-Mail" name="email" type="text" <?= (!$update) ?: 'value="'.$row["email"].'"' ?>/>
     </div>
     
     <div class="form-group">
       <label>Tlp</label>
-      <input class="form-control" name="telp" type="text" <?= (!$update) ?: 'value="'.$row["telp"].'"' ?>/>
+      <input class="form-control" placeholder="Masukkan Telepon" name="telp" type="text" <?= (!$update) ?: 'value="'.$row["telp"].'"' ?>/>
     </div>
-    <div class="form-group">
-      <label>Status</label>
-      <input class="form-control" name="status" type="text" <?= (!$update) ?: 'value="'.$row["status"].'"' ?>/>
-    </div>
+       <div class="form-group">
+                                            <label>Status </label>
+                                            <select class="form-control" name="status">
+												<option>--Pilih Status--</option>
+												<?php $query5 = $connection->query("SELECT * FROM siswa group by status"); while ($data5 = $query5->fetch_assoc()): ?>
+												<?php if($data5["status"]=='Y'){ ?>
+												<option value="Y" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>Aktif</option>
+												<option value="T">NonAktif</option>
+												<?php } else { ?>
+												<option value="T" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>NonAktif</option>
+												<option value="Y">Aktif</option>
+												<?php } ?>
+												
+												
+												<?php endwhile; ?>
+											
+												
+											</select>
+                                        </div>
     <div class="form-group">
       <label>Kelas </label>
       <select class="form-control" name="kd_kelas">
-        <option>Kelas</option>
+        <option>--Pilih Kelas--</option>
         <?php $query3 = $connection->query("SELECT * FROM kelas"); while ($data3 = $query3->fetch_assoc()): ?>
-        <option value="<?=$data3["kd_kelas"]?>" <?= (!$update) ?: (($row3["kd_kelas"] != $data3["kd_kelas"]) ?: 'selected="on"') ?>><?=$data3["nama_kelas"]?></option>
+        <option value="<?=$data3["kd_kelas"]?>" <?= (!$update) ?: (($data3["kd_kelas"] != $data3["kd_kelas"]) ?: 'selected="on"') ?>><?=$data3["nama_kelas"]?></option>
       <?php endwhile; ?>
     </select>
   </div>
   <div class="form-group">
     <label>Tahun Ajaran</label>
     <select class="form-control" name="kd_tajar">
-      <option>Tahun Ajaran</option>
+      <option>--Pilih Tahun Ajaran--</option>
       <?php $query5 = $connection->query("SELECT * FROM tahun_ajar"); while ($data5 = $query5->fetch_assoc()): ?>
-      <option value="<?=$data5["kd_tajar"]?>" <?= (!$update) ?: (($row5["kd_tajar"] != $data5["kd_tajar"]) ?: 'selected="on"') ?>><?=$data5["tahun_ajar"]?></option>
+      <option value="<?=$data5["kd_tajar"]?>" <?= (!$update) ?: (($data5["kd_tajar"] != $data5["kd_tajar"]) ?: 'selected="on"') ?>><?=$data5["tahun_ajar"]?></option>
     <?php endwhile; ?>
   </select>
 </div>

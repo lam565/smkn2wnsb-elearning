@@ -65,14 +65,14 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
        
        <div class="form-group">
         <label>NIS</label>
-        <input class="form-control" name="nis" type="text" <?= (!$update) ?: 'value="'.$row["nis"].'"' ?>/>
+        <input class="form-control" name="nis" placeholder="Masukkan NIS Siswa" type="text" <?= (!$update) ?: 'value="'.$row["nis"].'"' ?>/>
       </div>
       
       
        <div class="form-group">
         <label>Kelas </label>
         <select class="form-control" name="kd_kelas">
-            <option>Kelas</option>
+            <option>--Pilih Kelas--</option>
             <?php $query3 = $connection->query("SELECT * FROM kelas"); while ($data3 = $query3->fetch_assoc()): ?>
             <option value="<?=$data3["kd_kelas"]?>" <?= (!$update) ?: (($data3["kd_kelas"] != $data3["kd_kelas"]) ?: 'selected="on"') ?>><?=$data3["nama_kelas"]?></option>
         <?php endwhile; ?>
@@ -81,7 +81,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 <div class="form-group">
     <label>Tahun Ajaran</label>
     <select class="form-control" name="kd_tajar">
-        <option>Tahun Ajaran</option>
+        <option>--Pilih Tahun Ajaran--</option>
         <?php $query5 = $connection->query("SELECT * FROM tahun_ajar"); while ($data5 = $query5->fetch_assoc()): ?>
         <option value="<?=$data5["kd_tajar"]?>" <?= (!$update) ?: (($data5["kd_tajar"] != $data5["kd_tajar"]) ?: 'selected="on"') ?>><?=$data5["tahun_ajar"]?></option>
     <?php endwhile; ?>
@@ -121,13 +121,16 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
         </thead>
         <tbody>
          <?php $no = 1; ?>
-         <?php if ($query = $connection->query("SELECT * FROM rombel")): ?>
+         <?php if ($query = $connection->query("
+		 SELECT * FROM rombel,kelas,tahun_ajar 
+		 where rombel.kd_kelas=kelas.kd_kelas
+		 and rombel.kd_tajar=tahun_ajar.kd_tajar")): ?>
            <?php while($row = $query->fetch_assoc()): ?>
             <tr>
               <td></td>
               <td><?=$row['nis']?></td>
-              <td><?=$row['kd_kelas']?></td>
-              <td><?=$row['kd_tajar']?></td>
+              <td><?=$row['nama_kelas']?></td>
+              <td><?=$row['tahun_ajar']?></td>
               
               <td class="hidden-print">
                <div class="btn-group">

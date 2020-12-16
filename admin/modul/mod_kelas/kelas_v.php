@@ -64,25 +64,46 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 						<form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" role="form">
                                        
                                  <div class="form-group">
-                                            <label>ID</label>
-                                            <input class="form-control" name="kd_kelas" type="text" <?= (!$update) ?: 'value="'.$row["kd_kelas"].'"' ?>/>
+                                            <label>Kode Kelas</label>
+                                            <input class="form-control" placeholder="Masukkan Kode Kelas" name="kd_kelas" type="text" <?= (!$update) ?: 'value="'.$row["kd_kelas"].'"' ?>/>
                                         </div>
                                
                                        
                                         <div class="form-group">
                                             <label>Nama Kelas </label>
-                                            <input class="form-control" name="nama_kelas" type="text" <?= (!$update) ?: 'value="'.$row["nama_kelas"].'"' ?>/>
+                                            <input class="form-control" placeholder="Masukkan Nama Kelas" name="nama_kelas" type="text" <?= (!$update) ?: 'value="'.$row["nama_kelas"].'"' ?>/>
                                         </div>
 										
 										<div class="form-group">
                                             <label>Tingkat </label>
-                                            <input class="form-control" name="tingkat" type="text" <?= (!$update) ?: 'value="'.$row["tingkat"].'"' ?>/>
+                                            <select class="form-control" name="aktif">
+												<option value="T">--Pilih Tingkat--</option>
+												<?php $query5 = $connection->query("SELECT * FROM kelas group by tingkat and kd_jurusan"); while ($data5 = $query5->fetch_assoc()): ?>
+												<?php if($data5["tingkat"]=='X'){ ?>
+												<option value="X" <?= (!$update) ?: (($data5["aktif"] != $data5["aktif"]) ?: 'selected="on"') ?>>X</option>
+												<option value="XI">XI</option>
+												<option value="XII">XII</option>
+												<?php } else if($data5["tingkat"]=='XI') { ?>
+												<option value="XI" <?= (!$update) ?: (($data5["aktif"] != $data5["aktif"]) ?: 'selected="on"') ?>>XI</option>
+												<option value="X">X</option>
+												<option value="XII">XII</option>
+												<?php } else if($data5["tingkat"]=='XII') { ?>
+												<option value="XII" <?= (!$update) ?: (($data5["aktif"] != $data5["aktif"]) ?: 'selected="on"') ?>>XII</option>
+												<option value="X">X</option>
+												<option value="XI">XII</option>
+												<?php } ?>
+												
+												
+												<?php endwhile; ?>
+											
+												
+											</select>
                                         </div>
 										
 										<div class="form-group">
                                             <label>Jurusan </label>
                                             <select class="form-control" name="kd_jurusan">
-												<option>Jurusan</option>
+												<option>--Pilih Jurusan--</option>
 												<?php $query = $connection->query("SELECT * FROM jurusan"); while ($data = $query->fetch_assoc()): ?>
 													<option value="<?=$data["kd_jurusan"]?>" <?= (!$update) ?: (($row["kd_jurusan"] != $data["kd_jurusan"]) ?: 'selected="on"') ?>><?=$data["nama_jurusan"]?></option>
 												<?php endwhile; ?>
@@ -113,7 +134,8 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ID</th>
+											 <th>No</th>
+                                            <th>Kode Kelas</th>
 											 <th>Nama Kelas</th>
 											<th>Tingkat</th>
 											<th>Jurusan</th>
@@ -122,14 +144,15 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                     </thead>
                                     <tbody>
 									<?php $no = 1; ?>
-	                    <?php if ($query = $connection->query("SELECT * FROM kelas")): ?>
+	                    <?php if ($query = $connection->query("SELECT * FROM kelas,jurusan where kelas.kd_jurusan=jurusan.kd_jurusan")): ?>
 	                        <?php while($row = $query->fetch_assoc()): ?>
                                         <tr>
                                             <td></td>
                                             <td><?=$no++?></td>
+											<td><?=$row['kd_kelas']?></td>
                                             <td><?=$row['nama_kelas']?></td>
                                             <td><?=$row['tingkat']?></td>
-											<td><?=$row['kd_jurusan']?></td>
+											<td><?=$row['nama_jurusan']?></td>
 											<td class="hidden-print">
 	                                <div class="btn-group">
 	                                    <a href="?module=kelas&action=update&key=<?=$row['kd_kelas']?>" class="btn btn-warning btn-xs">Edit</a>

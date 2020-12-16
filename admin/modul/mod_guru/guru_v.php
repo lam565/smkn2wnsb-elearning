@@ -66,39 +66,57 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
      <div class="panel-body text-center recent-users-sec">
       <form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-          <label>ID</label>
-          <input class="form-control" name="kd_guru" type="text" <?= (!$update) ?: 'value="'.$row["kd_guru"].'"' ?>/>
+          <label>Kode Guru</label>
+          <input class="form-control" placeholder="Masukkan Kode Guru" name="kd_guru" type="text" <?= (!$update) ?: 'value="'.$row["kd_guru"].'"' ?>/>
         </div>
         <div class="form-group">
           <label>NIP</label>
-          <input class="form-control" name="nip" type="text" <?= (!$update) ?: 'value="'.$row["nip"].'"' ?>/>
+          <input class="form-control" placeholder="Masukkan NIP" name="nip" type="text" <?= (!$update) ?: 'value="'.$row["nip"].'"' ?>/>
         </div>
         <div class="form-group">
           <label>Username</label>
-          <input class="form-control" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
+          <input class="form-control" placeholder="Masukkan Username" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
         </div>
-
+		<div class="form-group">
+          <label>Password</label>
+          <input class="form-control" placeholder="Masukkan Password" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
+        </div>
 
         <div class="form-group">
           <label>Nama Guru </label>
-          <input class="form-control" name="nama" type="text" <?= (!$update) ?: 'value="'.$row["nama"].'"' ?>/>
+          <input class="form-control" placeholder="Masukkan Nama Guru" name="nama" type="text" <?= (!$update) ?: 'value="'.$row["nama"].'"' ?>/>
         </div>
 
         <div class="form-group">
-          <label>Telp </label>
-          <input class="form-control" name="telp" type="text" <?= (!$update) ?: 'value="'.$row["telp"].'"' ?>/>
+          <label>Telepon </label>
+          <input class="form-control" placeholder="Masukkan Telepon" name="telp" type="text" <?= (!$update) ?: 'value="'.$row["telp"].'"' ?>/>
 
         </div>
         <div class="form-group">
           <label>E-Mail </label>
-          <input class="form-control" name="email" type="text" <?= (!$update) ?: 'value="'.$row["email"].'"' ?>/>
+          <input class="form-control" placeholder="Masukkan E-Mail" name="email" type="text" <?= (!$update) ?: 'value="'.$row["email"].'"' ?>/>
 
         </div>
 
         <div class="form-group">
-          <label>Status </label>
-          <input class="form-control" name="status" type="text" <?= (!$update) ?: 'value="'.$row["status"].'"' ?>/>
-        </div>
+                                            <label>Status </label>
+                                            <select class="form-control" name="status">
+												<option>--Pilih Status--</option>
+												<?php $query5 = $connection->query("SELECT * FROM guru group by status"); while ($data5 = $query5->fetch_assoc()): ?>
+												<?php if($data5["status"]=='Y'){ ?>
+												<option value="Y" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>Aktif</option>
+												<option value="T">NonAktif</option>
+												<?php } else { ?>
+												<option value="T" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>NonAktif</option>
+												<option value="Y">Aktif</option>
+												<?php } ?>
+												
+												
+												<?php endwhile; ?>
+											
+												
+											</select>
+                                        </div>
 
 
         <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>

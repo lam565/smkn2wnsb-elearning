@@ -41,7 +41,18 @@ if($_SESSION['login']==0){
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
+	<link href="assets2/css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="assets2/fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets2/css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom styling plus plugins -->
+    <link href="assets2/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets2/css/maps/jquery-jvectormap-2.0.1.css" />
+    <link href="assets2/css/icheck/flat/green.css" rel="stylesheet">
+    <link href="assets2/css/floatexamples.css" rel="stylesheet" />
+
+    <script src="assets2/js/jquery.min.js"></script>
 </head>
 <body>
  <div class="navbar navbar-inverse set-radius-zero" >
@@ -84,7 +95,9 @@ if($_SESSION['login']==0){
 
 <div class="content-wrapper">
  <div class="container">
+ <div class="col-md-12">
     <?php include 'content.php'; ?>
+	</div>
 </div>
 </div>
 <!-- CONTENT-WRAPPER SECTION END-->
@@ -109,56 +122,8 @@ if($_SESSION['login']==0){
 <script src="assets/js/jquery-1.9.1.js"></script>
 <script src="assets/js/bootstrap-3.3.5.js"></script>
 <script type="text/javascript" src="assets/js/malsup-media.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(document).on('click', '.pmateri', function (e) {
-            e.preventDefault();
-            $("#previewmateri").modal('show');
-            $(".modal-title").html($(this).attr('data-judul'));
-            $.post('modul/mod_materi_siswa/dokumen.php',
-                {id: $(this).attr('data-id')},
-                function (html) {
-                    $(".modal-body").html(html);
-                }
-                );
-        });
 
-        $(document).on('change', '#cbbketergantungan', function(){
-            var pil = $(this).val();
-            var kd_soal = $(this).attr('data-soal');
-            var kd_det_soal = $(this).attr('data-detail');
-            if (pil=="Child"){
-                $.ajax({
-                    url: 'modul/mod_banksoal/getchild.php',
-                    type: 'post',
-                    data: {
-                        kds : kd_soal,
-                        kdd : kd_det_soal
-                    },
-                    success: function (data){
-                        $('#child').html(data);
-                    }
-                });
-            } else {
-                $('#child').html("");
-            }
 
-        });
-        $(document).on('change', '#cbbmapel', function(){
-            var mapel = $(this).val();
-            var kd_guru = $(this).attr('data-guru');
-            $.ajax({
-                url: 'function.php',
-                type: 'post',
-                data: {
-                    act: 'kelasmapel',
-                    mp: mapel,
-                    kdg: kd_guru
-                },
-                success: function (data){
-                    $('#infokls').html(data);
-                }
-            });
 
         });
 
@@ -212,111 +177,6 @@ if($_SESSION['login']==0){
                     $('#daftsoal').html(data);
                 }
             });
-
-        });
-
-        $(document).on('change', '#cbbForL', function(){
-            var pil = $(this).val();
-            $output="";
-            if (pil=='file') {
-                $output = "<label>Upload File Materi</label><input class='form-control' type='file' name='filemateri' id='fileupload' />";
-            } else if (pil=='link') {
-                $output = "<label>Upload Link Materi</label><input class='form-control' type='text' name='linkmateri' id='fileupload' />";
-            }
-            $("#ForL").html($output);
-        });
-
-        $("#fileupload").change(function () {
-            var fileExtension = ['pdf','jpeg', 'jpg', 'png'];
-            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-                $(this).val('');
-                $(".warningnya").html("Ekstensi file harus: "+fileExtension.join(', '));
-            } else {
-                $(".warningnya").html("");
-            }
-        });
-        
-    });
-</script>
-<script type="text/javascript">
-//    validasi form (hanya file .xls yang diijinkan)
-function validateForm()
-{
-    function hasExtension(inputID, exts) {
-        var fileName = document.getElementById(inputID).value;
-        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
-    }
-    if(!hasExtension('filesoal', ['.xls'])){
-        alert("Hanya file XLS yang diijinkan.");
-        return false;
-    }
-}
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-/** Membuat Waktu Mulai Hitung Mundur Dengan 
-* var detik = 0,
-* var menit = 1,
-* var jam = 1
-*/
-var detik = document.getElementById("detik").value;
-var menit = document.getElementById("menit").value;
-var jam   = document.getElementById("jam").value;
-
-/**
-* Membuat function hitung() sebagai Penghitungan Waktu
-*/
-function hitung() {
-/** setTimout(hitung, 1000) digunakan untuk 
-* mengulang atau merefresh halaman selama 1000 (1 detik) 
-*/
-setTimeout(hitung,1000);
-
-/** Jika waktu kurang dari 10 menit maka Timer akan berubah menjadi warna merah */
-if(menit < 10 && jam == 0){
-    var peringatan = 'style="color:red"';
-};
-
-/** Menampilkan Waktu Timer pada Tag #Timer di HTML yang tersedia */
-$('#timer').html(
-    '<h3 align="center"'+peringatan+'>' + jam + ' jam : ' + menit + ' menit : ' + detik + ' detik</h3>'
-    );
-
-/** Melakukan Hitung Mundur dengan Mengurangi variabel detik - 1 */
-detik --;
-
-/** Jika var detik < 0
-* var detik akan dikembalikan ke 59
-* Menit akan Berkurang 1
-*/
-if(detik < 0) {
-    detik = 59;
-    menit --;
-
-/** Jika menit < 0
-* Maka menit akan dikembali ke 59
-* Jam akan Berkurang 1
-*/
-if(menit < 0) {
-    menit = 59;
-    jam --;
-
-/** Jika var jam < 0
-* clearInterval() Memberhentikan Interval dan submit secara otomatis
-*/
-if(jam < 0) {                                                                 
-    clearInterval(); 
-    var frmSoal = document.getElementById("frmSoal");
-    frmSoal.submit();                           
-} 
-} 
-} 
-}           
-/** Menjalankan Function Hitung Waktu Mundur */
-hitung();
-}); 
-// ]]>
-</script>
 
 </body>
 </html>

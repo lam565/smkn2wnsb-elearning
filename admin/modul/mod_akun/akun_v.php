@@ -64,12 +64,12 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                         <div class="panel-body text-center recent-users-sec">
 						<form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" role="form">
 										 <div class="form-group">
-                                            <label>ID </label>
-                                            <input class="form-control" name="kd" type="text" <?= (!$update) ?: 'value="'.$row["kd_jurusan"].'"' ?>/>
+                                            <label>Kode </label>
+                                            <input class="form-control" placeholder="Masukkan Kode Jurusan"  name="kd" type="text" <?= (!$update) ?: 'value="'.$row["kd_jurusan"].'"' ?>/>
                                         </div>
                                         <div class="form-group">
                                             <label>Jurusan </label>
-                                            <input class="form-control" name="nama" type="text" <?= (!$update) ?: 'value="'.$row["nama_jurusan"].'"' ?>/>
+                                            <input class="form-control" placeholder="Masukkan Jurusan"  name="nama" type="text" <?= (!$update) ?: 'value="'.$row["nama_jurusan"].'"' ?>/>
                                         </div>
                                         
                                       
@@ -94,7 +94,8 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ID</th>
+                                            <th>No</th>
+											<th>Kode Jurusan</th>
 											 <th>Jurusan</th>
 											
 											 <th>Aksi</th>
@@ -107,6 +108,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                         <tr>
 										<td></td>
                                             <td><?=$no++?></td>
+											 <td><?=$row['kd_jurusan']?></td>
                                             <td><?=$row['nama_jurusan']?></td>
                                            <td class="hidden-print">
 	                                <div class="btn-group">
