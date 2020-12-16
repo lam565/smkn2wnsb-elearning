@@ -34,7 +34,8 @@ for ($i=2; $i<=$baris; $i++)
 	$password = md5("1234");
 	$status= "Aktif";
 	$nama  = $data->val($i, 2);
-	$email = $data->val($i, 3);
+	$kelamin = $data->val($i, 3);
+	$email = $data->val($i, 4);
 
 
 //setelah data dibaca, masukkan ke tabel login
