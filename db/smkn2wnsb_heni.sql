@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 16 Des 2020 pada 21.53
+-- Generation Time: 17 Des 2020 pada 15.00
 -- Versi Server: 5.6.21-log
 -- PHP Version: 5.6.3
 
@@ -166,7 +166,31 @@ INSERT INTO `guru` (`kd_guru`, `username`, `nip`, `nama`, `telp`, `email`, `foto
 ('GR091', 'smkwsb92', '-', 'Santi Arofah,S.Pd', '-', 'user@gmail.com', 'default.jpg', 'Aktif'),
 ('GR092', 'smkwsb93', '-', 'Puji Laksono,S.Pd', '-', 'user@gmail.com', 'default.jpg', 'Aktif'),
 ('GR093', 'smkwsb94', '-', 'Ulung Giri Sutikno, S.Pd', '-', 'user@gmail.com', 'default.jpg', 'Aktif'),
-('GR094', 'smkwsb95', '-', 'Ayu Andriyani, S.Pd', '-', 'user@gmail.com', 'default.jpg', 'Aktif');
+('GR094', 'smkwsb95', '-', 'Ayu Andriyani, S.Pd', '-', 'user@gmail.com', 'default.jpg', 'Aktif'),
+('GR095', 'test', '-', 'test', '08574322002', 'Elethaveronica@gmail.com', 'default.jpg', 'Aktif');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `jurnal`
+--
+
+CREATE TABLE IF NOT EXISTS `jurnal` (
+`id_jurnal` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `jam_ke` int(11) NOT NULL,
+  `kd_guru` varchar(20) NOT NULL,
+  `kd_mapel` varchar(10) NOT NULL,
+  `judul_materi` varchar(100) NOT NULL,
+  `jml_siswa` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `jurnal`
+--
+
+INSERT INTO `jurnal` (`id_jurnal`, `tanggal`, `jam_ke`, `kd_guru`, `kd_mapel`, `judul_materi`, `jml_siswa`) VALUES
+(3, '2020-12-17', 4, 'GR090', 'bing', 'abc', 2);
 
 -- --------------------------------------------------------
 
@@ -269,7 +293,8 @@ INSERT INTO `komentar` (`id_komentar`, `penulis_komentar`, `isi_komentar`, `tang
 (0, '8170', 'gg', '3:51 17/12/2020', 2, '', '8170', 1),
 (0, '8170', 'ggk', '3:51 17/12/2020', 2, '', '8170', 1),
 (0, '8170', 'ggkp', '3:51 17/12/2020', 2, '', '8170', 1),
-(0, '8170', 'ggkpi', '3:51 17/12/2020', 2, '', '8170', 1);
+(0, '8170', 'ggkpi', '3:51 17/12/2020', 2, '', '8170', 1),
+(0, '8170', 'hai', '20:55 17/12/2020', 2, '', '8170', 1);
 
 -- --------------------------------------------------------
 
@@ -302,7 +327,6 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`username`, `password`, `level`, `last`, `status`) VALUES
-('1234', '1234', 'guru', '2020-12-16 21:27:23', 'Y'),
 ('8168', '0c9e63b6cec0627182663ae8feb204cb', 'siswa', '2020-12-14 02:48:53', 'aktif'),
 ('8169', '1a32df83ac6be75b6907fe885465b7a9', 'siswa', '2020-12-14 02:48:53', 'aktif'),
 ('8170', 'c37f9e1283cbd4a6edfd778fc8b1c652', 'siswa', '2020-12-14 02:48:53', 'aktif'),
@@ -432,7 +456,8 @@ INSERT INTO `login` (`username`, `password`, `level`, `last`, `status`) VALUES
 ('smkwsb92', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-14 02:49:32', 'aktif'),
 ('smkwsb93', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-14 02:49:32', 'aktif'),
 ('smkwsb94', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-14 02:49:32', 'aktif'),
-('smkwsb95', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-14 02:49:32', 'aktif');
+('smkwsb95', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-14 02:49:32', 'aktif'),
+('test', '81dc9bdb52d04dc20036dbd8313ed055', 'guru', '2020-12-17 11:37:19', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -548,7 +573,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `suka_post` int(10) NOT NULL,
   `laporkan` varchar(20) NOT NULL,
   `tgl_lapor` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `post`
@@ -556,7 +581,8 @@ CREATE TABLE IF NOT EXISTS `post` (
 
 INSERT INTO `post` (`id_post`, `kd_pengajaran`, `judul_post`, `isi_post`, `penulis_post`, `tanggal_post`, `gambar_post`, `suka_post`, `laporkan`, `tgl_lapor`) VALUES
 (1, 2, 'j', '<p>k</p>\r\n', '8170', '3:50 17/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
-(2, 2, 'o', '<p>p</p>\r\n', '8170', '3:51 17/12/2020', '', 0, '0', '0000-00-00 00:00:00');
+(2, 2, 'o', '<p>p</p>\r\n', '8170', '3:51 17/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
+(3, 2, 'test', '<p>test</p>\r\n', '8170', '20:59 17/12/2020', '', 0, '0', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -831,6 +857,12 @@ ALTER TABLE `guru`
  ADD PRIMARY KEY (`kd_guru`);
 
 --
+-- Indexes for table `jurnal`
+--
+ALTER TABLE `jurnal`
+ ADD PRIMARY KEY (`id_jurnal`), ADD KEY `kd_guru` (`kd_guru`,`kd_mapel`);
+
+--
 -- Indexes for table `jurusan`
 --
 ALTER TABLE `jurusan`
@@ -919,6 +951,11 @@ ALTER TABLE `timeline`
 --
 
 --
+-- AUTO_INCREMENT for table `jurnal`
+--
+ALTER TABLE `jurnal`
+MODIFY `id_jurnal` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `pengajaran`
 --
 ALTER TABLE `pengajaran`
@@ -927,7 +964,7 @@ MODIFY `kd_pengajaran` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-MODIFY `id_post` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id_post` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `timeline`
 --

@@ -34,13 +34,20 @@ else{
     status='$_POST[status]' WHERE nis='$_GET[key]'";
   } else {
     $sql = "INSERT INTO siswa VALUES ('$_POST[nis]', '$_POST[nisn]', '$_POST[nama]',
-    '$_POST[username]', '$_POST[password]', '$_POST[kelamin]', '$_POST[email]', '', '$_POST[telp]', '$_POST[status]')";
+    '$_POST[username]', '$_POST[kelamin]', '$_POST[email]', '', '$_POST[telp]', '$_POST[status]')";
 
   }
 
   if ($connection->query($sql)) {
-   $sql2 = "INSERT INTO rombel VALUES ('$_POST[nis]', '$_POST[kd_kelas]', '$_POST[kd_tajar]')";
+   $password=md5($_POST['nis']);
+   $tg=date('Y-m-d H:i:s');
    echo "<script>alert('Berhasil!'); window.location = 'media.php?module=siswa'</script>";
+   
+   $connection->query("INSERT INTO login VALUES ('$_POST[nis]', '$password', 
+    'siswa','$tg','aktif')");
+	
+	$connection->query("INSERT INTO rombel VALUES ('$_POST[nis]', '$_POST[kd_kelas]', '$_POST[kd_tajar]')");
+	
  } else {
    echo "<script>alert('Gagal!'); window.location = 'media.php?module=siswa'</script>";
  }
@@ -88,10 +95,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
         <label>Username </label>
         <input class="form-control" placeholder="Masukkan Username" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
       </div>
-	  <div class="form-group">
-        <label>Password </label>
-        <input class="form-control" placeholder="Masukkan Password" name="password" type="text" <?= (!$update) ?: 'value="'.$row["password"].'"' ?>/>
-      </div>
+	  
       <div class="form-group">
         <label>Jenis Kelamin</label>
         <select class="form-control" name="kelamin">
@@ -122,12 +126,12 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <select class="form-control" name="status">
 												<option>--Pilih Status--</option>
 												<?php $query5 = $connection->query("SELECT * FROM siswa group by status"); while ($data5 = $query5->fetch_assoc()): ?>
-												<?php if($data5["status"]=='Y'){ ?>
-												<option value="Y" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>Aktif</option>
-												<option value="T">NonAktif</option>
+												<?php if($data5["status"]=='Aktif'){ ?>
+												<option value="Aktif" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>Aktif</option>
+												<option value="NonAktif">NonAktif</option>
 												<?php } else { ?>
-												<option value="T" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>NonAktif</option>
-												<option value="Y">Aktif</option>
+												<option value="NonAktif" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>NonAktif</option>
+												<option value="Aktif">Aktif</option>
 												<?php } ?>
 												
 												

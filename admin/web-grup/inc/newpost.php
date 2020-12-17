@@ -17,11 +17,14 @@ if (@$_SESSION["username"] == $useruser) {
                             <div class="x_panel">
                                 <div class="x_title">
 								<?php
-								$s = mysqli_query($connection, "SELECT*FROM pengajaran where kd_pengajaran='$_GET[id_det_kurikulum]'");           
+								$s = mysqli_query($connection, "SELECT*FROM pengajaran,kelas,mapel 
+								where pengajaran.kd_kelas=kelas.kd_kelas 
+								and pengajaran.kd_mapel=mapel.kd_mapel 
+								and pengajaran.kd_pengajaran='$_GET[id_det_kurikulum]'");           
 								$d = mysqli_fetch_array($s);
 								?>
-                                    <h2>Forum Kelas: <?php echo $d["kd_kelas"];?> | Mata Pelajaran:<?php echo $d["kd_mapel"];?></h2>
-                                    
+                                    <h2>Forum Kelas: <?php echo $d["nama_kelas"];?> | Mata Pelajaran:<?php echo $d["nama_mapel"];?></h2>
+                                   
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">

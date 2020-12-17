@@ -4,7 +4,9 @@
         //Navigasi Guru
         case 'guru': ?>
         <li class="<?php if ($_GET['module'] == 'home') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=home"><b>BERANDA</b></a></li>                           
-        <li class="<?php if ($_GET['module'] == 'silabus') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=silabus"><b>SILABUS</b></a></li>
+        <li class="<?php if ($_GET['module'] == 'jurnal') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=jurnal"><b>JURNAL</b></a></li>
+        
+		<li class="<?php if ($_GET['module'] == 'silabus') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=silabus"><b>SILABUS</b></a></li>
         <li class="<?php if ($_GET['module'] == 'materi') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=materi"><b>MATERI</b></a></li>
         <li class="<?php if ($_GET['module'] == 'tugas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=tugas"><b>TUGAS</b></a></li>
         <li class="<?php if ($_GET['module'] == 'banksoal') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=banksoal"><b>BANK SOAL</b></a></li>

@@ -41,8 +41,36 @@ else{
 <div id="page-inner">
 <div class="alert alert-info">
     <h2><?php echo $datapost["judul_post"];?></h2>
-    Penulis : <a>@<?php echo $datapost["penulis_post"];?></a> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> 
-
+	
+	<?php
+								$sq = mysqli_query($connection, "SELECT*FROM login 
+								where username='$_SESSION[username]'");           
+								$dq = mysqli_fetch_array($sq);
+						?>
+						<?php
+                        if ($dq["level"]=='siswa') {
+                        ?>
+						<?php
+								$sx = mysqli_query($connection, "SELECT*FROM siswa 
+								where username='$dq[username]'");           
+								$dx = mysqli_fetch_array($sx);
+						?>
+    Penulis : <a>@<?php echo $dx["nama"];?></a> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> 
+	<?php
+                        }
+                        else{
+                            ?>
+							<?php
+								$sm = mysqli_query($connection, "SELECT*FROM guru 
+								where username='$dq[username]'");           
+								$dm = mysqli_fetch_array($sm);
+						?>
+						Penulis : <a>@<?php echo $dm["nama"];?></a> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> 
+	 <?php
+                        }
+                        ?>
+	
+	
     <?php
     $datasukapost = @mysqli_fetch_array(mysqli_query($db, "SELECT*FROM suka_post WHERE id_post='$idpost' AND user_suka='$_SESSION[username]'"));
     if (empty($_SESSION["username"])) {
@@ -150,7 +178,30 @@ if ($totalkomentar >= 0) {
         
         $dataygngomen = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username = '$datakomentar[penulis_komentar]'"));
         ?>
-        <?php echo $dataygngomen["username"];?></a> :</b> <?php echo $datakomentar["isi_komentar"];?>
+		
+						<?php
+                        if ($dq["level"]=='siswa') {
+                        ?>
+						<?php
+								$sx = mysqli_query($connection, "SELECT*FROM siswa 
+								where username='$dataygngomen[username]'");           
+								$dx = mysqli_fetch_array($sx);
+						?>
+        <?php echo $dx["nama"];?></a> :</b> <?php echo $datakomentar["isi_komentar"];?>
+		
+		<?php
+                        }
+                        else{
+                            ?>
+							<?php
+								$sm = mysqli_query($connection, "SELECT*FROM guru 
+								where username='$dataygngomen[username]'");           
+								$dm = mysqli_fetch_array($sm);
+						?>
+		<?php echo $dm["nama"];?></a> :</b> <?php echo $datakomentar["isi_komentar"];?>
+			<?php
+                        }
+                        ?>
 <style>
 .abc{
     color: grey;
