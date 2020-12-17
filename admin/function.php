@@ -59,13 +59,13 @@ if (isset($_POST['act'])) {
 			$jum = mysqli_num_rows($query);
 			$pengajar = mysqli_fetch_array($query);
 			if ($jum>0){
-				$out = "<label>
+				$out = " <label>
 				<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $pengajar[nama] 
-				</label>";
+				</label> ";
 			} else {
-				$out = "<label>
+				$out = " <label>
 				<input type='checkbox' name='kd_kls[]' value='$kelas' />$nkls
-				</label>";
+				</label> ";
 			}
 			return $out;
 		}
