@@ -198,17 +198,21 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 												<thead>
 													<th>#</th>
 													<th>Pertanyaan</th>
+													<th>Kunci</th>
 													<th>aksi</th>
 												</thead>
 												<tbody>
 													<?php 
 													$np=1;
-													$qpert=mysqli_query($connect,"SELECT soal,kd_detail_soal,kd_soal FROM detail_soal WHERE kd_soal='$_GET[kds]'");
+													$qpert=mysqli_query($connect,"SELECT * FROM detail_soal WHERE kd_soal='$_GET[kds]'");
 													while ($rpert=mysqli_fetch_array($qpert)){
+														$tkun=strtoupper($rpert['kunci']);
+														$key="pil_".$tkun;
 														?>
 														<tr>
 															<td><?php echo $np; ?></td>
 															<td class="text-left"><?php echo $rpert['soal']; ?></td>
+															<td class="text-left"><?php echo $tkun.". ".$rpert[$key]; ?></td>
 															<td>
 																<a href="media.php?module=<?php echo "buatsoal&v=edit&kds=$rpert[kd_soal]&kdd=$rpert[kd_detail_soal]"; ?>" class="btn btn-warning">EDIT</a>
 																<a href="modul/mod_banksoal/aksi.php?act=delpert&kdd=<?php echo $rpert['kd_detail_soal']; ?>" onclick="return confirm('Yakin Hapus?')" class="btn btn-danger">HAPUS</a>

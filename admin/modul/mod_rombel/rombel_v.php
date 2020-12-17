@@ -67,7 +67,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
         <label>Siswa </label>
         <select class="form-control" name="nis">
             <option>--Pilih Siswa--</option>
-            <?php $query = $connection->query("SELECT * FROM siswa"); while ($data = $query->fetch_assoc()): ?>
+            <?php $query = $connection->query("SELECT * FROM siswa WHERE nis NOT IN (SELECT nis FROM rombel,tahun_ajar WHERE rombel.kd_tajar=tahun_ajar.kd_tajar AND tahun_ajar.aktif='Y')"); while ($data = $query->fetch_assoc()): ?>
             <option value="<?=$data["nis"]?>" <?= (!$update) ?: (($data["nis"] != $data["nis"]) ?: 'selected="on"') ?>><?=$data["nis"]?>--<?=$data["nama"]?></option>
         <?php endwhile; ?>
     </select>

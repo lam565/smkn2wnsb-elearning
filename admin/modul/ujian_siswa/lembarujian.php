@@ -31,61 +31,63 @@ $ujian=mysqli_fetch_array($qujian);
 					while ($soalujian=mysqli_fetch_array($qujian)) {
 						?>
 						<div class="form-row">
+							<?php 
+							if ($soalujian['gambar']!="T") {
+								echo "<div class='col-md-12 col-sm-12 col-xs-12'>";
+								echo "<img src='files/soal/$soalujian[gambar]' width='300'>";
+								echo "</div>";
+							}
+							?>
+						</div>
+						<div class="form-row">
 							<div class="col-md-1 col-sm-1 col-xs-12">
 								<?php echo $nomor; ?>
 								<input type="hidden" name="id[]" value="<?php echo $soalujian['kd_detail_soal']; ?>">
 							</div>
 							
 							<?php 
-							if ($soalujian['gambar']!="T") {
-								echo "<div class='col-md-3 col-sm-3 col-xs-12'>";
-								echo "<img src='files/soal/$soalujian[gambar]'>";
-								echo "</div>";
-								echo "<div class='col-md-8 col-sm-8 col-xs-12'>";
-								echo "</div>";
-							} else {
-								echo "<div class='col-md-11 col-sm-11 col-xs-12'>";
-								?>
-								<div class="form-group">
-									<p><?php echo $soalujian['soal']; ?></p>
+							echo "<div class='col-md-11 col-sm-11 col-xs-12'>";
+							?>
+							<div class="form-group">
+								<p><?php echo $soalujian['soal']; ?></p>
+							</div>
+							<div class="form-group">
+								<div class="radio">
+									A. 
+									<label>
+										<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="a" checked=""><?php echo $soalujian['pil_A']; ?>
+									</label>
 								</div>
-								<div class="form-group">
-									<div class="radio">
-										A. 
-										<label>
-											<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="a" checked=""><?php echo $soalujian['pil_A']; ?>
-										</label>
-									</div>
-									<div class="radio">
-										B. 
-										<label>
-											<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="b"><?php echo $soalujian['pil_B']; ?>
-										</label>
-									</div>
-									<div class="radio">
-										C. 
-										<label>
-											<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="c"><?php echo $soalujian['pil_C']; ?>
-										</label>
-									</div>
-									<div class="radio">
-										D. 
-										<label>
-											<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="d"><?php echo $soalujian['pil_D']; ?>
-										</label>
-									</div>
-									<div class="radio">
-										E. 
-										<label>
-											<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="e"><?php echo $soalujian['pil_E']; ?>
-										</label>
-									</div>
+								<div class="radio">
+									B. 
+									<label>
+										<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="b"><?php echo $soalujian['pil_B']; ?>
+									</label>
 								</div>
-								<hr>
+								<div class="radio">
+									C. 
+									<label>
+										<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="c"><?php echo $soalujian['pil_C']; ?>
+									</label>
+								</div>
+								<div class="radio">
+									D. 
+									<label>
+										<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="d"><?php echo $soalujian['pil_D']; ?>
+									</label>
+								</div>
+								<div class="radio">
+									E. 
+									<label>
+										<input type="radio" name="pil[<?php echo $soalujian['kd_detail_soal']; ?>]" value="e"><?php echo $soalujian['pil_E']; ?>
+									</label>
+								</div>
+							</div>
+							<hr>
 
-								<?php
-								echo "</div>";
-							}
+							<?php
+							echo "</div>";
+							
 							?>
 						</div>
 						<?php

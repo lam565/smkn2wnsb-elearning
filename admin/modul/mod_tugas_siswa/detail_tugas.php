@@ -7,7 +7,7 @@ $kd=$_GET['kd'];
 
 $qt="SELECT * 
 FROM tugas, kerja_tugas, mapel, guru, kelas
-WHERE tugas.kd_tugas=kerja_tugas.kd_tugas AND tugas.kd_mapel=mapel.kd_mapel AND tugas.kd_guru=guru.kd_guru AND tugas.kd_kelas=kelas.kd_kelas AND tugas.kd_kelas='$kode_kelas' AND kerja_tugas.nis='$_SESSION[kode]'";
+WHERE tugas.kd_tugas=kerja_tugas.kd_tugas AND tugas.kd_mapel=mapel.kd_mapel AND tugas.kd_guru=guru.kd_guru AND tugas.kd_kelas=kelas.kd_kelas AND tugas.kd_kelas='$kode_kelas' AND kerja_tugas.nis='$_SESSION[kode]' AND kerja_tugas.kd_tugas='$kd'";
 $qtugas=mysqli_query($connect,$qt);
 $rtugas=mysqli_fetch_array($qtugas);
 
