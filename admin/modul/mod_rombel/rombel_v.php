@@ -118,6 +118,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
           <tr>
             <th>#</th>
             <th>NIS</th>
+			<th>Nama Siswa</th>
             <th>Kelas</th>
             <th>Tahun Ajaran</th>
            

@@ -20,10 +20,13 @@ else{
                             <div class="x_panel">
                                 <div class="x_title">
 								<?php
-								$s = mysqli_query($connection, "SELECT*FROM pengajaran where kd_pengajaran='$_GET[id_det_kurikulum]'");           
+								$s = mysqli_query($connection, "SELECT*FROM pengajaran,kelas,mapel 
+								where pengajaran.kd_kelas=kelas.kd_kelas 
+								and pengajaran.kd_mapel=mapel.kd_mapel 
+								and pengajaran.kd_pengajaran='$_GET[id_det_kurikulum]'");           
 								$d = mysqli_fetch_array($s);
 								?>
-                                    <h2>Forum Kelas: <?php echo $d["kd_kelas"];?> | Mata Pelajaran:<?php echo $d["kd_mapel"];?></h2>
+                                    <h2>Forum Kelas: <?php echo $d["nama_kelas"];?> | Mata Pelajaran:<?php echo $d["nama_mapel"];?></h2>
                                     
                                     <div class="clearfix"></div>
                                 </div>
@@ -55,8 +58,35 @@ else{
                         <?php
                         if (@$_SESSION["username"]) {
                         ?>
-                        <b><?php echo $data2["username"];?> (<?php echo $data2["username"];?>)</b>! <a href="./?p=posting&profil=<?php echo $data2["username"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><li class="fa fa-pencil"></li> Buat Postingan</a> Di Forum Kelas
+						<?php
+								$sq = mysqli_query($connection, "SELECT*FROM login 
+								where username='$_SESSION[username]'");           
+								$dq = mysqli_fetch_array($sq);
+						?>
+						<?php
+                        if ($dq["level"]=='siswa') {
+                        ?>
+						<?php
+								$sx = mysqli_query($connection, "SELECT*FROM siswa 
+								where username='$dq[username]'");           
+								$dx = mysqli_fetch_array($sx);
+						?>
+                        <b><u><?php echo $dx["nama"];?> (NIS:<?php echo $dx["nis"];?>)</u></b> <a href="./?p=posting&profil=<?php echo $data2["username"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><li class="fa fa-pencil"></li> Buat Postingan</a>
                         <?php
+                        }
+                        else{
+                            ?>
+							<?php
+								$sm = mysqli_query($connection, "SELECT*FROM guru 
+								where username='$dq[username]'");           
+								$dm = mysqli_fetch_array($sm);
+						?>
+							<b><u><?php echo $dm["nama"];?> (KODE GURU:<?php echo $dm["kd_guru"];?>)</u></b> <a href="./?p=posting&profil=<?php echo $data2["username"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><li class="fa fa-pencil"></li> Buat Postingan</a>
+                        <?php
+                        }
+                        ?>
+						
+						<?php
                         }
                         else{
                             ?>
@@ -94,8 +124,34 @@ else{
                 <span style="float:right;"><?php echo $datasqlpost["tanggal_post"];?></span>
                 <a href="./?p=post&id=<?php echo $datasqlpost["id_post"];?>&post_by=<?php echo $datasqlpost["penulis_post"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><h2><b><?php echo $datasqlpost["judul_post"];?></b></h2></a>
                 
-                <a ><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $datauserpost["username"];?></b></a>
-                
+				<?php
+								$sq = mysqli_query($connection, "SELECT*FROM login 
+								where username='$_SESSION[username]'");           
+								$dq = mysqli_fetch_array($sq);
+						?>
+						<?php
+                        if ($dq["level"]=='siswa') {
+                        ?>
+						<?php
+								$sx = mysqli_query($connection, "SELECT*FROM siswa 
+								where username='$dq[username]'");           
+								$dx = mysqli_fetch_array($sx);
+						?>
+                <a ><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $dx["nama"];?></b></a>
+                <?php
+                        }
+                        else{
+                            ?>
+							<?php
+								$sm = mysqli_query($connection, "SELECT*FROM guru 
+								where username='$dq[username]'");           
+								$dm = mysqli_fetch_array($sm);
+						?>
+						<a ><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $dm["nama"];?>(Kode Guru:<?php echo $dx["kd_guru"];?>)</b></a>
+                <?php
+                        }
+                        ?>
+						
                 <span style="float:right"><i class="fa fa-comment"></i> : <?php $totalkomentarpost = mysqli_num_rows(mysqli_query($connection,"SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]'")); echo $totalkomentarpost;?></span>
                 <hr>
  
@@ -124,8 +180,30 @@ else{
                     while ($datakomentarnya = mysqli_fetch_array($komentarnya)) {
                     $ygomen = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username = '$datakomentarnya[penulis_komentar]'"));
                     ?>
-                    <img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $ygomen["username"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
-                    
+					
+					
+						<?php
+                        if ($dq["level"]=='siswa') {
+                        ?>
+						<?php
+								$sx = mysqli_query($connection, "SELECT*FROM siswa 
+								where username='$ygomen[username]'");           
+								$dx = mysqli_fetch_array($sx);
+						?>
+                    <img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $dx["nama"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
+                    <?php
+                        }
+                        else{
+                            ?>
+							<?php
+								$sm = mysqli_query($connection, "SELECT*FROM guru 
+								where username='$ygomen[username]'");           
+								$dm = mysqli_fetch_array($sm);
+						?>
+						<img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $dm["nama"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
+                    <?php
+                        }
+                        ?>
                     <?php
                     
                 }
@@ -133,7 +211,7 @@ else{
                     if (mysqli_num_rows($lala) >= 4) {
                     	$totalngomeng = mysqli_num_rows(mysqli_query($connection, "SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]'"));
                     	$dikurang = $totalngomeng - 3;
-                    echo "<a href='./?p=post&id=$datasqlpost[id_post]&post_by=$datasqlpost[penulis_post]'>Lihat ($dikurang) Komentar Lagi...</a><br>";
+                    echo "<a href='./?p=post&id=$datasqlpost[id_post]&post_by=$datasqlpost[penulis_post]&id_det_kurikulum=$_GET[id_det_kurikulum]'>Lihat ($dikurang) Komentar Lagi...</a><br>";
                     }
                     if (@$_SESSION["username"]) {
                     ?>
@@ -241,7 +319,7 @@ else{
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div>
                                             <div class="x_title">
-                                                <h2>Anggota</h2>
+                                                <h2>Anggota Kelas</h2>
                                                 <ul class="nav navbar-right panel_toolbox">
                                                     
                                                 </ul>

@@ -35,13 +35,15 @@ else{
 	  $tg=date('Y-m-d H:i:s');
     $sql = "INSERT INTO guru VALUES ('$_POST[kd_guru]', '$_POST[username]', 
     '$_POST[nip]','$_POST[nama]','$_POST[telp]','$_POST[email]',
-    '','$_POST[status]')";
+    'default.jpg','$_POST[status]')";
 	
-	$sql = "INSERT INTO login VALUES ('$_POST[username]', '1234', 
-    'guru','$tg','$_POST[status]')";
   }
   if ($connection->query($sql)) {
+	  $password=md5('1234');
+	  $tg=date('Y-m-d H:i:s');
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=guru'</script>";
+	$connection->query("INSERT INTO login VALUES ('$_POST[username]', '$password', 
+    'guru','$tg','aktif')");
   } else {
     echo "<script>alert('Gagal'); window.location = 'media.php?module=guru'</script>";
   }
@@ -71,7 +73,21 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
       <form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label>Kode Guru</label>
-          <input class="form-control" placeholder="Masukkan Kode Guru" name="kd_guru" type="text" <?= (!$update) ?: 'value="'.$row["kd_guru"].'"' ?>/>
+		  <?php
+$sql="select * from guru order by kd_guru DESC LIMIT 0,1";
+$results = mysqli_query($connect,$sql) or die("Error: ".mysqli_error($connect));
+$data = mysqli_fetch_array($results);
+	$kodeawal=substr($data['kd_guru'],3,4)+1;
+	if($kodeawal<10){
+		$kd='GR00'.$kodeawal;
+	}elseif($kodeawal > 9 && $kodeawal <=99){
+		$kd='GR0'.$kodeawal;
+	}else{
+		$kd='GR'.$kodeawal;
+	}
+	
+?>
+          <input class="form-control" value="<?php echo $kd;?>" "Masukkan Kode Guru" name="kd_guru" type="text"/>
         </div>
         <div class="form-group">
           <label>NIP</label>
@@ -81,10 +97,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
           <label>Username</label>
           <input class="form-control" placeholder="Masukkan Username" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
         </div>
-		<div class="form-group">
-          <label>Password</label>
-          <input class="form-control" placeholder="Masukkan Password" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
-        </div>
+		
 
         <div class="form-group">
           <label>Nama Guru </label>
@@ -107,12 +120,12 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <select class="form-control" name="status">
 												<option>--Pilih Status--</option>
 												<?php $query5 = $connection->query("SELECT * FROM guru group by status"); while ($data5 = $query5->fetch_assoc()): ?>
-												<?php if($data5["status"]=='Y'){ ?>
-												<option value="Y" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>Aktif</option>
-												<option value="T">NonAktif</option>
+												<?php if($data5["status"]=='Aktif'){ ?>
+												<option value="Aktif" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>Aktif</option>
+												<option value="NonAktif">NonAktif</option>
 												<?php } else { ?>
-												<option value="T" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>NonAktif</option>
-												<option value="Y">Aktif</option>
+												<option value="NonAktif" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>NonAktif</option>
+												<option value="Aktif">Aktif</option>
 												<?php } ?>
 												
 												
