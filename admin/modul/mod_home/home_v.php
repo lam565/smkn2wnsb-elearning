@@ -145,6 +145,9 @@ else{
               <i class=\"fa fa-book fa-5x\"></i>
               <p>$rkur[nama_mapel]</p>
               <h3>$rkur[nama_kelas]</h3>
+              <p><a class='btn btn-xs btn-info' href='?module=materi'> Materi </a></p>
+              <p><a class='btn btn-xs btn-info' href='?module=tugas'> Tugas </a></p>
+              <p><a class='btn btn-xs btn-info' href='?module=ujian'> Ujian </a></p>
 
               </div>
               </div>";
