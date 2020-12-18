@@ -111,12 +111,12 @@ else{
 									if ($dt['file_kerja']=='T'){
 										echo "<p class='alert'>Siswa belum mengumpulkan tugas</p>";
 									} else {
+										$gbr=explode(",", $dt['file_kerja']);
+										foreach ($gbr as $img) {
+											echo  "<a href='files/kerja_tugas/$img' target='_blank'><img src='files/kerja_tugas/$img' class='col-md-12 col-sm-12 col-xs-12'></a><br>";
+										}
 										?>
-										<img src="files/kerja_tugas/<?php echo $dt['file_kerja']; ?>" class="col-md-12 col-sm-12 col-xs-12">
-
-										<div class="text-center">
-											<a href="files/kerja_tugas/<?php echo $dt['file_kerja']; ?>" target="_blank" class="btn btn-primary">Download</a>	
-										</div>
+										
 
 										<?php
 									}

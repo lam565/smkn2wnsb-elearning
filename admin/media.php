@@ -144,6 +144,17 @@ if($_SESSION['login']==0){
             }
 
         });
+        $(document).on('change', '#jfile', function(){
+            var jfile = $(this).val();
+            var i;
+            var inputfile = "";
+            for (i=1;i<=jfile;i++){
+                inputfile = inputfile + "<input class='form-control' type='FILE' name='ftugas"+i+"' required='required'><br>";
+            }
+            $('#hjfile').val(jfile);
+            $('#Uploadj').html(inputfile);
+            
+        });
         $(document).on('change', '#cbbmapel', function(){
             var mapel = $(this).val();
             var kd_guru = $(this).attr('data-guru');

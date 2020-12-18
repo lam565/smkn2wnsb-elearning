@@ -52,7 +52,11 @@ $rtugas=mysqli_fetch_array($qtugas);
 						echo  "<div class='alert alert-danger'>Anda Belum Mengumpulkan Tugas
 						</div>";
 					} else if ($rtugas['status_kerja']=='K'){
-						echo  "<img src='files/kerja_tugas/$rtugas[file_kerja]' width=100><hr>
+						$gbr=explode(",", $rtugas['file_kerja']);
+						foreach ($gbr as $img) {
+							echo  "<img src='files/kerja_tugas/$img' width=100>";
+						}
+						echo "<hr>
 						<div class='alert alert-warning'>Jawaban Anda Sedang Dikoreksi</div>";
 					} else if ($rtugas['status_kerja']=='N') {
 						echo  "<div class='alert alert-success'>Anda mendapat nilai: $rtugas[nilai]</div>";
@@ -60,10 +64,30 @@ $rtugas=mysqli_fetch_array($qtugas);
 					?>
 					<h4>Upload Jawaban:</h4>
 					<div class="form-group">
+						<select class="form-control" name="jumfile" id="jfile">
+							<option value="0"> Jumlah File Jawaban </option>
+							<option value="1"> 1 </option>
+							<option value="2"> 2 </option>
+							<option value="3"> 3 </option>
+							<option value="4"> 4 </option>
+							<option value="5"> 5 </option>
+						</select>
+						<input type="hidden" name="kd_kerja" value="<?php echo $rtugas['kd_kerja'] ?>">
+						<input type="hidden" name="kd_tugas" value="<?php echo $kd ?>">
+						<input type="hidden" name="jfile" id="hjfile" value="">	
+					</div>
+					<div class="form-group">
+						<div id="Uploadj">
+							
+						</div>
+					</div>
+					<!-- 
+					<div class="form-group">
 						<input class="form-control" type="FILE" name="ftugas">
 						<input type="hidden" name="kd_kerja" value="<?php echo $rtugas['kd_kerja'] ?>">
 						<input type="hidden" name="kd_tugas" value="<?php echo $kd ?>">	
 					</div>
+					-->
 					<?php
 					date_default_timezone_set('Asia/Jakarta');
 					$skr=date("Y-m-d H:i:s"); 

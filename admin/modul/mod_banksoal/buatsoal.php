@@ -90,7 +90,7 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 														?>
 														<div class="form-group">
 															<label>No</label>
-															<input type="text" class="form-control" name="no" disabled="disabled" value="<?php echo $kodeurut; ?>">
+															<input type="text" class="form-control" name="no" disabled="disabled" value="<?php echo $kd_detail_soal; ?>">
 															<input type="hidden" name="kd_soal" value="<?php echo $_GET['kds']; ?>">
 															<input type="hidden" name="kd_detail" value="<?php echo $kd_detail_soal; ?>">	
 														</div>
@@ -252,7 +252,7 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 											?>
 											<div class="form-group">
 												<label>No</label>
-												<input type="text" class="form-control" name="no" disabled="disabled" value="<?php echo $nourut; ?>">
+												<input type="text" class="form-control" name="no" disabled="disabled" value="<?php echo $max['kd_detail_soal']; ?>">
 												<input type="hidden" name="kd_soal" value="<?php echo $max['kd_soal']; ?>">
 												<input type="hidden" name="kd_detail" value="<?php echo $kdd; ?>">	
 											</div>
