@@ -80,6 +80,25 @@ if (isset($_POST['act'])) {
 
 		break;
 
+		case 'mdlslb':
+		$kd=$_POST['kd'];
+
+		$query=mysqli_query($connect,"SELECT * FROM pengajaran,mapel,kelas WHERE pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_pengajaran='$kd'");
+		$rsl=mysqli_fetch_array($query);
+		if (mysqli_num_rows($query)){
+			echo "<div class='form-group'?>
+			<input type='hidden' name='kd_pengajaran' value='$kd'>
+			<label>Pilih Silabus</label>
+			<select name='kd_silabus' class='form-control'>";
+			$qs=mysqli_query($connect,"SELECT * FROM silabus WHRE kd_mapel='$rsl[kd_mapel]' AND kd_jurusan='$rsl[kd_jurusan]' AND tingkat='$rsl[tingkat]'");
+
+			echo "</select>
+			</div>
+			";
+		}
+		
+		break;
+
 		default:
 		echo "alert('Terjadi Kesalahan!')";
 		break;

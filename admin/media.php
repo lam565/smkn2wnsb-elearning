@@ -44,7 +44,7 @@ if($_SESSION['login']==0){
 
 </head>
 <body>
- <div class="navbar navbar-inverse set-radius-zero" >
+   <div class="navbar navbar-inverse set-radius-zero" >
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -54,10 +54,10 @@ if($_SESSION['login']==0){
             </button>
             <a class="navbar-brand" href="index.html">
 
-                    <img src="assets/img/new_logo.png" width="150" height="110"/>
-                    <h5 style="color:red;"><b>SMKN 2 WONOSOBO</b></h5>
-                    
-                </a>
+                <img src="assets/img/new_logo.png" width="150" height="110"/>
+                <h5 style="color:red;"><b>SMKN 2 WONOSOBO</b></h5>
+
+            </a>
 
         </div>
 
@@ -83,7 +83,7 @@ if($_SESSION['login']==0){
 <!-- MENU SECTION END-->
 
 <div class="content-wrapper">
- <div class="container">
+   <div class="container">
     <?php include 'content.php'; ?>
 </div>
 </div>
@@ -93,10 +93,10 @@ if($_SESSION['login']==0){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-             &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
-         </div>
-     </div>
- </div>
+               &copy; 2020 by SMK N 2 Wonosobo |<a href="" target="_blank"  > Tahun Ajaran : <?php echo $namatajar ?></a> 
+           </div>
+       </div>
+   </div>
 </section>
 <!-- FOOTER SECTION END-->
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
@@ -246,6 +246,22 @@ if($_SESSION['login']==0){
                 $(".warningnya").html("");
             }
         });
+
+        $(document).on('click','#openmodal',function(){
+            var id = $(this).attr('data-kds');
+            $.ajax({
+                url: 'function.php',
+                type: 'post',
+                data: {
+                    act: 'mdlslb',
+                    kd: id
+                },
+                success: function (data){
+                    $('#modalsilabus').html(data);
+                }
+            });
+            $('#modalupdsilabus').modal({show:true});
+        });
         
     });
 </script>
@@ -328,15 +344,15 @@ hitung();
 }); 
 // ]]>
 </script>
- <!-- CORE JQUERY  -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="assets/js/bootstrap.js"></script>
-    <!-- DATATABLE SCRIPTS  -->
-    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
-    <script src="assets/js/custom.js"></script>
+<!-- CORE JQUERY  -->
+<script src="assets/js/jquery-1.10.2.js"></script>
+<!-- BOOTSTRAP SCRIPTS  -->
+<script src="assets/js/bootstrap.js"></script>
+<!-- DATATABLE SCRIPTS  -->
+<script src="assets/js/dataTables/jquery.dataTables.js"></script>
+<script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+<!-- CUSTOM SCRIPTS  -->
+<script src="assets/js/custom.js"></script>
 </body>
 </html>
 <?php }} ?>
