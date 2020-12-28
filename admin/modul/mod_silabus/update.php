@@ -7,6 +7,8 @@ if (isset($_GET['act'])){
     $kd_mapel=$_POST['mapel'];
     $judul=$_POST['judul'];
     $kd_guru=$_POST['kd_guru'];
+    $kd_jur=$_POST['jurusan'];
+    $tingkat=$_POST['tingkat'];
     date_default_timezone_set("Asia/Bangkok");
     $upl=date('Y-m-d H:i:s');
 
@@ -41,10 +43,10 @@ if (isset($_GET['act'])){
       $filext       = substr($filename, strrpos($filename, '.'));
         $filext       = str_replace('.','',$filext); // Extension
         $filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
-        $newfilename   = $kd_silabus.'.'.$filext;
+        $newfilename   = $kd_mapel.'_'.$tingkat.'_'.$kd_jur.'.'.$filext;
 
 
-        $q="INSERT INTO silabus (kd_silabus,judul,nama_file,tanggal_upload) VALUES ('$kd_silabus','$judul','$newfilename','$upl')";
+        $q="INSERT INTO silabus (kd_silabus,kd_mapel,kd_jurusan,tingkat,judul,nama_file,tanggal_upload) VALUES ('$kd_silabus','$kd_mapel','$kd_jur','$tingkat','$judul','$newfilename','$upl')";
 
         if ($res=mysqli_query($connect,$q)) {
           move_uploaded_file($_FILES["silabusfile"]["tmp_name"], $temp.$newfilename);
@@ -58,10 +60,18 @@ if (isset($_GET['act'])){
       break;
 
       case 'upd':
+      $kd_pengajaran=$_POST['kd_pengajaran'];
+      $kd_silabus=$_POST['kd_silabus'];
+
       $qup="UPDATE pengajaran
       SET kd_silabus='$kd_silabus'
-      WHERE kd_guru='$kd_guru' AND kd_mapel='$kd_mapel'";
+      WHERE kd_pengajaran='$kd_pengajaran'";
       $up=mysqli_query($connect,$qup);
+      if ($up) {
+        echo "<script>alert('Berhasil ubah silabus'); location='../../media.php?module=silabus'</script>";
+      } else {
+        echo "gagal";  
+      }
       break;
 
       default:

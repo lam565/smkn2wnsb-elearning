@@ -90,7 +90,17 @@ if (isset($_POST['act'])) {
 			<input type='hidden' name='kd_pengajaran' value='$kd'>
 			<label>Pilih Silabus</label>
 			<select name='kd_silabus' class='form-control'>";
-			$qs=mysqli_query($connect,"SELECT * FROM silabus WHRE kd_mapel='$rsl[kd_mapel]' AND kd_jurusan='$rsl[kd_jurusan]' AND tingkat='$rsl[tingkat]'");
+
+			$qs=mysqli_query($connect,"SELECT * FROM silabus WHERE kd_mapel='$rsl[kd_mapel]' AND kd_jurusan='$rsl[kd_jurusan]' AND tingkat='$rsl[tingkat]'");
+			if (mysqli_num_rows($qs)){
+				echo "<option>Pilih Silabus</option>";
+				while ($rsilabus=mysqli_fetch_array($qs)){
+					echo "<option value='$rsilabus[kd_silabus]'>$rsilabus[judul]</option>";
+				}
+				
+			} else {
+				echo "<option value=''>Belum ada silabus diupload</option>";
+			}
 
 			echo "</select>
 			</div>

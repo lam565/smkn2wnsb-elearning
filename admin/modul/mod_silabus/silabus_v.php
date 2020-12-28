@@ -38,7 +38,7 @@ else{
                    Upload Silabus
                </div>
                <div class="panel-body text-center recent-users-sec">
-                <form role="form" method="POST" enctype="multipart/form-data" action="modul/mod_silabus/update.php">
+                <form role="form" method="POST" enctype="multipart/form-data" action="modul/mod_silabus/update.php?act=add">
                     <div class="form-group">
                         <label>Pilih Mata Pelajaran</label>
                         <select name="mapel" class="form-control" id="cbbmapel" required="required">
@@ -120,7 +120,7 @@ else{
                     <?php
                     $sql="SELECT silabus.judul, silabus.nama_file,kelas.nama_kelas, mapel.nama_mapel, silabus.tanggal_upload, pengajaran.kd_pengajaran 
                     FROM pengajaran, mapel, silabus, kelas 
-                    WHERE pengajaran.kd_silabus=silabus.kd_silabus AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_guru='$_SESSION[kode]'";
+                    WHERE pengajaran.kd_silabus=silabus.kd_silabus AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_guru='$_SESSION[kode]' ORDER BY pengajaran.kd_kelas";
                     $silabus=mysqli_query($connect,$sql);
                     $n=1;
                     while ($rsilabus=mysqli_fetch_array($silabus)) {
@@ -161,7 +161,7 @@ else{
 </div>
 <div class="panel panel-success">
     <div class="panel-heading">
-        Daftar Silabus
+        Daftar Silabus Yang Diupload
    </div>
    <div class="panel-body">
     <div class="table-responsive">
@@ -171,26 +171,37 @@ else{
                     <th>#</th>
                     <th>Nama Silabus</th>
                     <th>Mata Pelajaran</th>
-                    <th>Kelas</th>
-                    <th>File</th>
-                    <th>Aksi</th>
+                    <th>Tingkat</th>
+                    <th>Jurusan</th>
+                    <th colspan="2">Aksi</th>
                 </tr>
             </thead>
             <tbody>                
                 <?php
-                $sql="SELECT silabus.judul, silabus.nama_file,kelas.nama_kelas, mapel.nama_mapel, silabus.tanggal_upload, pengajaran.kd_pengajaran 
-                FROM pengajaran, mapel, silabus, kelas 
-                WHERE pengajaran.kd_silabus=silabus.kd_silabus AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_guru='$_SESSION[kode]'";
+                $sql="SELECT silabus.judul, silabus.nama_file, mapel.nama_mapel, silabus.tingkat, jurusan.nama_jurusan
+                FROM mapel, silabus, jurusan 
+                WHERE silabus.kd_mapel=mapel.kd_mapel AND silabus.kd_jurusan=jurusan.kd_jurusan AND silabus.kd_mapel IN (SELECT m.kd_mapel 
+                            FROM pengajaran as p, mapel as m 
+                            WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+                            GROUP BY p.kd_mapel)";
                 $silabus=mysqli_query($connect,$sql);
                 $n=1;
+                if (mysqli_num_rows($silabus)) {
+                    # code...
+                } else {
+                    echo "<tr>
+                            <td colspan='6'>Belum ada silabus diupload</d>
+                    </tr>";
+                }
                 while ($rsilabus=mysqli_fetch_array($silabus)) {
                     echo "<tr>";
                     echo "<td>$n</td>
                     <td>$rsilabus[judul]</td>
                     <td>$rsilabus[nama_mapel]</td>
-                    <td>$rsilabus[nama_kelas]</td>
+                    <td>$rsilabus[tingkat]</td>
+                    <td>$rsilabus[nama_jurusan]</td>
                     <td><a href='files/silabus/$rsilabus[nama_file]' target='_blank' class='btn btn-info btn-xs'>Lihat File</a></td>
-                    <td><a class='btn btn-xs btn-warning' id='openmodal' data-kds='$rsilabus[kd_pengajaran]'>ubah</a></td>";
+                    <td><a class='btn btn-xs btn-warning'>Hapus</a></td>";
                     echo "</tr>";
                     $n++;
                 }
