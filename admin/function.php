@@ -54,20 +54,31 @@ if (isset($_POST['act'])) {
 		$mapel=$_POST['mp'];
 		$jurusan=$_POST['jrs'];
 
+		function namaGuru($con,$kd){
+          $query = mysqli_query($con,"SELECT nama FROM guru WHERE kd_guru='$kd'");
+          $guru=mysqli_fetch_array($query);
+          return $guru['nama'];
+         }
+
 		function cekPengajar($kon,$mapel,$kelas,$nkls){
-			$query = mysqli_query($kon,"SELECT * FROM pengajaran as p,kelas,guru,mapel WHERE p.kd_guru=guru.kd_guru AND p.kd_kelas=kelas.kd_kelas AND p.kd_mapel=mapel.kd_mapel AND p.kd_mapel='$mapel' AND p.kd_kelas='$kelas'");
+			$query = mysqli_query($kon,"SELECT * FROM pengajaran as p,kelas,mapel WHERE p.kd_kelas=kelas.kd_kelas AND p.kd_mapel=mapel.kd_mapel AND p.kd_mapel='$mapel' AND p.kd_kelas='$kelas'");
 			$jum = mysqli_num_rows($query);
 			$pengajar = mysqli_fetch_array($query);
 			if ($jum>0){
 				$cekjumpengajar=explode(",", $pengajar['kd_guru']);
 				$jpengajar = count($cekjumpengajar);
-				if ($jpengajar<3) {
-					$out = " <label>
-				<input type='checkbox' name='kd_kls[]' value='$kelas' />$pengajar[nama_kelas] - $pengajar[nama]
-				</label> <br>";
+				if ($jpengajar<2) {
+					$nama_guru=namaGuru($kon,$pengajar['kd_guru']);
+					$out = "<label>
+				<input type='checkbox' name='kd_kls[]' value='$kelas' />$pengajar[nama_kelas] - $nama_guru </label> <br>";
 				} else {
+					$nama=array();
+					foreach ($cekjumpengajar as $kdg) {
+						$nama[]=namaGuru($kon,$kdg);
+					}
+					$nama_guru=implode(" dan ",$nama);
 					$out = " <label>
-				<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $pengajar[nama] $jpengajar
+				<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $nama_guru
 				</label> <br>";
 				}
 			} else {

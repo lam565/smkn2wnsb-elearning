@@ -130,6 +130,11 @@ else{
         <tbody>
 
          <?php
+         function namaGuru($con,$kd){
+          $query = mysqli_query($con,"SELECT nama FROM guru WHERE kd_guru='$kd'");
+          $guru=mysqli_fetch_array($query);
+          return $guru['nama'];
+         }
          $fkelas="";
          if (isset($_GET['fkelas'])){
           if ($_GET['fkelas']=='all'){
@@ -140,13 +145,21 @@ else{
           
          } 
          $no=1;
-         if ($query = $connection->query("SELECT * FROM pengajaran,mapel,kelas,guru where pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_guru=guru.kd_guru".$fkelas." ORDER BY pengajaran.kd_kelas")): ?>
+         if ($query = $connection->query("SELECT * FROM pengajaran,mapel,kelas where pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_kelas=kelas.kd_kelas ".$fkelas." ORDER BY pengajaran.kd_kelas")): ?>
            <?php while($row = $query->fetch_assoc()): ?>
             <tr>
               <td><?=$no; ?></td>
               <td><?=$row['nama_mapel']?></td>
               <td><?=$row['nama_kelas']?></td>
-              <td><?=$row['nama']?></td>
+              <td><?php 
+              $kd_guru=explode(",", $row['kd_guru']);
+              $j=1;
+              foreach ($kd_guru as $kd) {
+                echo $j==2 ? "<br>" : " ";
+                echo namaGuru($connect,$kd);
+                $j++;
+              } 
+              ?></td>
               <td class="hidden-print">
                <div class="btn-group">
                 <a href="?module=pengajaran&eid=<?php echo $row['kd_pengajaran'] ?>" class="btn btn-warning btn-xs">Edit</a>

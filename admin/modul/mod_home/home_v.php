@@ -58,12 +58,12 @@ else{
                     <tbody>
                       <?php
                       $i=1; 
-                      $qget=mysqli_query($connect,"SELECT * FROM mapel,kelas,pengajaran WHERE pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_guru='$guru[kd_guru]'");
+                      $qget=mysqli_query($connect,"SELECT * FROM mapel,kelas,pengajaran WHERE pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_guru LIKE '%$guru[kd_guru]%'");
                       while ($ajar=mysqli_fetch_array($qget)) {
                         echo "<tr>";
                         echo "<td> $i </td>
                         <td>$ajar[nama_mapel] - $ajar[nama_kelas]</td>
-                        <td><a class='btn btn-xs btn-danger' href='modul/mod_home/aksi.php?act=del&kd=$ajar[kd_pengajaran]'>-</a></td>";
+                        <td><a class='btn btn-xs btn-danger' href='modul/mod_home/aksi.php?act=del&kd=$ajar[kd_pengajaran]&kdg=$guru[kd_guru]'>-</a></td>";
                         echo "</tr>";
                         $i++;
                       }
@@ -134,9 +134,9 @@ else{
         <div class="panel panel-info">
           <div class="panel-body">
             <?php
-            $qbacakurikulum="SELECT kls.kd_kelas,kls.nama_kelas,g.kd_guru,g.nama,m.nama_mapel 
-            FROM pengajaran as p, guru as g, kelas as kls, mapel as m 
-            WHERE g.kd_guru=p.kd_guru AND kls.kd_kelas=p.kd_kelas AND m.kd_mapel=p.kd_mapel AND g.username='$_SESSION[username]'";
+            $qbacakurikulum="SELECT kls.nama_kelas,m.nama_mapel 
+            FROM pengajaran as p, kelas as kls, mapel as m 
+            WHERE kls.kd_kelas=p.kd_kelas AND m.kd_mapel=p.kd_mapel AND p.kd_guru LIKE '%$guru[kd_guru]%'";
 
             $datakurikulum=mysqli_query($connect,$qbacakurikulum);
             while ($rkur=mysqli_fetch_array($datakurikulum)){
