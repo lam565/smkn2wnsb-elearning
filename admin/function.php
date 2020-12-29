@@ -55,10 +55,10 @@ if (isset($_POST['act'])) {
 		$jurusan=$_POST['jrs'];
 
 		function namaGuru($con,$kd){
-          $query = mysqli_query($con,"SELECT nama FROM guru WHERE kd_guru='$kd'");
-          $guru=mysqli_fetch_array($query);
-          return $guru['nama'];
-         }
+			$query = mysqli_query($con,"SELECT nama FROM guru WHERE kd_guru='$kd'");
+			$guru=mysqli_fetch_array($query);
+			return $guru['nama'];
+		}
 
 		function cekPengajar($kon,$mapel,$kelas,$nkls){
 			$query = mysqli_query($kon,"SELECT * FROM pengajaran as p,kelas,mapel WHERE p.kd_kelas=kelas.kd_kelas AND p.kd_mapel=mapel.kd_mapel AND p.kd_mapel='$mapel' AND p.kd_kelas='$kelas'");
@@ -70,7 +70,7 @@ if (isset($_POST['act'])) {
 				if ($jpengajar<2) {
 					$nama_guru=namaGuru($kon,$pengajar['kd_guru']);
 					$out = "<label>
-				<input type='checkbox' name='kd_kls[]' value='$kelas' />$pengajar[nama_kelas] - $nama_guru </label> <br>";
+					<input type='checkbox' name='kd_kls[]' value='$kelas' />$pengajar[nama_kelas] - $nama_guru </label> <br>";
 				} else {
 					$nama=array();
 					foreach ($cekjumpengajar as $kdg) {
@@ -78,8 +78,8 @@ if (isset($_POST['act'])) {
 					}
 					$nama_guru=implode(" dan ",$nama);
 					$out = " <label>
-				<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $nama_guru
-				</label> <br>";
+					<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $nama_guru
+					</label> <br>";
 				}
 			} else {
 				$out = " <label>
@@ -95,6 +95,23 @@ if (isset($_POST['act'])) {
 			$output .= cekPengajar($connect,$mapel,$result['kd_kelas'],$result['nama_kelas']);
 		}
 		$output .= "</div>";
+		echo $output;
+
+		break;
+
+		case 'tingkatjurusan':
+		$mapel=$_POST['mp'];
+		$guru=$_POST['gru'];
+
+		$output="";
+		$qwr=mysqli_query($connect,"SELECT kelas.tingkat,jurusan.nama_jurusan,jurusan.kd_jurusan FROM pengajaran,kelas,jurusan WHERE pengajaran.kd_kelas=kelas.kd_kelas AND kelas.kd_jurusan=jurusan.kd_jurusan AND pengajaran.kd_mapel='$mapel' AND pengajaran.kd_guru LIKE '%$guru%'");
+
+		while ($rsl=mysqli_fetch_array($qwr)) {
+			$tingkat_jurusan=$rsl['tingkat']."-".$rsl['kd_jurusan'];
+			$stingkat_jurusan=$rsl['nama_jurusan']." - ".$rsl['tingkat'];
+			$output .= "<input type='radio' name='tingkatjurusan' value='$tingkat_jurusan' required=''/> $stingkat_jurusan <br>";
+		}
+
 		echo $output;
 
 		break;

@@ -41,13 +41,13 @@ else{
                 <form role="form" method="POST" enctype="multipart/form-data" action="modul/mod_silabus/update.php?act=add">
                     <div class="form-group">
                         <label>Pilih Mata Pelajaran</label>
-                        <select name="mapel" class="form-control" id="cbbmapel" required="required">
+                        <select name="mapel" class="form-control" id="cbbmapelsil" data-guru="<?php echo $_SESSION['kode'] ?>" required="required">
                             <option selected="selected">Pilih Mata Pelajaran</option>
                             <?php
 
                             $qmapel="SELECT m.nama_mapel,m.kd_mapel 
                             FROM pengajaran as p, mapel as m 
-                            WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+                            WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru LIKE '%$_SESSION[kode]%' 
                             GROUP BY p.kd_mapel";
 
                             $datamapel=mysqli_query($connect,$qmapel);
@@ -58,30 +58,8 @@ else{
                             ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Tingkat</label>
-                        <select name="tingkat" class="form-control" required="required">
-                            <option value="X">X</option>
-                            <option value="XI">XI</option>
-                            <option value="XII">XII</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Jurusan</label>
-                        <select name="jurusan" class="form-control" required="required">
-                            <option selected="selected">Pilih Mata Pelajaran</option>
-                            <?php
-
-                            $qjur="SELECT * FROM jurusan";
-
-                            $datajur=mysqli_query($connect,$qjur);
-                            while ($jur=mysqli_fetch_array($datajur)){
-                                echo "<option value='$jur[kd_jurusan]'>$jur[nama_jurusan]</option>";
-                            }
-
-                            ?>
-                        </select>
-                    </div>
+                    
+                    <div id="tingkatjurusan"></div>
                     
                     <div class="form-group">
                         <label>Judul Silabus</label>
@@ -120,7 +98,7 @@ else{
                     <?php
                     $sql="SELECT silabus.judul, silabus.nama_file,kelas.nama_kelas, mapel.nama_mapel, silabus.tanggal_upload, pengajaran.kd_pengajaran 
                     FROM pengajaran, mapel, silabus, kelas 
-                    WHERE pengajaran.kd_silabus=silabus.kd_silabus AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_guru='$_SESSION[kode]' ORDER BY pengajaran.kd_kelas";
+                    WHERE pengajaran.kd_silabus=silabus.kd_silabus AND pengajaran.kd_kelas=kelas.kd_kelas AND pengajaran.kd_silabus IN (SELECT kd_silabus FROM silabus ) AND pengajaran.kd_mapel=mapel.kd_mapel AND pengajaran.kd_guru LIKE '%$_SESSION[kode]%' ORDER BY pengajaran.kd_kelas";
                     $silabus=mysqli_query($connect,$sql);
                     $n=1;
                     while ($rsilabus=mysqli_fetch_array($silabus)) {
@@ -182,7 +160,7 @@ else{
                 FROM mapel, silabus, jurusan 
                 WHERE silabus.kd_mapel=mapel.kd_mapel AND silabus.kd_jurusan=jurusan.kd_jurusan AND silabus.kd_mapel IN (SELECT m.kd_mapel 
                             FROM pengajaran as p, mapel as m 
-                            WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+                            WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru LIKE '%$_SESSION[kode]%' 
                             GROUP BY p.kd_mapel)";
                 $silabus=mysqli_query($connect,$sql);
                 $n=1;

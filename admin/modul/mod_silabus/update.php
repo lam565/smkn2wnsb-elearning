@@ -6,9 +6,10 @@ if (isset($_GET['act'])){
     case 'add':
     $kd_mapel=$_POST['mapel'];
     $judul=$_POST['judul'];
+    $datatj=explode("-", $_POST['tingkatjurusan']);
     $kd_guru=$_POST['kd_guru'];
-    $kd_jur=$_POST['jurusan'];
-    $tingkat=$_POST['tingkat'];
+    $kd_jur=$datatj[1];
+    $tingkat=$datatj[0];
     date_default_timezone_set("Asia/Bangkok");
     $upl=date('Y-m-d H:i:s');
 

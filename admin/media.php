@@ -178,6 +178,24 @@ if($_SESSION['login']==0){
             $('#cbbjurusan').attr('data-mapel',mapel)
         });
 
+        $(document).on('change', '#cbbmapelsil', function(){
+            var mapel = $(this).val();
+            var kd_guru = $(this).attr('data-guru');
+            
+            $.ajax({
+                url: 'function.php',
+                type: 'post',
+                data: {
+                    act: 'tingkatjurusan',
+                    mp: mapel,
+                    gru: kd_guru
+                },
+                success: function (data){
+                    $('#tingkatjurusan').html(data);
+                }
+            });
+        });
+
         $(document).on('change', '#cbbjurusan', function(){
             var jurusan = $(this).val();
             var kd_mapel = $(this).attr('data-mapel');
