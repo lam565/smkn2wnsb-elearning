@@ -93,7 +93,7 @@ if (isset($_GET['act'])){
 			$filext       = substr($filename, strrpos($filename, '.'));
 			$filext       = str_replace('.','',$filext);
 			$filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
-			$gambar   = $filename."_".$acak.'.'.$filext;
+			$gambar   = $kdd."_".$acak.'.'.$filext;
 
 		} else {
 			$gambar = "T";
@@ -228,7 +228,7 @@ if (isset($_GET['act'])){
 				$filext       = substr($filename, strrpos($filename, '.'));
 				$filext       = str_replace('.','',$filext);
 				$filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
-				$gambar   = $filename."_".$acak.'.'.$filext;
+				$gambar   = $kdd."_".$acak.'.'.$filext;
 
 			} else {
 				$gambar = "T";

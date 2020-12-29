@@ -42,6 +42,7 @@
 					<thead>
 						<th>#</th>
 						<th>Nama</th>
+						<th>Matapelajaran</th>
 						<th>Jenis</th>
 						<th>Nilai</th>
 					</thead>
@@ -49,13 +50,13 @@
 						<?php 
 						if ($mapel=='all'){
 
-							$query="SELECT 'Tugas' as jenis, kerja_tugas.nis,kerja_tugas.nilai,tugas.nama_tugas as nama_nilai 
-							FROM kerja_tugas,tugas 
-							WHERE kerja_tugas.kd_tugas=tugas.kd_tugas AND kerja_tugas.nis='$_SESSION[kode]' 
+							$query="SELECT 'Tugas' as jenis, kerja_tugas.nis,kerja_tugas.nilai,tugas.nama_tugas as nama_nilai, mapel.nama_mapel 
+							FROM kerja_tugas,tugas, mapel 
+							WHERE kerja_tugas.kd_tugas=tugas.kd_tugas AND tugas.kd_mapel=mapel.kd_mapel AND kerja_tugas.nis='$_SESSION[kode]' 
 							UNION 
-							SELECT 'Ujian' as jenis, nilai_ujian.nis,nilai_ujian.nilai,ujian.nama_ujian as nama_nilai 
-							FROM nilai_ujian,ujian 
-							WHERE nilai_ujian.kd_ujian=ujian.kd_ujian AND nilai_ujian.nis='$_SESSION[kode]'";
+							SELECT 'Ujian' as jenis, nilai_ujian.nis,nilai_ujian.nilai,ujian.nama_ujian as nama_nilai,mapel.nama_mapel 
+							FROM nilai_ujian,ujian,mapel 
+							WHERE nilai_ujian.kd_ujian=ujian.kd_ujian AND ujian.kd_mapel=mapel.kd_mapel AND nilai_ujian.nis='$_SESSION[kode]'";
 							$qnilai=mysqli_query($connect,$query);
 							$cj=mysqli_num_rows($qnilai);
 							$no=1;
@@ -66,6 +67,7 @@
 								echo "<tr>";
 								echo "<td>$no</td>
 								<td>$rsl[nama_nilai]</td>
+								<td>$rsl[nama_mapel]</td>
 								<td>$rsl[jenis]</td>
 								<td>$rsl[nilai]</td>";
 								echo "<tr>";

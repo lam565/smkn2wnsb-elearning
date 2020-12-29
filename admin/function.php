@@ -13,7 +13,7 @@ if (isset($_POST['act'])) {
 		$qkls=mysqli_query($connect, $q);
 		while ($kls=mysqli_fetch_array($qkls)){
 			$kelas .= "
-			<input type='checkbox' value='$kls[kd_kelas]' name='kd_kls[]' checked='checked'/><label> $kls[nama_kelas] </label>
+			<input type='checkbox' value='$kls[kd_kelas]' name='kd_kls[]' checked='checked'/><label> $kls[nama_kelas] </label><br>
 			";
 		}		
 		$kelas .= "</div>";
@@ -59,13 +59,21 @@ if (isset($_POST['act'])) {
 			$jum = mysqli_num_rows($query);
 			$pengajar = mysqli_fetch_array($query);
 			if ($jum>0){
-				$out = " <label>
-				<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $pengajar[nama] 
-				</label> ";
+				$cekjumpengajar=explode(",", $pengajar['kd_guru']);
+				$jpengajar = count($cekjumpengajar);
+				if ($jpengajar<3) {
+					$out = " <label>
+				<input type='checkbox' name='kd_kls[]' value='$kelas' />$pengajar[nama_kelas] - $pengajar[nama]
+				</label> <br>";
+				} else {
+					$out = " <label>
+				<input type='checkbox' name='kd_kls[]' value='$kelas' disabled='disabled'/>$pengajar[nama_kelas] - $pengajar[nama] $jpengajar
+				</label> <br>";
+				}
 			} else {
 				$out = " <label>
 				<input type='checkbox' name='kd_kls[]' value='$kelas' />$nkls
-				</label> ";
+				</label> <br>";
 			}
 			return $out;
 		}

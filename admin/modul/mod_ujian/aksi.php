@@ -8,6 +8,7 @@ if (isset($_GET['act'])){
 		$nama_ujian=$_POST['nama_ujian'];
 		$deskripsi=$_POST['deskripsi'];
 		$tgl_ujian=$_POST['tgl_mulai']." ".$_POST['jam_mulai'].":00";
+		$tgl_ahir=$_POST['tgl_ahir']." ".$_POST['jam_ahir'].":00";
 		$jam=$_POST['jam'];
 		$menit=$_POST['menit'];
 		$detik=$_POST['detik'];
@@ -31,7 +32,7 @@ if (isset($_GET['act'])){
 			}
 			$kd_ujian=$k.$kodeurut;
 
-			$query="INSERT INTO ujian VALUES ('$kd_ujian','$nama_ujian','$deskripsi','$tgl_ujian','$jam','$menit','$detik','$kd_soal','$kd','$kd_mapel','$kd_guru')";
+			$query="INSERT INTO ujian VALUES ('$kd_ujian','$nama_ujian','$deskripsi','$tgl_ujian','$tgl_ahir','$jam','$menit','$detik','$kd_soal','$kd','$kd_mapel','$kd_guru')";
 			$qins=mysqli_query($connect,$query);
 			if ($qins) {
 				$qt="INSERT INTO timeline (jenis,id_jenis,waktu,kd_kelas,kd_mapel,kd_guru) 
@@ -51,6 +52,7 @@ if (isset($_GET['act'])){
 		$nama_ujian=$_POST['nama_ujian'];
 		$deskripsi=$_POST['deskripsi'];
 		$tgl_ujian=$_POST['tgl_mulai']." ".$_POST['jam_mulai'].":00";
+		$tgl_ahir=$_POST['tgl_ahir']." ".$_POST['jam_ahir'].":00";
 		$jam=$_POST['jam'];
 		$menit=$_POST['menit'];
 		$detik=$_POST['detik'];
@@ -60,7 +62,7 @@ if (isset($_GET['act'])){
 		$kd_guru=$_POST['kd_guru'];
 		$tglup=date("Y-m-d H:i:s");
 
-		$qupdate="UPDATE ujian SET nama_ujian='$nama_ujian',deskripsi='$deskripsi',tgl_ujian='$tgl_ujian',jam='$jam',menit='$menit',detik='$detik',kd_soal='$kd_soal',kd_kelas='$kd_kelas',kd_mapel='$kd_mapel',kd_guru='$kd_guru' WHERE kd_ujian='$kd_ujian'";
+		$qupdate="UPDATE ujian SET nama_ujian='$nama_ujian',deskripsi='$deskripsi',tgl_ujian='$tgl_ujian',tgl_ahir='$tgl_ahir',jam='$jam',menit='$menit',detik='$detik',kd_soal='$kd_soal',kd_kelas='$kd_kelas',kd_mapel='$kd_mapel',kd_guru='$kd_guru' WHERE kd_ujian='$kd_ujian'";
 		$updt=mysqli_query($connect,$qupdate);
 		if ($updt){
 			echo "<script>alert('Berhasil mengubah data ujian'); location='../../media.php?module=ujian'</script>";

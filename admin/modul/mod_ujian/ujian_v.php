@@ -121,6 +121,14 @@ else {
                                         <label>Pukul </label>
                                         <input class="form-control" name="jam_mulai" type="time" value="<?php echo substr($eujian['tgl_ujian'],11,5) ?>" />
                                     </div>
+                                    <div class="form-group col-xs-7">
+                                        <label>Berakhir pada </label>
+                                        <input class="form-control" name="tgl_ahir" type="date" value="<?php echo substr($eujian['tgl_ahir'],0,10) ?>" />
+                                    </div>
+                                    <div class="form-group col-xs-5">
+                                        <label>Pukul </label>
+                                        <input class="form-control" name="jam_ahir" type="time" value="<?php echo substr($eujian['tgl_ahir'],11,5) ?>" />
+                                    </div>
                                     <div class="form-group">
                                         <label>Durasi</label>
                                     </div>
@@ -236,6 +244,14 @@ else {
                                         <label>Pukul </label>
                                         <input class="form-control" name="jam_mulai" type="time" />
                                     </div>
+                                    <div class="form-group col-xs-7">
+                                        <label>Berakhir pada </label>
+                                        <input class="form-control" name="tgl_ahir" type="date" />
+                                    </div>
+                                    <div class="form-group col-xs-5">
+                                        <label>Pukul </label>
+                                        <input class="form-control" name="jam_ahir" type="time" />
+                                    </div>
                                     <div class="form-group">
                                         <label>Durasi</label>
                                     </div>
@@ -332,7 +348,7 @@ else {
                                             return $n;
                                         }
 
-                                        $qsoal="SELECT ujian.nama_ujian,mapel.nama_mapel,kelas.nama_kelas,ujian.tgl_ujian,ujian.kd_soal,ujian.kd_ujian
+                                        $qsoal="SELECT ujian.nama_ujian,mapel.nama_mapel,kelas.nama_kelas,ujian.tgl_ujian,ujian.kd_soal,ujian.kd_ujian,ujian.tgl_ahir
                                         FROM ujian,mapel,kelas
                                         WHERE ujian.kd_mapel=mapel.kd_mapel AND ujian.kd_kelas=kelas.kd_kelas AND ujian.kd_guru='$_SESSION[kode]'";
                                         $esoal=mysqli_query($connect,$qsoal);
@@ -352,7 +368,7 @@ else {
                                                 echo "<td>$rsoal[nama_mapel]</td>";
                                                 echo "<td>$rsoal[nama_kelas]</td>";
                                                 echo "<td>$js</td>";
-                                                echo "<td>$rsoal[tgl_ujian]</td>";
+                                                echo "<td><b>Mulai:</b> $rsoal[tgl_ujian] |<br> <b>Berahir:</b> $rsoal[tgl_ahir]</td>";
                                                 echo "<td>$j <a class='btn btn-success btn-xs' href='?module=detnilujian&kd=$rsoal[kd_ujian]'>Lihat Nilai Siswa</a></td>";
                                                 echo "<td><a href='?module=ujian&eid=$rsoal[kd_ujian]' class='btn btn-primary btn-xs'>Edit</a><a href='modul/mod_ujian/aksi.php?act=del&kdu=$rsoal[kd_ujian]' class='btn btn-warning btn-xs'>Hapus</a></td>";
                                                 echo "</tr>";

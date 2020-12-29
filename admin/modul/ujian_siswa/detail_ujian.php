@@ -22,6 +22,7 @@ $ujian=mysqli_fetch_array($qujian);
 			<div class="panel-body">
 				<h2><?php echo $ujian['nama_ujian']; ?></h2>
 				<h5>Ujian dimulai pada: <?php echo $ujian['tgl_ujian']; ?></h5>
+				<h5>Ujian berahir pada: <?php echo $ujian['tgl_ahir']." pastikan sudah mengerjakan sebelum ujian berahir."; ?></h5>
 				<h5>Durasi pengerjaan: <?php echo $ujian['jam']." jam ".$ujian['menit']." menit ".$ujian['detik']." detik "; ?></h5>
 				<hr>
 				<p><?php echo $ujian['deskripsi']; ?>.</p>
@@ -62,9 +63,11 @@ $ujian=mysqli_fetch_array($qujian);
 				<?php
 				date_default_timezone_set('Asia/Jakarta');
 				$skr=date("Y-m-d H:i:s"); 
-				if (strtotime($ujian['tgl_ujian']) <= strtotime($skr)) {
-					echo "<p class='alert alert-warning'> Ujian telah dimulai, silahkan klik <strong>Mulai Ujian</strong> untuk mengikuti ujian</p>";
+				if (strtotime($ujian['tgl_ujian']) <= strtotime($skr) AND strtotime($ujian['tgl_ahir']) >= strtotime($skr) ) {
+					echo "<p class='alert alert-warning'> Ujian telah dimulai, silahkan klik <strong>Mulai Ujian</strong> untuk mengikuti ujian. Ujian akan berahir pada $ujian[tgl_ahir]</p>";
 					echo "<a href='?module=lembarujian&kd=$ujian[kd_ujian]' class='btn btn-success'> MULAI UJIAN</a>";
+				} else if (strtotime($ujian['tgl_ujian']) <= strtotime($skr) AND strtotime($ujian['tgl_ahir']) <= strtotime($skr)) {
+					echo "<p class='alert alert-danger'> Ujian telah berahir, anda tidak bisa mengikuti lagi ujian</p>";
 				} else {
 					echo "<p class='alert alert-warning'> Belum bisa mengikuti ujian karena belum dimulai</p>";
 				}
