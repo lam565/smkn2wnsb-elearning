@@ -351,7 +351,7 @@ if(menit < 0) {
 */
 if(jam < 0) {                                                                 
     clearInterval(); 
-    var frmSoal = document.getElementById("frmSoal");
+    var frmSoal = document.getElementById("flembarujian");
     frmSoal.submit();                           
 } 
 } 

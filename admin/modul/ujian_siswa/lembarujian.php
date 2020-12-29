@@ -18,7 +18,7 @@ $ujian=mysqli_fetch_array($qujian);
 				<strong>Lembar Ujian</strong>
 			</div>
 			<div class="panel-body">
-				<form method="POST" action="modul/ujian_siswa/aksi.php">
+				<form method="POST" action="modul/ujian_siswa/aksi.php" id="flembarujian">
 					<input type="hidden" id="jam" value=<?php echo $ujian['jam']; ?>>
 					<input type="hidden" id="menit" value=<?php echo $ujian['menit']; ?>>
 					<input type="hidden" id="detik" value=<?php echo $ujian['detik']; ?>>

@@ -156,14 +156,13 @@ else{
               $j=1;
               foreach ($kd_guru as $kd) {
                 echo $j==2 ? "<br>" : " ";
-                echo namaGuru($connect,$kd);
+                echo namaGuru($connect,$kd)." <a href='modul/mod_pengajaran/aksi.php?act=del&kd=$row[kd_pengajaran]&kdg=$kd' class='btn-danger btn-xs'> x </a>";
                 $j++;
               } 
               ?></td>
               <td class="hidden-print">
                <div class="btn-group">
                 <a href="?module=pengajaran&eid=<?php echo $row['kd_pengajaran'] ?>" class="btn btn-warning btn-xs">Edit</a>
-                <a href="modul/mod_pengajaran/aksi.php?act=del&kd=<?php echo $row['kd_pengajaran'] ?>" class="btn btn-danger btn-xs">Hapus</a>
               </div>
             </td>
 

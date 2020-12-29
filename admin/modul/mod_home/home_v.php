@@ -41,7 +41,12 @@ else{
             <div class="row">
               <label class="col-sm-3 col-xs-3">Nama : </label>
               <p class="col-sm-7 col-xs-7"><?php echo $guru['nama'] ?></p>
-              <a class="col-sm-2 col-xs-2 btn btn-xs" href="">Edit</a>
+              <a class="col-sm-2 col-xs-2 btn btn-xs" href="" data-toggle="modal" data-target="#modalnama">Ubah</a>
+            </div>
+            <div class="row">
+              <label class="col-sm-3 col-xs-3">Password</label>
+              <p class="col-sm-7 col-xs-7"> ********** </p>
+              <a class="col-sm-2 col-xs-2 btn btn-xs" href="" data-toggle="modal" data-target="#modalpassowrd">Ubah</a>
             </div>
             <div class="row">
               <label class="col-sm-12 col-xs-12 text-center">** Mata Pelajaran Diampu **</label>
@@ -123,6 +128,63 @@ else{
                   <input type="hidden" name="kd_guru" value="<?php echo $guru['kd_guru'] ?>">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                   <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="modal fade" id="modalnama" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form method="POST" action="modul/mod_home/aksi.php?act=rename">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Ubah Nama</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="nama_baru">Nama Baru</label>
+                    <input type="text" name="nama_baru" class="form-control" required="" placeholder="<?php echo $guru['nama'] ?>">                    
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <input type="hidden" name="kd_guru" value="<?php echo $guru['kd_guru'] ?>">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-primary">Ubah</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="modal fade" id="modalpassowrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form method="POST" action="modul/mod_home/aksi.php?act=updpass">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Ubah Password</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="passlama">Password Lama</label>
+                    <input type="password" name="passlama" class="form-control" required="" >                    
+                  </div>
+                  <div class="form-group">
+                    <label for="passbaru1">Password Baru</label>
+                    <input type="password" name="passbaru1" class="form-control" required="" >                    
+                  </div>
+                  <div class="form-group">
+                    <label for="passbaru2">Ulangi Password Baru</label>
+                    <input type="password" name="passbaru2" class="form-control" required="" >                    
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <input type="hidden" name="kd_guru" value="<?php echo $guru['kd_guru'] ?>">
+                  <input type="hidden" name="username" value="<?php echo $guru['username'] ?>">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-primary">Ubah</button>
                 </div>
               </div>
             </form>

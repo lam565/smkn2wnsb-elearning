@@ -82,21 +82,21 @@ if (isset($_GET['act'])){
 				$qup="UPDATE pengajaran SET kd_guru='$newkdgp' WHERE kd_pengajaran='$kd'";
 				$updt=mysqli_query($connect,$qup);
 				if ($updt){
-					echo "<script>alert('Berhasil menghapus'); location='../../media.php?module=home'</script>";
+					echo "<script>alert('Berhasil menghapus'); location='../../media.php?module=pengajaran'</script>";
 				} else {
-					echo "<script>alert('GAGAL'); location='../../media.php?module=home'</script>";
+					echo "<script>alert('GAGAL'); location='../../media.php?module=pengajaran'</script>";
 				}
 			} else {
 				$qdel="DELETE FROM pengajaran WHERE kd_pengajaran='$kd'";
 				$del=mysqli_query($connect,$qdel);
 				if ($del){
-					echo "<script>alert('Berhasil menghapus'); location='../../media.php?module=home'</script>";
+					echo "<script>alert('Berhasil menghapus'); location='../../media.php?module=pengajaran'</script>";
 				} else {
-					echo "<script>alert('GAGAL'); location='../../media.php?module=home'</script>";
+					echo "<script>alert('GAGAL'); location='../../media.php?module=pengajaran'</script>";
 				}
 			}
 		} else {
-			echo "<script>alert('GAGAL data tidak ditemukan'); location='../../media.php?module=home'</script>";
+			echo "<script>alert('GAGAL data tidak ditemukan'); location='../../media.php?module=pengajaran'</script>";
 		}
 		break;
 		
