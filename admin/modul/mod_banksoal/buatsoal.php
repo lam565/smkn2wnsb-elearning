@@ -94,7 +94,8 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 															<input type="hidden" name="kd_soal" value="<?php echo $_GET['kds']; ?>">
 															<input type="hidden" name="kd_detail" value="<?php echo $kd_detail_soal; ?>">	
 														</div>
-														<div class="form-group">
+														<input type="hidden" name="jenis" value="-">
+														<!-- <div class="form-group">
 															<label>Jenis Ketergantungan</label>
 															<select class="form-control" name="jenis" id="cbbketergantungan" data-soal="<?php echo $_GET['kds']; ?>">
 																<option value="-">Normal</option>
@@ -102,6 +103,7 @@ if (!isset($_GET['kds']) OR empty($_GET['kds'])) {
 																<option value="Child">Child</option>
 															</select>
 														</div>
+													-->
 														<div class="form-group" id="child"></div>
 														<div class="form-group">
 															<label>PERTANYAAN</label>

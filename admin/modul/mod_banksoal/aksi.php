@@ -105,7 +105,7 @@ if (isset($_GET['act'])){
 			if (!empty($fileupload)){
 				move_uploaded_file($_FILES["gbsoal"]["tmp_name"], $temp.$gambar);
 			}
-			if ($_POST['lanjut']) {
+			if (isset($_POST['lanjut'])) {
 				echo "<script>alert('Berhasil membuat pertanyaan'); location='../../media.php?module=buatsoal&v=add&kds=$kds'</script>";
 			} else {
 				echo "<script>alert('Berhasil membuat pertanyaan'); location='../../media.php?module=buatsoal&v=tampil&kds=$kds'</script>";
