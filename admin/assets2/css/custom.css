@@ -3945,13 +3945,13 @@ html > body > .ui-pnotify {
 
 .alert-info {
     color: #E9EDEF;
-    background-color: rgba(52, 152, 219, 0.88);
+    background-color: rgb(222 234 229 / 98%);
     border-color: rgba(52, 152, 219, 0.88);
 }
 
 .alert-warning {
     color: #E9EDEF;
-    background-color: rgba(243, 156, 18, 0.88);
+    background-color: rgb(222 234 229 / 98%);
     border-color: rgba(243, 156, 18, 0.88);
 }
 

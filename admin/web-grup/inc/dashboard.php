@@ -121,7 +121,7 @@ else{
                     $datauserpost = mysqli_fetch_array(mysqli_query($connection, "SELECT*FROM login WHERE username='$datasqlpost[penulis_post]'"));
                 ?>
                 <div class="alert alert-info" id="post<?php echo $datasqlpost["id_post"];?>">
-                <span style="float:right;"><?php echo $datasqlpost["tanggal_post"];?></span>
+                <a><span style="float:right;"><?php echo $datasqlpost["tanggal_post"];?></span></a>
                 <a href="./?p=post&id=<?php echo $datasqlpost["id_post"];?>&post_by=<?php echo $datasqlpost["penulis_post"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><h2><b><?php echo $datasqlpost["judul_post"];?></b></h2></a>
                 
 				<?php
@@ -152,7 +152,7 @@ else{
                         }
                         ?>
 						
-                <span style="float:right"><i class="fa fa-comment"></i> : <?php $totalkomentarpost = mysqli_num_rows(mysqli_query($connection,"SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]'")); echo $totalkomentarpost;?></span>
+                <a><span style="float:right"><i class="fa fa-comment"></i> : <?php $totalkomentarpost = mysqli_num_rows(mysqli_query($connection,"SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]'")); echo $totalkomentarpost;?></span></a>
                 <hr>
  
                     <?php
@@ -164,15 +164,16 @@ else{
                     else{
 
                     }
-                    echo $datasqlpost["isi_post"];
-                    ?><hr>
+					?>
+                    <a> <?php echo $datasqlpost["isi_post"]; ?></a>
+                    <hr>
 
                 <?php
                 $sqllike = mysqli_query($connection, "SELECT*FROM suka_post WHERE id_post='$datasqlpost[id_post]'");
                 $siapayglike = mysqli_fetch_array($sqllike);
                 
                 ?>
-                <i class="fa fa-thumbs-up"></i> : <?php echo $datasqlpost["suka_post"];?>
+               <a> <i class="fa fa-thumbs-up"></i> : <?php echo $datasqlpost["suka_post"];?></a>
                 <br><br>
                     <?php
                     $komentarnya = mysqli_query($connection, "SELECT*FROM komentar WHERE id_post='$datasqlpost[id_post]' ORDER BY id_komentar ASC LIMIT 3");
@@ -190,7 +191,7 @@ else{
 								where username='$ygomen[username]'");           
 								$dx = mysqli_fetch_array($sx);
 						?>
-                    <img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $dx["nama"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
+                    <img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $dx["nama"];?></a></b> <a>: <?php echo $datakomentarnya["isi_komentar"];?></a><font style="float:right;"></font><br>
                     <?php
                         }
                         else{
@@ -200,7 +201,7 @@ else{
 								where username='$ygomen[username]'");           
 								$dm = mysqli_fetch_array($sm);
 						?>
-						<img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $dm["nama"];?></a></b> : <?php echo $datakomentarnya["isi_komentar"];?><font style="float:right;"></font><br>
+						<img src="./assets/img/user/user.jpg" style="width:20px;height:20px;border-radius:100%"><b><a><?php echo $dm["nama"];?></a></b> <a>: <?php echo $datakomentarnya["isi_komentar"];?></a><font style="float:right;"></font><br>
                     <?php
                         }
                         ?>

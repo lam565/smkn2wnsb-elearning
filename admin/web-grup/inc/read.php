@@ -55,7 +55,7 @@ else{
 								where username='$dq[username]'");           
 								$dx = mysqli_fetch_array($sx);
 						?>
-    Penulis : <a>@<?php echo $dx["nama"];?></a> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> 
+    <a>Penulis : @<?php echo $dx["nama"];?> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?></a> 
 	<?php
                         }
                         else{
@@ -65,7 +65,7 @@ else{
 								where username='$dq[username]'");           
 								$dm = mysqli_fetch_array($sm);
 						?>
-						Penulis : <a>@<?php echo $dm["nama"];?></a> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> 
+						<a>Penulis : @<?php echo $dm["nama"];?> | Pada : <u><?php echo $datapost["tanggal_post"];?></u> <span style="float:right;"><i class="fa fa-thumbs-up"></i> : <?php echo $datapost["suka_post"];?> </a>
 	 <?php
                         }
                         ?>
