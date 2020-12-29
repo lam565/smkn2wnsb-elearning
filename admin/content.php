@@ -118,8 +118,8 @@ else{
       include "modul/mod_pelaporan/pelaporan_v.php";
       break;
 
-      case 'gfsiswa':
-      include "modul/mod_gfsiswa/gfsiswa_v.php";
+      case 'aktivitas':
+      include "modul/mod_aktivitas/aktivitas_v.php";
       break;
 
       default:

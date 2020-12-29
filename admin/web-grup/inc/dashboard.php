@@ -71,7 +71,7 @@ else{
 								where username='$dq[username]'");           
 								$dx = mysqli_fetch_array($sx);
 						?>
-                        <b><u><?php echo $dx["nama"];?> (NIS:<?php echo $dx["nis"];?>)</u></b> <a href="./?p=posting&profil=<?php echo $data2["username"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><li class="fa fa-pencil"></li> Buat Postingan</a>
+                        <b><u><?php echo $dx["nama"];?> (NIS:<?php echo $dx["nis"];?>)</u></b><a href="./?p=posting&profil=<?php echo $data2["username"];?>&id_det_kurikulum=<?php echo $_GET["id_det_kurikulum"];?>"><li class="fa fa-pencil"></li>Buat Postingan</a>
                         <?php
                         }
                         else{
@@ -147,7 +147,7 @@ else{
 								where username='$dq[username]'");           
 								$dm = mysqli_fetch_array($sm);
 						?>
-						<a ><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $dm["nama"];?>(Kode Guru:<?php echo $dx["kd_guru"];?>)</b></a>
+						<a ><img src="./assets/img/user/user.jpg" style="width:40px;height:40px;border-radius:100%;"> <b><?php echo $dm["nama"];?></b></a>
                 <?php
                         }
                         ?>
@@ -325,7 +325,7 @@ else{
                                                 </ul>
                                                 <div class="clearfix"></div>
                                             </div>
-                                            <ul class="list-unstyled top_profiles scroll-view">
+                                            <ul class="">
                                               <?php
 												$sx = mysqli_query($connection, "SELECT*FROM siswa,kelas,pengajaran,rombel 
 												where pengajaran.kd_kelas=kelas.kd_kelas
@@ -339,7 +339,7 @@ else{
                                                         <i class="fa fa-user green"></i>
                                                     </a>
                                                     <div class="media-body">
-                                                        <a class="title" href="#"><?php echo $dx["nama"];?></a>
+                                                        <p><?php echo $dx["nama"];?></p>
                                                         <p>NIS:<?php echo $dx["nis"];?></p>
                                                        
                                                         </p>

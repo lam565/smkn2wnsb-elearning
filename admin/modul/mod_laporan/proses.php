@@ -36,8 +36,9 @@ mysqli_select_db($connection,'smkn2wnsb');
 	<tr>
 		<th>NO</th>
 		<th>NIS</th>
-		<th>NAMA SISWA</th>
+		
 		<th>NILAI</th>		
+		<th>NAMA UJIAN</th>
 	</tr>
 	<?php
 	// Load file koneksi.php
@@ -62,8 +63,9 @@ mysqli_select_db($connection,'smkn2wnsb');
 		echo "<tr>";
 		echo "<td>".$no."</td>";
 		echo "<td>".$data['nis']."</td>";
-		echo "<td>".$data['nama']."</td>";
+		
 		echo "<td>".$data['nilai']."</td>";
+		echo "<td>".$data['nama_ujian']."</td>";
 		
 		echo "</tr>";
 		

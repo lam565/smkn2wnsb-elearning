@@ -36,7 +36,7 @@ mysqli_select_db($connection,'smkn2wnsb');
 	<tr>
 		<th>NO</th>
 										<th>NIS</th>
-										<th>NAMA SISWA</th>
+										
 										<th>NILAI</th>
 										<th>NAMA TUGAS</th>	
 	</tr>
@@ -56,14 +56,17 @@ mysqli_select_db($connection,'smkn2wnsb');
 								and tugas.kd_guru='$row3[kd_guru]'
 								and tugas.kd_kelas='$_GET[kd_kelas]'
 								and tugas.kd_mapel='$_GET[kd_mapel]'
-								and tugas.tgl_up BETWEEN '$_GET[from]' AND '$_GET[to]'");
+								and tugas.tgl_up BETWEEN '$_GET[from]' AND '$_GET[to]'
+								group by siswa.nis");
+								
+								
 	
 	$no=1;// Untuk penomoran tabel, di awal set dengan 1
 	while($data = mysqli_fetch_array($sql)){ // Ambil semua data dari hasil eksekusi $sql
 		echo "<tr>";
 		echo "<td>".$no."</td>";
 		echo "<td>".$data['nis']."</td>";
-		echo "<td>".$data['nama']."</td>";
+		
 		echo "<td>".$data['nilai']."</td>";
 		echo "<td>".$data['nama_tugas']."</td>";
 		

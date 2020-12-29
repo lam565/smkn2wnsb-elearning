@@ -27,6 +27,7 @@
         <li class="<?php if ($_GET['module'] == 'siswa') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=siswa"><b>SISWA</b></a></li>
 		<li class="<?php if ($_GET['module'] == 'mapel') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=mapel"><b>MATA PELAJARAN</b></a></li>
 		<li class="<?php if ($_GET['module'] == 'kurikulum') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=pengajaran"><b>PENGAJARAN</b></a></li>
+		<li class="<?php if ($_GET['module'] == 'aktivitas') {echo "open";} ?>"><a style="color:blue;" href="media.php?module=aktivitas"><b>AKTIVITAS KELAS</b></a></li>
 		
         <?php
         break;

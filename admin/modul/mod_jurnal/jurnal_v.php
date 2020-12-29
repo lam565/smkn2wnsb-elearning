@@ -29,9 +29,10 @@ if ($update) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($update) {
 		$sql = "UPDATE jurnal SET tanggal='$_POST[tanggal]',jam_ke='$_POST[jam_ke]',kd_guru='$_POST[kd_guru]',kd_mapel='$_POST[kd_mapel]',
-		judul_materi='$_POST[judul_materi]',jml_siswa='$_POST[jml_siswa]' WHERE id_jurnal='$_GET[key]'";
+		judul_materi='$_POST[judul_materi]',jml_siswa='$_POST[jml_siswa]',nm_siswa_tdhdr='$_POST[nm_siswa_tdhdr]' WHERE id_jurnal='$_GET[key]'";
 	} else {
-		$sql = "INSERT INTO jurnal VALUES ('','$_POST[tanggal]','$_POST[jam_ke]','$_POST[kd_guru]','$_POST[kd_mapel]','$_POST[judul_materi]','$_POST[jml_siswa]')";
+		$sql = "INSERT INTO jurnal VALUES ('','$_POST[tanggal]','$_POST[jam_ke]','$_POST[kd_guru]','$_POST[kd_mapel]',
+		'$_POST[judul_materi]','$_POST[jml_siswa]','$_POST[nm_siswa_tdhdr]')";
 	}
   if ($connection->query($sql)) {
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=jurnal'</script>";
@@ -118,6 +119,12 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 										 <div class="form-group">
                                             <label>Jumlah Siswa Hadir</label>
                                             <input class="form-control" placeholder="Masukkan Jumlah Siswa Hadir" name="jml_siswa" type="text" <?= (!$update) ?: 'value="'.$row["jml_siswa"].'"' ?>/>
+                                        </div>
+										
+										 <div class="form-group">
+                                            <label>Nama Siswa Tidak Hadir</label>
+                                            <textarea class="form-control" placeholder="Masukkan Nama Siswa Tidak Hadir" name="nm_siswa_tdhdr" type="text" <?= (!$update) ?: 'value="'.$row["nm_siswa_tdhdr"].'"' ?>/>
+											</textarea>
                                         </div>
                                         
                                         

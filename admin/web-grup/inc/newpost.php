@@ -86,7 +86,7 @@ if (@$_SESSION["username"] == $useruser) {
                                                 </ul>
                                                 <div class="clearfix"></div>
                                             </div>
-                                            <ul class="list-unstyled top_profiles scroll-view">
+                                            <ul class="">
                                               <?php
 												$sx = mysqli_query($connection, "SELECT*FROM siswa,kelas,pengajaran,rombel 
 												where pengajaran.kd_kelas=kelas.kd_kelas
@@ -100,7 +100,7 @@ if (@$_SESSION["username"] == $useruser) {
                                                         <i class="fa fa-user green"></i>
                                                     </a>
                                                     <div class="media-body">
-                                                        <a class="title" href="#"><?php echo $dx["nama"];?></a>
+                                                        <p><?php echo $dx["nama"];?></p>
                                                         <p>NIS:<?php echo $dx["nis"];?></p>
                                                        
                                                         </p>
