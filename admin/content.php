@@ -40,8 +40,8 @@ else{
       case 'tugas':
       include "modul/mod_tugas/tugas_v.php";
       break;
-	  
-	  case 'jurnal':
+
+      case 'jurnal':
       include "modul/mod_jurnal/jurnal_v.php";
       break;
 
@@ -131,9 +131,17 @@ else{
 
     case 'siswa':
     $q=mysqli_query($connect,"SELECT * FROM rombel,kelas WHERE rombel.kd_kelas=kelas.kd_kelas AND rombel.nis='$_SESSION[kode]' AND rombel.kd_tajar='$kd_tajar'");
-    $qkls=mysqli_fetch_array($q);
-    $kode_kelas=$qkls['kd_kelas'];
-    $nama_kelas=$qkls['nama_kelas'];
+    $rombel="OK";
+    if (mysqli_num_rows($q)){
+      $qkls=mysqli_fetch_array($q);
+      $kode_kelas=$qkls['kd_kelas'];
+      $nama_kelas=$qkls['nama_kelas'];
+    } else {
+      $rombel="NULL";
+      $kode_kelas="kosong";
+      $nama_kelas="kosong";
+    }
+    
     switch ($modul) {
       case 'home':
       include "modul/home_siswa/home_v.php";
