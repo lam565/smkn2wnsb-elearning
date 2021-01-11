@@ -80,6 +80,7 @@ $rtugas=mysqli_fetch_array($qtugas);
 						<div id="Uploadj">
 							
 						</div>
+						<p class="warningnya text-danger text-left"></p>
 					</div>
 					<!-- 
 					<div class="form-group">

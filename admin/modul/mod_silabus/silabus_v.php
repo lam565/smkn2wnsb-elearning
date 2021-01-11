@@ -68,7 +68,8 @@ else{
                     </div>
                     <div class="form-group">
                         <label>FILE Silabus</label>
-                        <input type="file" name="silabusfile" required="required" />
+                        <input type="file" name="silabusfile" required="required" id="fileupload" />
+                        <p class="warningnya text-danger text-left"></p>
                     </div>
 
                     <button type="submit" class="btn btn-success">Tambah Silabus</button>

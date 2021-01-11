@@ -149,7 +149,7 @@ if($_SESSION['login']==0){
             var i;
             var inputfile = "";
             for (i=1;i<=jfile;i++){
-                inputfile = inputfile + "<input class='form-control' type='FILE' name='ftugas"+i+"' required='required'><br>";
+                inputfile = inputfile + "<input class='form-control' type='FILE' name='ftugas"+i+"'  required='required'><br>";
             }
             $('#hjfile').val(jfile);
             $('#Uploadj').html(inputfile);
@@ -265,6 +265,22 @@ if($_SESSION['login']==0){
             }
         });
 
+        $("#filemateri").change(function () {
+            var fileExtension = ['pdf','jpeg', 'jpg', 'png', 'ppt', 'docx', 'xlsx' ,'pptx', 'mp4'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                $(this).val('');
+                $(".warningnya").html("Ekstensi file harus: "+fileExtension.join(', '));
+            } else {
+                if ( this.files[0].size/1024/1024 > 50 ){
+                    $(this).val('');
+                    $(".warningnya").html("Ukuran maksimum hanya 30MB");
+                } else {
+                    $(".warningnya").html("");
+                }
+                
+            }
+        });
+
         $(document).on('click','#openmodal',function(){
             var id = $(this).attr('data-kds');
             $.ajax({
@@ -283,9 +299,21 @@ if($_SESSION['login']==0){
         
     });
 </script>
+
 <script type="text/javascript">
 //    validasi form (hanya file .xls yang diijinkan)
 function validateForm()
+{
+    function hasExtension(inputID, exts) {
+        var fileName = document.getElementById(inputID).value;
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+    if(!hasExtension('filesoal', ['.xls'])){
+        alert("Hanya file XLS yang diijinkan.");
+        return false;
+    }
+}
+function validatetugas()
 {
     function hasExtension(inputID, exts) {
         var fileName = document.getElementById(inputID).value;

@@ -64,15 +64,15 @@ else{
                 </div>
                 <div class="form-group">
                     <label>Pertemuan ke</label>
-                    <input class="form-control" type="text" name="pertemuan" />
+                    <input class="form-control" type="text" name="pertemuan" required="" />
                 </div>
                 <div class="form-group">
                     <label>Judul</label>
-                    <input class="form-control" type="text" name="nama_materi" />
+                    <input class="form-control" type="text" name="nama_materi" required="" />
                 </div>
                 <div class="form-group">
                     <label>Deskripsi</label>
-                    <textarea class="form-control" name="deskripsi" rows="3"></textarea>
+                    <textarea class="form-control" name="deskripsi" rows="3" required="" ></textarea>
                 </div>
                 <div class="form-group">
                     <label>File Atau Link</label>
@@ -84,7 +84,7 @@ else{
                 <div class="form-group">
                     <div id="ForL">
                         <label>Upload File Materi</label>
-                        <input class="form-control" type="file" name="filemateri" id="fileupload" />
+                        <input class="form-control" type="file" name="filemateri" id="filemateri" />
                     </div>
                     <p class="warningnya text-danger text-left"></p>
                 </div>
@@ -137,7 +137,7 @@ else{
                             echo "<td>$rmateri[nama_kelas]</td>";
                             echo "<td>$rmateri[nama_mapel]</td>";
                             if ($rmateri['ForL']=='file') {
-                                echo "<td><a href='files/materi/$rmateri[file]' class='btn btn-info btn-xs' target='_blank'>Lihat Materi</a></td>";
+                                echo "<td><a href='download.php?file=materi/$rmateri[file]' class='btn btn-info btn-xs'>Lihat Materi</a></td>";
                             } else {
                                 echo "<td><a href='$rmateri[file]' class='btn btn-primary btn-xs' target='_blank'>Lihat Materi</a></td>";
                             }

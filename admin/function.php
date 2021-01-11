@@ -104,7 +104,7 @@ if (isset($_POST['act'])) {
 		$guru=$_POST['gru'];
 
 		$output="";
-		$qwr=mysqli_query($connect,"SELECT kelas.tingkat,jurusan.nama_jurusan,jurusan.kd_jurusan FROM pengajaran,kelas,jurusan WHERE pengajaran.kd_kelas=kelas.kd_kelas AND kelas.kd_jurusan=jurusan.kd_jurusan AND pengajaran.kd_mapel='$mapel' AND pengajaran.kd_guru LIKE '%$guru%'");
+		$qwr=mysqli_query($connect,"SELECT kelas.tingkat,jurusan.nama_jurusan,jurusan.kd_jurusan FROM pengajaran,kelas,jurusan WHERE pengajaran.kd_kelas=kelas.kd_kelas AND kelas.kd_jurusan=jurusan.kd_jurusan AND pengajaran.kd_mapel='$mapel' AND pengajaran.kd_guru LIKE '%$guru%' GROUP BY kelas.tingkat");
 
 		while ($rsl=mysqli_fetch_array($qwr)) {
 			$tingkat_jurusan=$rsl['tingkat']."-".$rsl['kd_jurusan'];

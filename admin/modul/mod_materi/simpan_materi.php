@@ -26,7 +26,7 @@ if ($forl=='file') {
 		$filext       = substr($filename, strrpos($filename, '.'));
 		$filext       = str_replace('.','',$filext);
 		$filename      = preg_replace("/\.[^.\s]{3,4}$/", "", $filename);
-		$newfilename   = $filename."_".$acak.'.'.$filext;
+		$newfilename   = $nama_materi."_".$acak.'.'.$filext;
 
 		foreach ($kelas as $kd) {
 			//buat kode materi 01
