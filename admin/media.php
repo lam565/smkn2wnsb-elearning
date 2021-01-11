@@ -60,10 +60,21 @@ if($_SESSION['login']==0){
             </a>
 
         </div>
-
+		
+	
         <div class="right-div">
-            <a href="../logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
-        </div>
+		<?php
+		if($_SESSION['level']=='guru'){
+		?>
+            <a href="../logout.php" onclick = "return confirm('Pastikan Anda Sudah Mengisi Jurnal Harian!! ');" class="btn btn-danger pull-right">LOG ME OUT</a>
+        <?php
+		} else {
+		?>
+		 <a href="../logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
+       <?php
+		}
+		?>
+		</div>
     </div><br><br>
 </div>
 <!-- LOGO HEADER END-->

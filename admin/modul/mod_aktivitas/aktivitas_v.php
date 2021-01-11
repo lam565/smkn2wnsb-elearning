@@ -25,7 +25,7 @@ else{
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">ADMIN DASHBOARD</h4>
+                <h4 class="header-line">ADMIN DASHBOARD | AKTIVITAS PEMBELAJARAN TANGGAL : <?php echo date('Y-m-d'); ?></h4>
                 
                             </div>
 
@@ -36,11 +36,10 @@ else{
                 <?php 
 				$tg=date('Y-m-d');
 				$query = $connection->query("
-				SELECT * FROM jurnal,kelas,guru,mapel,pengajaran 
+				SELECT * FROM jurnal,kelas,guru,mapel 
 				where jurnal.kd_guru=guru.kd_guru 
 				and jurnal.kd_mapel=mapel.kd_mapel
-				and pengajaran.kd_guru=guru.kd_guru
-				and pengajaran.kd_kelas=kelas.kd_kelas
+				and jurnal.kd_kelas=kelas.kd_kelas
 				and jurnal.tanggal='$tg'				
 				order by id_jurnal DESC"); ?>
 	            <?php while($row = $query->fetch_assoc()): ?>

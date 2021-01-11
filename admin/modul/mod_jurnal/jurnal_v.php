@@ -28,10 +28,10 @@ if ($update) {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($update) {
-		$sql = "UPDATE jurnal SET tanggal='$_POST[tanggal]',jam_ke='$_POST[jam_ke]',kd_guru='$_POST[kd_guru]',kd_mapel='$_POST[kd_mapel]',
+		$sql = "UPDATE jurnal SET tanggal='$_POST[tanggal]',jam_ke='$_POST[jam_ke]',kd_guru='$_POST[kd_guru]',kd_mapel='$_POST[kd_mapel]',kd_kelas='$_POST[kd_kelas]',
 		judul_materi='$_POST[judul_materi]',jml_siswa='$_POST[jml_siswa]',nm_siswa_tdhdr='$_POST[nm_siswa_tdhdr]' WHERE id_jurnal='$_GET[key]'";
 	} else {
-		$sql = "INSERT INTO jurnal VALUES ('','$_POST[tanggal]','$_POST[jam_ke]','$_POST[kd_guru]','$_POST[kd_mapel]',
+		$sql = "INSERT INTO jurnal VALUES ('','$_POST[tanggal]','$_POST[jam_ke]','$_POST[kd_guru]','$_POST[kd_mapel]','$_POST[kd_kelas]',
 		'$_POST[judul_materi]','$_POST[jml_siswa]','$_POST[nm_siswa_tdhdr]')";
 	}
   if ($connection->query($sql)) {
@@ -110,6 +110,16 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
         <?php endwhile; ?>
     </select>
 </div>
+
+										 <div class="form-group">
+        <label>Kelas</label>
+        <select class="form-control" name="kd_kelas">
+            <option>--Kelas--</option>
+            <?php $query5 = $connection->query("SELECT * FROM pengajaran,kelas where pengajaran.kd_kelas=kelas.kd_kelas and pengajaran.kd_guru='$d[kd_guru]'"); while ($data5 = $query5->fetch_assoc()): ?>
+            <option value="<?=$data5["kd_kelas"]?>" <?= (!$update) ?: (($data5["kd_kelas"] != $data5["kd_kelas"]) ?: 'selected="on"') ?>><?=$data5["nama_kelas"]?></option>
+        <?php endwhile; ?>
+    </select>
+</div>
 										
 										 <div class="form-group">
                                             <label>Materi </label>
@@ -131,11 +141,14 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                         
                                        
                                         <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>
-	                <?php if ($update): ?>
+							
+					<?php if ($update): ?>
 										<a href="?module=akun" class="btn btn-info btn-block">Batal</a>
 									<?php endif; ?>
 
                                     </form>
+
+
                         </div>
      </div>
              </div>
@@ -155,8 +168,10 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 											  <th>Jam Ke</th>
 											  <th>Guru</th>
 											  <th>Mata Pelajaran</th>
+											  <th>Kelas</th>
 											  <th>Judul Materi</th>
 											  <th>Jumlah Siswa Hadir</th>
+											  <th>Siswa Tidak Hadir</th>
 											
 											 <th>Aksi</th>
                                         </tr>
@@ -164,8 +179,19 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                     <tbody>
                                         <tr>
 										<?php $no = 1; ?>
-	                    <?php if ($query = $connection->query("SELECT * FROM jurnal,guru,mapel where jurnal.kd_guru=guru.kd_guru 
-						and jurnal.kd_mapel=mapel.kd_mapel and guru.username='$_SESSION[username]' order by id_jurnal DESC")): ?>
+										
+				
+	                    <?php 
+						
+						if ($query = $connection->query("SELECT * FROM jurnal,kelas,guru,mapel 
+				where jurnal.kd_guru=guru.kd_guru 
+				and jurnal.kd_mapel=mapel.kd_mapel
+				
+				and jurnal.kd_kelas=kelas.kd_kelas
+				
+				and guru.username='$_SESSION[username]'				
+				order by id_jurnal DESC
+				")): ?>
 	                        <?php while($row = $query->fetch_assoc()): ?>
 							<td></td>
 											<td><?=$no++?></td>
@@ -173,8 +199,10 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <td><?=$row['jam_ke']?></td>
 											<td><?=$row['nama']?></td>
                                             <td><?=$row['nama_mapel']?></td>
+											<td><?=$row['nama_kelas']?></td>
 											<td><?=$row['judul_materi']?></td>
                                             <td><?=$row['jml_siswa']?></td>
+											 <td><?=$row['nm_siswa_tdhdr']?></td>
 											
                                             
 											<td class="hidden-print">
