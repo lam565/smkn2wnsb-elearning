@@ -197,7 +197,7 @@ else{
         <div class="panel panel-info">
           <div class="panel-body">
             <?php
-            $qbacakurikulum="SELECT kls.nama_kelas,m.nama_mapel 
+            $qbacakurikulum="SELECT kls.kd_kelas,kls.nama_kelas,m.nama_mapel,m.kd_mapel 
             FROM pengajaran as p, kelas as kls, mapel as m 
             WHERE kls.kd_kelas=p.kd_kelas AND m.kd_mapel=p.kd_mapel AND p.kd_guru LIKE '%$guru[kd_guru]%'";
 
@@ -208,10 +208,10 @@ else{
               <i class=\"fa fa-book fa-5x\"></i>
               <p>$rkur[nama_mapel]</p>
               <h3>$rkur[nama_kelas]</h3>
-              <p><a class='btn btn-xs btn-info form-control' href='?module=materi'> Materi </a></p>
-              <p><a class='btn btn-xs btn-info form-control' href='?module=tugas'> Tugas </a></p>
-              <p><a class='btn btn-xs btn-info form-control' href='?module=ujian'> Ujian </a></p>
-
+              <p><a class='btn btn-xs btn-info form-control' href='?module=materi&mp=$rkur[kd_mapel]'> Materi </a></p>
+              <p><a class='btn btn-xs btn-info form-control' href='?module=tugas&mp=$rkur[kd_mapel]'> Tugas </a></p>
+              <p><a class='btn btn-xs btn-info form-control' href='?module=ujian&mp=$rkur[kd_mapel]'> Ujian </a></p>
+              <p><a class='btn btn-xs btn-info form-control' href='?module=absensi&mp=$rkur[kd_mapel]&kls=$rkur[kd_kelas]'> Absensi </a></p>
               </div>
               </div>";
             }

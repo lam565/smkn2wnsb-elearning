@@ -14,6 +14,10 @@ else{
       case 'home':
       include "modul/mod_home/home_v.php";
       break;
+
+      case 'absensi':
+      include "modul/kehadiran/kehadiran_v.php";
+      break;
       
       case 'silabus':
       include "modul/mod_silabus/silabus_v.php";
@@ -130,12 +134,16 @@ else{
     break;
 
     case 'siswa':
-    $q=mysqli_query($connect,"SELECT * FROM rombel,kelas WHERE rombel.kd_kelas=kelas.kd_kelas AND rombel.nis='$_SESSION[kode]' AND rombel.kd_tajar='$kd_tajar'");
+    $q=mysqli_query($connect,"SELECT * FROM siswa,rombel,kelas WHERE rombel.nis=siswa.nis AND rombel.kd_kelas=kelas.kd_kelas AND rombel.nis='$_SESSION[kode]' AND rombel.kd_tajar='$kd_tajar'");
     $rombel="OK";
     if (mysqli_num_rows($q)){
       $qkls=mysqli_fetch_array($q);
       $kode_kelas=$qkls['kd_kelas'];
       $nama_kelas=$qkls['nama_kelas'];
+      $nama_siswa=$qkls['nama'];
+      $nis = $qkls['nis'];
+      $username = $qkls['username'];
+
     } else {
       $rombel="NULL";
       $kode_kelas="kosong";

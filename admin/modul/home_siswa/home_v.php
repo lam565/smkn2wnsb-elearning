@@ -20,14 +20,33 @@ if ($rombel=="NULL") {
     # code...
 } else {
 
+
   ?>
   <div class="row">
     <div class="col-md-4 col-sm-4 col-xs-12" >
 
-      <?php
-      $qsw="SELECT * FROM siswa WHERE nis='$_SESSION[kode]'";
-      $rsw=mysqli_fetch_array(mysqli_query($connect,$qsw));
-      ?>
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Data Siswa
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <label class="col-sm-3 col-xs-3">Nama </label>
+            <p class="col-sm-7 col-xs-7"><?php echo $nama_siswa; ?></p>
+            <a class="col-sm-2 col-xs-2 btn btn-xs" href="" data-toggle="modal" data-target="#modalnama">Ubah</a>
+          </div>
+          <div class="row">
+            <label class="col-sm-3 col-xs-3">Kelas</label>
+            <p class="col-sm-7 col-xs-7"> <?= $nama_kelas; ?></p>
+          </div>
+          <div class="row">
+            <label class="col-sm-3 col-xs-3">Password</label>
+            <p class="col-sm-7 col-xs-7"> ********** </p>
+            <a class="col-sm-2 col-xs-2 btn btn-xs" href="" data-toggle="modal" data-target="#modalpassowrd">Ubah</a>
+          </div>
+          
+        </div>
+      </div>
 
       <div class="panel panel-success">
         <div class="panel-heading">
@@ -53,8 +72,18 @@ if ($rombel=="NULL") {
               <div class='panel-body'>
               <a href='?module=materi&mp=$rmp[kd_mapel]' class='btn btn-primary btn-sm'>Materi</a>
               <a href='?module=tugas&mp=$rmp[kd_mapel]' class='btn btn-primary btn-sm'>Tugas</a>
-              <a href='?module=nilai&mp=$rmp[kd_mapel]' class='btn btn-primary btn-sm'>Nilai</a>
-              </div>
+              <a href='?module=nilai&mp=$rmp[kd_mapel]' class='btn btn-primary btn-sm'>Nilai</a>";
+
+              $cekabsensi = mysqli_query($connect,"SELECT kd_absensi FROM absensi WHERE nis='$nis' AND kd_kelas='$kode_kelas' AND kd_mapel='$rmp[kd_mapel]'");
+              $sudahabsen = mysqli_num_rows($cekabsensi);
+
+              if ($sudahabsen > 0) {
+                echo " <a href='#' class='btn btn-default btn-sm' disabled>Sudah Absensi</a>";
+              } else {
+                echo " <a href='modul/home_siswa/aksi.php?act=absen&mp=$rmp[kd_mapel]&nis=$nis&kls=$kode_kelas' class='btn btn-primary btn-sm'>Absensi</a>";
+              }
+              
+              echo "</div>
               </div>
               </div>";
               $o++;
@@ -66,11 +95,70 @@ if ($rombel=="NULL") {
       </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalnama" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form method="POST" action="modul/home_siswa/aksi.php?act=rename">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Ubah Nama</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="nama_baru">Nama Baru</label>
+                <input type="text" name="nama_baru" class="form-control" required="" placeholder="<?php echo $nama_siswa; ?>">                    
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="nis" value="<?php echo $nis; ?>">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-primary">Ubah</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalpassowrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form method="POST" action="modul/home_siswa/aksi.php?act=updpass">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Ubah Password</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="passlama">Password Lama</label>
+                <input type="password" name="passlama" class="form-control" required="" >                    
+              </div>
+              <div class="form-group">
+                <label for="passbaru1">Password Baru</label>
+                <input type="password" name="passbaru1" class="form-control" required="" >                    
+              </div>
+              <div class="form-group">
+                <label for="passbaru2">Ulangi Password Baru</label>
+                <input type="password" name="passbaru2" class="form-control" required="" >                    
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="nis" value="<?php echo $nis ?>">
+              <input type="hidden" name="username" value="<?php echo $username ?>">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-primary">Ubah</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- END Modal -->
+
     <div class="col-md-8 col-sm-8 col-xs-12">
 
 
       <div class="row">
-        <div class="panel panel-warning">
+        <div class="panel panel-primary">
           <div class="panel-heading">
             Timeline Kelas <?php echo $nama_kelas; ?>
           </div>
@@ -120,7 +208,7 @@ if ($rombel=="NULL") {
 
           </div>
           <div class="panel-footer">
-            <a href="#">Lihat Semua</a>
+            <a href="#">....</a>
           </div>
         </div>
       </div>

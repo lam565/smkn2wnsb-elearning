@@ -118,20 +118,21 @@ if (isset($_GET['act'])){
 		$newpass1=md5($_POST['passbaru1']);
 		$newpass2=md5($_POST['passbaru2']);
 
-		$cekpasslama=mysqli_query($connect,"SELECT password FROM login,guru WHERE login.username=guru.username AND guru.kd_guru='$kdg' AND login.password='$oldpass'");
-		if (mysqli_num_rows($cekpasslama)<1) {
+		$cekpasslama=mysqli_query($connect,"SELECT login.password FROM login,guru WHERE login.username=guru.username AND guru.kd_guru='$kdg' AND login.password='$oldpass'");
+		$cek=mysqli_num_rows($cekpasslama);
+		if ($cek<1) {
 			echo "<script>alert('GAGAL, password lama salah'); location='../../media.php?module=home'</script>";
-		}
-
-		if ($newpass1 != $newpass2) {
-			echo "<script>alert('GAGAL, Verifikasi password baru tidak cocok'); location='../../media.php?module=home'</script>";
-		}
-
-		$qupd=mysqli_query($connect,"UPDATE login SET password='$newpass1' WHERE username='$username'");
-		if ($qupd) {
-			echo "<script>alert('Berhasil mengubah password'); location='../../media.php?module=home'</script>";
 		} else {
-			echo "<script>alert('GAGAL'); location='../../media.php?module=home'</script>";
+			if ($newpass1 != $newpass2) {
+				echo "<script>alert('GAGAL, Verifikasi password baru tidak cocok'); location='../../media.php?module=home'</script>";
+			} else {
+				$qupd=mysqli_query($connect,"UPDATE login SET password='$newpass1' WHERE username='$username'");
+				if ($qupd) {
+					echo "<script>alert('Berhasil mengubah password'); location='../../media.php?module=home'</script>";
+				} else {
+					echo "<script>alert('GAGAL'); location='../../media.php?module=home'</script>";
+				}
+			}	
 		}
 
 		break;
