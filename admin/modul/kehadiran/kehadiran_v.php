@@ -89,7 +89,7 @@ if (!isset($_GET['mp']) OR !isset($_GET['kls']) OR empty($_GET['mp']) OR empty($
 											$i++;
 										}
 										echo "<tr>";
-										echo "<td colspan=3>Jumah Hadir</td>";
+										echo "<td colspan=3>Jumlah Hadir</td>";
 										echo "<td>$jhdr[0]</td>";
 										echo "</tr>";
 									} else {
