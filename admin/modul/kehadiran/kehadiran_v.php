@@ -63,7 +63,7 @@ if (!isset($_GET['mp']) OR !isset($_GET['kls']) OR empty($_GET['mp']) OR empty($
 				<div class="col-md-8 col-sm-8 col-xs-12">
 					<div class="panel panel-success">
 						<div class="panel-heading">
-							Daftar Nilai Siswa
+							Daftar Kehadiran Siswa
 						</div>
 						<div class="panel-body">
 							<table class="table table-striped table-bordered table-hover">
