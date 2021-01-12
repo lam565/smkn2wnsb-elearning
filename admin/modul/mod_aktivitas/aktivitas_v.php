@@ -25,12 +25,25 @@ else{
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">ADMIN DASHBOARD | AKTIVITAS PEMBELAJARAN TANGGAL : <?php echo date('Y-m-d'); ?></h4>
+				<?php 
+				$tg2=date("m");
+				$tg3=date("Y");
+				$query2 = $connection->query("
+				SELECT * FROM jurnal,kelas,guru,mapel 
+				where jurnal.kd_guru=guru.kd_guru 
+				and jurnal.kd_mapel=mapel.kd_mapel
+				and jurnal.kd_kelas=kelas.kd_kelas
+				and month(jurnal.tanggal)= '$tg2'		
+				order by id_jurnal DESC"); 
+				$row2 = $query2->fetch_assoc();
+				?>
+				
+                <h4 class="header-line">ADMIN DASHBOARD | AKTIVITAS PEMBELAJARAN BULAN : JANUARI 2021 | <a href="modul/mod_aktivitas/proses.php?bulan=<?php echo $tg2;?>&tahun=<?php echo $tg3;?>"><i class="glyphicon glyphicon-download"></i>DOWNLOAD JURNAL</a></h4>
                 
                             </div>
 
         </div>
-             
+             AKTIVITAS PEMBELAJARAN TANGGAL : <?php echo date('Y-m-d'); ?><hr>
              <div class="row">
             
                 <?php 

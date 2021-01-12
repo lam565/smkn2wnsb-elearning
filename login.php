@@ -79,7 +79,7 @@
 						</div>
                     <br />
                   </form>
-				  
+				  <p><center><font color="red">Lupa password Hubungi Kuriulum!!</font></center></p>
 				</div>
                 </div>
               

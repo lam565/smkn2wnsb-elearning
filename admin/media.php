@@ -59,7 +59,7 @@ if($_SESSION['login']==0){
 
             </a>
 
-        </div>
+        </div><br>
 		
 	
         <div class="right-div">

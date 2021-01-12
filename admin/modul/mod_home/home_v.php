@@ -56,7 +56,7 @@ else{
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Matapelajaran</th>
+                        <th>Mata Pelajaran</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -92,22 +92,10 @@ else{
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel">Tambah Matapelajaran</h4>
+                  <h4 class="modal-title" id="myModalLabel">Tambah Mata Pelajaran</h4>
                 </div>
                 <div class="modal-body">
-                  <div class="form-group">
-                    <label>Matapelajaran</label>
-                    <select class="form-control" name="kd_mapel" id="cbbmapelajar">
-                      <option value="">Pilih Mapel</option>
-                      <?php 
-                      $qmp=mysqli_query($connect,"SELECT kd_mapel,nama_mapel FROM mapel ORDER BY nama_mapel");
-                      while ($mapel=mysqli_fetch_array($qmp)){
-                        echo "<option value='$mapel[kd_mapel]'>$mapel[nama_mapel]</option>";
-                      }
-                      ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
+				 <div class="form-group">
                     <label>Jurusan</label>
                     <select class="form-control" name="kd_jurusan" id="cbbjurusan" data-mapel="">
                       <option value="">Pilih Jurusan</option>
@@ -119,6 +107,19 @@ else{
                       ?>
                     </select>
                   </div>
+                  <div class="form-group">
+                    <label>Mata Pelajaran</label>
+                    <select class="form-control" name="kd_mapel" id="cbbmapelajar">
+                      <option value="">Pilih Mapel</option>
+                      <?php 
+                      $qmp=mysqli_query($connect,"SELECT kd_mapel,nama_mapel FROM mapel ORDER BY nama_mapel");
+                      while ($mapel=mysqli_fetch_array($qmp)){
+                        echo "<option value='$mapel[kd_mapel]'>$mapel[nama_mapel]</option>";
+                      }
+                      ?>
+                    </select>
+                  </div>
+                 
                   <div class="form-group">
                     <label>Kelas</label>
                     <div id="kelasajar"></div>

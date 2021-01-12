@@ -23,13 +23,13 @@ else{
   <?php
   $update = (isset($_GET['action']) AND $_GET['action'] == 'update') ? true : false;
   if ($update) {
-   $sql = $connection->query("SELECT * FROM siswa WHERE nis='$_GET[key]'");
+   $sql = $connection->query("SELECT * FROM siswa,login WHERE siswa.username=login.username and siswa.nis='$_GET[key]'");
    $row = $sql->fetch_assoc();
  }
  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
    if ($update) {
-    $sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]',password='$_POST[password]', 
+    $sql = "UPDATE siswa SET nisn='$_POST[nisn]', nama='$_POST[nama]', username='$_POST[username]', 
     kelamin='$_POST[kelamin]',email='$_POST[email]',telp='$_POST[telp]',
     status='$_POST[status]' WHERE nis='$_GET[key]'";
   } else {
@@ -39,15 +39,19 @@ else{
   }
 
   if ($connection->query($sql)) {
-   $password=md5($_POST['nis']);
-   $tg=date('Y-m-d H:i:s');
-   echo "<script>alert('Berhasil!'); window.location = 'media.php?module=siswa'</script>";
+	  if ($update) {
+		  $sql = "UPDATE login SET password='$_POST[password]' WHERE username='$_POST[username]'";
    
-   $connection->query("INSERT INTO login VALUES ('$_POST[nis]', '$password', 
-    'siswa','$tg','aktif')");
+	 } else {
+		 $password=md5($_POST['nis']);
+		$tg=date('Y-m-d H:i:s');
+		echo "<script>alert('Berhasil!'); window.location = 'media.php?module=siswa'</script>";
+   
+		$connection->query("INSERT INTO login VALUES ('$_POST[nis]', '$password', 
+		'siswa','$tg','aktif')");
 	
-	$connection->query("INSERT INTO rombel VALUES ('$_POST[nis]', '$_POST[kd_kelas]', '$_POST[kd_tajar]')");
-	
+		$connection->query("INSERT INTO rombel VALUES ('$_POST[nis]', '$_POST[kd_kelas]', '$_POST[kd_tajar]')");
+	 }
  } else {
    echo "<script>alert('Gagal!'); window.location = 'media.php?module=siswa'</script>";
  }
@@ -94,6 +98,10 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
       <div class="form-group">
         <label>Username </label>
         <input class="form-control" placeholder="Masukkan Username" name="username" type="text" <?= (!$update) ?: 'value="'.$row["username"].'"' ?>/>
+      </div>
+	  <div class="form-group">
+        <label>Password </label>
+        <input class="form-control" placeholder="Masukkan Password" name="password" type="text" <?= (!$update) ?: 'value="'.$row["password"].'"' ?>/>
       </div>
 	  
       <div class="form-group">
