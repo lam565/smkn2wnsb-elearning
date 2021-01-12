@@ -95,18 +95,6 @@ else{
                   <h4 class="modal-title" id="myModalLabel">Tambah Mata Pelajaran</h4>
                 </div>
                 <div class="modal-body">
-				 <div class="form-group">
-                    <label>Jurusan</label>
-                    <select class="form-control" name="kd_jurusan" id="cbbjurusan" data-mapel="">
-                      <option value="">Pilih Jurusan</option>
-                      <?php 
-                      $qjrs=mysqli_query($connect,"SELECT kd_jurusan,nama_jurusan FROM jurusan ORDER BY nama_jurusan");
-                      while ($jrs=mysqli_fetch_array($qjrs)){
-                        echo "<option value='$jrs[kd_jurusan]'>$jrs[nama_jurusan]</option>";
-                      }
-                      ?>
-                    </select>
-                  </div>
                   <div class="form-group">
                     <label>Mata Pelajaran</label>
                     <select class="form-control" name="kd_mapel" id="cbbmapelajar">
@@ -119,7 +107,19 @@ else{
                       ?>
                     </select>
                   </div>
-                 
+                  <div class="form-group">
+                    <label>Jurusan</label>
+                    <select class="form-control" name="kd_jurusan" id="cbbjurusan" data-mapel="">
+                      <option value="">Pilih Jurusan</option>
+                      <?php 
+                      $qjrs=mysqli_query($connect,"SELECT kd_jurusan,nama_jurusan FROM jurusan ORDER BY nama_jurusan");
+                      while ($jrs=mysqli_fetch_array($qjrs)){
+                        echo "<option value='$jrs[kd_jurusan]'>$jrs[nama_jurusan]</option>";
+                      }
+                      ?>
+                    </select>
+                  </div>
+                  
                   <div class="form-group">
                     <label>Kelas</label>
                     <div id="kelasajar"></div>
