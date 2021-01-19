@@ -47,7 +47,7 @@ else{
 
                         $qmapel="SELECT m.nama_mapel,m.kd_mapel 
                         FROM pengajaran as p, mapel as m 
-                        WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru='$_SESSION[kode]' 
+                        WHERE m.kd_mapel=p.kd_mapel AND p.kd_guru like '%$_SESSION[kode]%' 
                         GROUP BY p.kd_mapel";
 
                         $datamapel=mysqli_query($connect,$qmapel);
@@ -122,9 +122,13 @@ else{
             <tbody>
                 <div id="bag-data">
                     <?php 
-                    $q="SELECT materi.ForL, materi.nama_materi, materi.file, materi.pertemuan, materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas 
+                    $q="SELECT materi.ForL, materi.nama_materi, materi.file, materi.pertemuan, 
+					materi.tgl_up, mapel.nama_mapel, materi.kd_materi, kelas.nama_kelas 
                     FROM materi, pengajaran as p, mapel, kelas 
-                    WHERE p.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=materi.kd_kelas AND p.kd_kelas=kelas.kd_kelas AND materi.kd_guru=p.kd_guru";
+                    WHERE p.kd_mapel=materi.kd_mapel AND materi.kd_mapel=mapel.kd_mapel 
+					AND kelas.kd_kelas=materi.kd_kelas AND p.kd_kelas=kelas.kd_kelas 					
+					and p.kd_guru like '%$_SESSION[kode]%'
+					";
                     $materi=mysqli_query($connect,$q);
                     if (mysqli_num_rows($materi)>0){
                         $n=1;

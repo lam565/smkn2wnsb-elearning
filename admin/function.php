@@ -7,7 +7,7 @@ if (isset($_POST['act'])) {
 		$kd_guru=$_POST['kdg'];
 		$q="SELECT kelas.kd_kelas, kelas.nama_kelas 
 		FROM pengajaran as p, kelas, mapel
-		WHERE p.kd_kelas=kelas.kd_kelas AND p.kd_mapel=mapel.kd_mapel AND mapel.kd_mapel='$mapel' AND p.kd_guru='$kd_guru'";
+		WHERE p.kd_kelas=kelas.kd_kelas AND p.kd_mapel=mapel.kd_mapel AND mapel.kd_mapel='$mapel' AND p.kd_guru like '%$kd_guru%'";
 
 		$kelas = "<div class=\"form-group\">";
 		$qkls=mysqli_query($connect, $q);
@@ -104,7 +104,10 @@ if (isset($_POST['act'])) {
 		$guru=$_POST['gru'];
 
 		$output="";
-		$qwr=mysqli_query($connect,"SELECT kelas.tingkat,jurusan.nama_jurusan,jurusan.kd_jurusan FROM pengajaran,kelas,jurusan WHERE pengajaran.kd_kelas=kelas.kd_kelas AND kelas.kd_jurusan=jurusan.kd_jurusan AND pengajaran.kd_mapel='$mapel' AND pengajaran.kd_guru LIKE '%$guru%' GROUP BY kelas.tingkat");
+		$qwr=mysqli_query($connect,"SELECT kelas.tingkat,jurusan.nama_jurusan,jurusan.kd_jurusan 
+		FROM pengajaran,kelas,jurusan WHERE pengajaran.kd_kelas=kelas.kd_kelas 
+		AND kelas.kd_jurusan=jurusan.kd_jurusan AND pengajaran.kd_mapel='$mapel' 
+		AND pengajaran.kd_guru LIKE '%$guru%' GROUP BY kelas.kd_jurusan");
 
 		while ($rsl=mysqli_fetch_array($qwr)) {
 			$tingkat_jurusan=$rsl['tingkat']."-".$rsl['kd_jurusan'];

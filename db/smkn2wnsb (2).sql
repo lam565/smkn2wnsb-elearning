@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 30 Des 2020 pada 06.51
+-- Generation Time: 13 Jan 2021 pada 03.07
 -- Versi Server: 5.6.21-log
 -- PHP Version: 5.6.3
 
@@ -19,6 +19,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `smkn2wnsb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `absensi`
+--
+
+CREATE TABLE IF NOT EXISTS `absensi` (
+`kd_absensi` int(11) NOT NULL,
+  `nis` varchar(10) NOT NULL,
+  `tgl_absensi` datetime NOT NULL,
+  `kd_kelas` varchar(10) NOT NULL,
+  `kd_mapel` varchar(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `absensi`
+--
+
+INSERT INTO `absensi` (`kd_absensi`, `nis`, `tgl_absensi`, `kd_kelas`, `kd_mapel`) VALUES
+(2, '8170', '2021-01-13 04:23:02', 'xakl1', 'bind');
 
 -- --------------------------------------------------------
 
@@ -56,7 +77,8 @@ INSERT INTO `detail_soal` (`kd_detail_soal`, `kd_soal`, `soal`, `pil_A`, `pil_B`
 ('442020GR089007', '142020GR089001', 'Pertanyaan 7', 'Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D', 'Pilihan E', 'a', NULL, 'T', '-', '-'),
 ('442020GR089008', '142020GR089001', 'Pertanyaan 8', 'Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D', 'Pilihan E', 'a', NULL, 'T', '-', '-'),
 ('442020GR089009', '142020GR089001', 'Pertanyaan 9', 'Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D', 'Pilihan E', 'a', NULL, 'T', '-', '-'),
-('442020GR089010', '142020GR089001', 'Pertanyaan 10', 'Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D', 'Pilihan E', 'a', NULL, 'T', '-', '-');
+('442020GR089010', '142020GR089001', 'Pertanyaan 10', 'Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D', 'Pilihan E', 'a', NULL, 'T', '-', '-'),
+('442021GR090001', '142021GR090001', 'abcd', 'a', 'b', 'c', 'd', 'e', 'a', NULL, 'T', '-', '-');
 
 -- --------------------------------------------------------
 
@@ -188,18 +210,18 @@ CREATE TABLE IF NOT EXISTS `jurnal` (
   `jam_ke` int(11) NOT NULL,
   `kd_guru` varchar(20) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
+  `kd_kelas` varchar(10) NOT NULL,
   `judul_materi` varchar(100) NOT NULL,
   `jml_siswa` int(11) NOT NULL,
   `nm_siswa_tdhdr` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `jurnal`
 --
 
-INSERT INTO `jurnal` (`id_jurnal`, `tanggal`, `jam_ke`, `kd_guru`, `kd_mapel`, `judul_materi`, `jml_siswa`, `nm_siswa_tdhdr`) VALUES
-(3, '2020-12-29', 4, 'GR090', 'bing', 'abc', 2, ''),
-(4, '2020-12-29', 1, 'GR090', 'ppkn', 'materi 1', 10, '');
+INSERT INTO `jurnal` (`id_jurnal`, `tanggal`, `jam_ke`, `kd_guru`, `kd_mapel`, `kd_kelas`, `judul_materi`, `jml_siswa`, `nm_siswa_tdhdr`) VALUES
+(8, '2021-01-13', 1, 'GR090', 'mtk', 'xdpib1', 'materi 122', 22, 'ASQW					');
 
 -- --------------------------------------------------------
 
@@ -313,7 +335,8 @@ INSERT INTO `komentar` (`id_komentar`, `penulis_komentar`, `isi_komentar`, `tang
 (0, 'smkwsb91', 'ok 3', '11:22 18/12/2020', 4, '', 'smkwsb91', 1),
 (0, 'smkwsb91', 'ok 4', '11:22 18/12/2020', 4, '', 'smkwsb91', 1),
 (0, '8170', 'baik pak ibu guru', '11:23 18/12/2020', 4, '', 'smkwsb91', 1),
-(0, 'smkwsb91', 'hai', '17:49 29/12/2020', 4, '', 'smkwsb91', 1);
+(0, 'smkwsb91', 'hai', '17:49 29/12/2020', 4, '', 'smkwsb91', 1),
+(0, 'smkwsb91', 'hai', '12:05 12/01/2021', 5, '', 'smkwsb91', 1);
 
 -- --------------------------------------------------------
 
@@ -529,7 +552,8 @@ INSERT INTO `materi` (`kd_materi`, `nama_materi`, `deskripsi`, `ForL`, `file`, `
 ('012020GR089001', 'BIND 1', 'Descripsi', 'file', '13-44-1-PB_47116088.pdf', '2020-12-29 18:59:54', '1', 'bing', 'xakl1', 'GR089'),
 ('012020GR090002', 'Listening', 'Listening Section', 'link', 'https://youtube.com', '2020-12-16 05:35:51', '3', 'bing', 'xakl1', 'GR090'),
 ('012020GR090003', 'Prohibition', 'Integer ultrices lobortis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin semper, ante vitae sollicitudin posuere, metus quam iaculis nibh, vitae scelerisque nunc massa eget pede.', 'file', 'prohibition_76831564.pdf', '2020-12-16 08:45:49', '1 dan 2', 'bing', 'xakl1', 'GR090'),
-('012020GR090004', 'reading', 'belajar materi reading', 'file', 'Model dan Corak Perhiasan Perak Bali_36907958.pdf', '2020-12-18 06:46:34', '4', 'bing', 'xakl1', 'GR090');
+('012020GR090004', 'reading', 'belajar materi reading', 'file', 'Model dan Corak Perhiasan Perak Bali_36907958.pdf', '2020-12-18 06:46:34', '4', 'bing', 'xakl1', 'GR090'),
+('012021GR090001', 'reading', 'a', 'link', 'www.smkwsb.com', '2021-01-12 11:51:32', '1', 'mtk', 'xdpib1', 'GR090');
 
 -- --------------------------------------------------------
 
@@ -569,17 +593,15 @@ CREATE TABLE IF NOT EXISTS `pengajaran` (
   `kd_kelas` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL,
   `kd_silabus` varchar(30) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pengajaran`
 --
 
 INSERT INTO `pengajaran` (`kd_pengajaran`, `kd_mapel`, `kd_kelas`, `kd_guru`, `kd_silabus`) VALUES
-(3, 'bind', 'xakl1', 'GR036', '1'),
-(4, 'bind', 'xan1', 'GR036', '1'),
-(7, 'ppkn', 'xakl1', 'GR090', '042020GR090006'),
-(8, 'bing', 'xakl1', 'GR089', '042020GR089001');
+(10, 'bind', 'xakl1', 'GR090', '1'),
+(11, 'bing', 'xakl1', 'GR090', '1');
 
 -- --------------------------------------------------------
 
@@ -598,7 +620,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `suka_post` int(10) NOT NULL,
   `laporkan` varchar(20) NOT NULL,
   `tgl_lapor` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `post`
@@ -608,7 +630,8 @@ INSERT INTO `post` (`id_post`, `kd_pengajaran`, `judul_post`, `isi_post`, `penul
 (1, 2, 'j', '<p>k</p>\r\n', '8170', '3:50 17/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
 (2, 2, 'o', '<p>p</p>\r\n', '8170', '3:51 17/12/2020', '', 0, '0', '0000-00-00 00:00:00'),
 (3, 2, 'test', '<p>test</p>\r\n', '8170', '20:59 17/12/2020', '', 1, '0', '0000-00-00 00:00:00'),
-(4, 7, 'selamat pagi siswa', '<p>coba 1</p>\r\n', 'smkwsb91', '11:20 18/12/2020', '20201218_112051daftar_soal.JPG', 1, '0', '0000-00-00 00:00:00');
+(4, 7, 'selamat pagi siswa', '<p>coba 1</p>\r\n', 'smkwsb91', '11:20 18/12/2020', '20201218_112051daftar_soal.JPG', 1, '0', '0000-00-00 00:00:00'),
+(5, 9, 'test', '<p>s</p>\r\n', 'smkwsb91', '12:05 12/01/2021', '', 0, '0', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -628,7 +651,9 @@ CREATE TABLE IF NOT EXISTS `rombel` (
 
 INSERT INTO `rombel` (`nis`, `kd_kelas`, `kd_tajar`) VALUES
 ('8170', 'xakl1', '2020-2021-ganjil'),
-('8168', 'xakl1', '2020-2021-ganjil');
+('8168', 'xakl1', '2020-2021-ganjil'),
+('8169', 'xakl1', '2020-2021-ganjil'),
+('8171', 'xakl1', '2020-2021-ganjil');
 
 -- --------------------------------------------------------
 
@@ -651,7 +676,6 @@ CREATE TABLE IF NOT EXISTS `silabus` (
 --
 
 INSERT INTO `silabus` (`kd_silabus`, `kd_mapel`, `kd_jurusan`, `tingkat`, `judul`, `nama_file`, `tanggal_upload`) VALUES
-('042020GR089001', 'bing', 'akl', 'X', 'Silabus Bing X Akl', 'bing_X_akl.doc', '2020-12-29 18:57:01'),
 ('1', 'default', 'default', 'defaut', 'Belum Upload Silabus', 'silabus-default.pdf', '2020-12-14 00:00:00');
 
 -- --------------------------------------------------------
@@ -731,7 +755,8 @@ CREATE TABLE IF NOT EXISTS `soal` (
 --
 
 INSERT INTO `soal` (`kd_soal`, `nama_soal`, `acak`, `kd_mapel`, `kd_guru`) VALUES
-('142020GR089001', 'Soal Bhs Ing', 'T', 'bing', 'GR089');
+('142020GR089001', 'Soal Bhs Ing', 'T', 'bing', 'GR089'),
+('142021GR090001', 'ppkn1', 'T', 'ppkn', 'GR090');
 
 -- --------------------------------------------------------
 
@@ -792,7 +817,7 @@ CREATE TABLE IF NOT EXISTS `timeline` (
   `kd_kelas` varchar(10) NOT NULL,
   `kd_mapel` varchar(10) NOT NULL,
   `kd_guru` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `timeline`
@@ -809,7 +834,10 @@ INSERT INTO `timeline` (`id_timeline`, `jenis`, `id_jenis`, `waktu`, `kd_kelas`,
 (10, 'ujian', '072020GR090002', '2020-12-18 07:00:00', 'xakl1', 'bing', 'GR090'),
 (13, 'ujian', '072020GR090003', '2020-12-18 11:11:51', 'xakl1', 'ppkn', 'GR090'),
 (14, 'materi', '012020GR089001', '2020-12-29 18:59:54', 'xakl1', 'bing', 'GR089'),
-(15, 'ujian', '072020GR089001', '2020-12-29 19:06:18', 'xakl1', 'bing', 'GR089');
+(15, 'ujian', '072020GR089001', '2020-12-29 19:06:18', 'xakl1', 'bing', 'GR089'),
+(16, 'tugas', '022021GR090001', '2021-01-12 11:46:14', 'xdpib1', 'mtk', 'GR090'),
+(17, 'materi', '012021GR090001', '2021-01-12 11:51:32', 'xdpib1', 'mtk', 'GR090'),
+(18, 'ujian', '072021GR090001', '2021-01-13 03:23:45', 'xakl1', 'ppkn', 'GR090');
 
 -- --------------------------------------------------------
 
@@ -837,7 +865,8 @@ CREATE TABLE IF NOT EXISTS `tugas` (
 INSERT INTO `tugas` (`kd_tugas`, `nama_tugas`, `deskripsi`, `batas_awal`, `batas_ahir`, `file`, `tgl_up`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
 ('022020GR090001', 'Tugas 1', 'Integer ultrices lobortis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin semper, ante vitae sollicitudin posuere, metus quam iaculis nibh, vitae scelerisque nunc massa eget pede. Sed velit urna, interdum vel, ultricies vel, faucibus at, quam. Donec elit est, consectetuer eget, consequat quis, tempus quis, wisi.', '2020-12-16 08:00:00', '2020-12-17 23:59:00', 'Tugas 1_83469434.pdf', '2020-12-16 06:07:49', 'xakl1', 'bing', 'GR090'),
 ('022020GR090002', 'Tugas 2', 'silahkan dikerjakan', '2020-12-18 06:48:00', '2020-12-18 06:48:00', 'Tugas 2_38766479.pdf', '2020-12-18 06:48:46', 'xakl1', 'bing', 'GR090'),
-('022020GR090003', 'Tugas 3', 'dikerjakan', '2020-12-18 06:51:00', '2020-12-18 07:51:00', 'Tugas 3_77841186.pdf', '2020-12-18 06:51:35', 'xakl1', 'bing', 'GR090');
+('022020GR090003', 'Tugas 3', 'dikerjakan', '2020-12-18 06:51:00', '2020-12-18 07:51:00', 'Tugas 3_77841186.pdf', '2020-12-18 06:51:35', 'xakl1', 'bing', 'GR090'),
+('022021GR090001', 'tugas1', 'ok', '2021-01-12 05:45:00', '2021-01-14 11:46:00', 'tugas1_90667724.png', '2021-01-12 11:46:14', 'xdpib1', 'mtk', 'GR090');
 
 -- --------------------------------------------------------
 
@@ -866,7 +895,8 @@ CREATE TABLE IF NOT EXISTS `ujian` (
 
 INSERT INTO `ujian` (`kd_ujian`, `nama_ujian`, `deskripsi`, `tgl_ujian`, `tgl_ahir`, `jam`, `menit`, `detik`, `kd_soal`, `kd_kelas`, `kd_mapel`, `kd_guru`) VALUES
 ('072020GR090001', 'Ujian Matematika', 'Ujian MTK', '2020-12-28 22:10:00', '2020-12-28 23:10:00', 1, 0, 0, '142020GR090001', 'xakl1', 'mtk', 'GR090'),
-('072020GR089001', 'Ujian Bahasa Inggris 1', 'aksdalksjdaladasdjladsad', '2020-12-29 07:05:00', '2020-12-29 22:06:00', 1, 0, 0, '142020GR089001', 'xakl1', 'bing', 'GR089');
+('072020GR089001', 'Ujian Bahasa Inggris 1', 'aksdalksjdaladasdjladsad', '2020-12-29 07:05:00', '2020-12-29 22:06:00', 1, 0, 0, '142020GR089001', 'xakl1', 'bing', 'GR089'),
+('072021GR090001', 'uj_ppkn', 'semangat', '2021-01-13 04:23:00', '2021-01-14 04:23:00', 1, 10, 0, '142021GR090001', 'xakl1', 'ppkn', 'GR090');
 
 -- --------------------------------------------------------
 
@@ -884,6 +914,12 @@ CREATE TABLE IF NOT EXISTS `wali_kelas` (
 --
 
 --
+-- Indexes for table `absensi`
+--
+ALTER TABLE `absensi`
+ ADD PRIMARY KEY (`kd_absensi`);
+
+--
 -- Indexes for table `detail_soal`
 --
 ALTER TABLE `detail_soal`
@@ -899,7 +935,7 @@ ALTER TABLE `guru`
 -- Indexes for table `jurnal`
 --
 ALTER TABLE `jurnal`
- ADD PRIMARY KEY (`id_jurnal`), ADD KEY `kd_guru` (`kd_guru`,`kd_mapel`);
+ ADD PRIMARY KEY (`id_jurnal`), ADD KEY `kd_guru` (`kd_guru`,`kd_mapel`), ADD KEY `kd_kelas` (`kd_kelas`);
 
 --
 -- Indexes for table `jurusan`
@@ -990,25 +1026,30 @@ ALTER TABLE `timeline`
 --
 
 --
+-- AUTO_INCREMENT for table `absensi`
+--
+ALTER TABLE `absensi`
+MODIFY `kd_absensi` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `jurnal`
 --
 ALTER TABLE `jurnal`
-MODIFY `id_jurnal` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id_jurnal` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `pengajaran`
 --
 ALTER TABLE `pengajaran`
-MODIFY `kd_pengajaran` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `kd_pengajaran` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-MODIFY `id_post` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id_post` int(200) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `timeline`
 --
 ALTER TABLE `timeline`
-MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
