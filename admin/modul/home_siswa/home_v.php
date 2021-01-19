@@ -74,7 +74,9 @@ if ($rombel=="NULL") {
               <a href='?module=tugas&mp=$rmp[kd_mapel]' class='btn btn-primary btn-sm'>Tugas</a>
               <a href='?module=nilai&mp=$rmp[kd_mapel]' class='btn btn-primary btn-sm'>Nilai</a>";
 
-              $cekabsensi = mysqli_query($connect,"SELECT kd_absensi FROM absensi WHERE nis='$nis' AND kd_kelas='$kode_kelas' AND kd_mapel='$rmp[kd_mapel]'");
+              date_default_timezone_set("Asia/Bangkok");
+              $tglnow = date("Y-m-d");
+              $cekabsensi = mysqli_query($connect,"SELECT kd_absensi FROM absensi WHERE nis='$nis' AND kd_kelas='$kode_kelas' AND kd_mapel='$rmp[kd_mapel]' AND tgl_absensi LIKE '$tglnow%'");
               $sudahabsen = mysqli_num_rows($cekabsensi);
 
               if ($sudahabsen > 0) {

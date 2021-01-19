@@ -351,6 +351,9 @@ else {
                                         $qsoal="SELECT ujian.nama_ujian,mapel.nama_mapel,kelas.nama_kelas,ujian.tgl_ujian,ujian.kd_soal,ujian.kd_ujian,ujian.tgl_ahir
                                         FROM ujian,mapel,kelas
                                         WHERE ujian.kd_mapel=mapel.kd_mapel AND ujian.kd_kelas=kelas.kd_kelas AND ujian.kd_guru='$_SESSION[kode]'";
+                                        if ( isset($_GET['mp']) AND isset($_GET['kls'])){
+                                            $qsoal .= " AND ujian.kd_mapel='$_GET[mp]' AND ujian.kd_kelas='$_GET[kls]'";
+                                        }
                                         $esoal=mysqli_query($connect,$qsoal);
                                         $num=mysqli_num_rows($esoal);
 
