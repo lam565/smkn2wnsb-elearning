@@ -208,9 +208,9 @@ else{
               <i class=\"fa fa-book fa-5x\"></i>
               <p>$rkur[nama_mapel]</p>
               <h3>$rkur[nama_kelas]</h3>
-              <p><a class='btn btn-xs btn-info form-control' href='?module=materi&mp=$rkur[kd_mapel]'> Materi </a></p>
-              <p><a class='btn btn-xs btn-info form-control' href='?module=tugas&mp=$rkur[kd_mapel]'> Tugas </a></p>
-              <p><a class='btn btn-xs btn-info form-control' href='?module=ujian&mp=$rkur[kd_mapel]'> Ujian </a></p>
+              <p><a class='btn btn-xs btn-info form-control' href='?module=materi&mp=$rkur[kd_mapel]&kls=$rkur[kd_kelas]'> Materi </a></p>
+              <p><a class='btn btn-xs btn-info form-control' href='?module=tugas&mp=$rkur[kd_mapel]&kls=$rkur[kd_kelas]'> Tugas </a></p>
+              <p><a class='btn btn-xs btn-info form-control' href='?module=ujian&mp=$rkur[kd_mapel]&kls=$rkur[kd_kelas]'> Ujian </a></p>
               <p><a class='btn btn-xs btn-info form-control' href='?module=absensi&mp=$rkur[kd_mapel]&kls=$rkur[kd_kelas]'> Absensi </a></p>
               </div>
               </div>";
