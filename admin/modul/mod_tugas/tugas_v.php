@@ -191,7 +191,12 @@ else{
                 }
                 $q="SELECT tugas.nama_tugas, tugas.file, tugas.batas_ahir, tugas.tgl_up, mapel.nama_mapel, tugas.kd_tugas, tugas.deskripsi, kelas.nama_kelas 
                 FROM tugas, pengajaran as p, mapel, kelas 
-                WHERE p.kd_mapel=tugas.kd_mapel AND tugas.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=tugas.kd_kelas AND p.kd_kelas=kelas.kd_kelas AND tugas.kd_guru=p.kd_guru ";
+                WHERE p.kd_mapel=tugas.kd_mapel AND tugas.kd_mapel=mapel.kd_mapel AND kelas.kd_kelas=tugas.kd_kelas AND p.kd_kelas=kelas.kd_kelas AND p.kd_guru LIKE '%$_SESSION[kode]%'";
+                
+                if ( isset($_GET['mp']) AND isset($_GET['kls'])){
+                        $q .= " AND tugas.kd_mapel='$_GET[mp]' AND tugas.kd_kelas='$_GET[kls]'";
+                    }
+
                 $tugas=mysqli_query($connect,$q);
                 if (mysqli_num_rows($tugas)>0){
                     $n=1;
