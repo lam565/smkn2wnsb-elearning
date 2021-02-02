@@ -63,18 +63,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
      <div class="panel-body text-center recent-users-sec">
       <form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" role="form">
 
-       <div class="form-group">
-        <label>Kode Kelas</label>
-        <input class="form-control" placeholder="Masukkan Kode Kelas" name="kd_kelas" type="text" <?= (!$update) ?: 'value="'.$row["kd_kelas"].'"' ?>/>
-      </div>
-
-
-      <div class="form-group">
-        <label>Nama Kelas </label>
-        <input class="form-control" placeholder="Masukkan Nama Kelas" name="nama_kelas" type="text" <?= (!$update) ?: 'value="'.$row["nama_kelas"].'"' ?>/>
-      </div>
-
-      <div class="form-group">
+        <div class="form-group">
         <label>Tingkat </label>
         <select class="form-control" name="tingkat">
           <option value="T">--Pilih Tingkat--</option>
@@ -110,9 +99,18 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
     </select>
   </div>
 
+       <div class="form-group">
+        <label>Kode Kelas</label>
+        <input class="form-control" placeholder="Masukkan Kode Kelas" name="kd_kelas" type="text" <?= (!$update) ?: 'value="'.$row["kd_kelas"].'"' ?>/>
+      </div>
 
 
+      <div class="form-group">
+        <label>Nama Kelas </label>
+        <input class="form-control" placeholder="Masukkan Nama Kelas" name="nama_kelas" type="text" <?= (!$update) ?: 'value="'.$row["nama_kelas"].'"' ?>/>
+      </div>
 
+      
   <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>
   <?php if ($update): ?>
     <a href="?module=akun" class="btn btn-info btn-block">Batal</a>
@@ -133,7 +131,6 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
       <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
           <tr>
-            <th>#</th>
             <th>No</th>
             <th>Kode Kelas</th>
             <th>Nama Kelas</th>
@@ -147,9 +144,8 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
          <?php if ($query = $connection->query("SELECT * FROM kelas,jurusan where kelas.kd_jurusan=jurusan.kd_jurusan")): ?>
            <?php while($row = $query->fetch_assoc()): ?>
             <tr>
-              <td></td>
               <td><?=$no++?></td>
-              <td><?=$row['kd_kelas']?></td>
+              <td><?=$row['kd_kelas']?> <br><a href="?module=rombel&kls=<?=$row['kd_kelas']?>" class="btn btn-xs btn-info">Lihat</a> </td>
               <td><?=$row['nama_kelas']?></td>
               <td><?=$row['tingkat']?></td>
               <td><?=$row['nama_jurusan']?></td>

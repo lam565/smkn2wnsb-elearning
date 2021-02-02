@@ -189,6 +189,13 @@ if($_SESSION['login']==0){
             $('#cbbjurusan').attr('data-mapel',mapel)
         });
 
+        $(document).on('change', '#cbbkls', function(){
+            var kd_kelas = $(this).val();
+            var lokasi = "?module=rombel&kls="+kd_kelas;
+
+            $(location).attr('href', lokasi);
+        });
+
         $(document).on('change', '#cbbmapelsil', function(){
             var mapel = $(this).val();
             var kd_guru = $(this).attr('data-guru');
