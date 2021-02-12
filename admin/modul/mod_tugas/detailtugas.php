@@ -38,7 +38,7 @@ else{
 				<div class="col-md-6 col-sm-6 col-xs-12">
 					<div class="panel panel-success">
 						<div class="panel-heading">
-							DAFTAR SISWA
+							DAFTAR SISWA | <a href="modul/mod_tugas/proses_tugas.php?kd=<?=$_GET['kd'];?>" class="btn btn-primary"><i class="glyphicon glyphicon-download"></i></a></a>
 						</div>
 						<div class="panel-body">
 							<div class="table-responsive">

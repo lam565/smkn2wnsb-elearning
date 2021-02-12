@@ -274,7 +274,7 @@ if($_SESSION['login']==0){
         });
 
         $("#fileupload").change(function () {
-            var fileExtension = ['pdf','jpeg', 'jpg', 'png'];
+            var fileExtension = ['pdf','jpeg', 'jpg', 'png', 'ppt', 'docx', 'xlsx' ,'pptx', 'mp4', 'rar'];
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                 $(this).val('');
                 $(".warningnya").html("Ekstensi file harus: "+fileExtension.join(', '));
@@ -284,7 +284,7 @@ if($_SESSION['login']==0){
         });
 
         $("#filemateri").change(function () {
-            var fileExtension = ['pdf','jpeg', 'jpg', 'png', 'ppt', 'docx', 'xlsx' ,'pptx', 'mp4'];
+            var fileExtension = ['pdf','jpeg', 'jpg', 'png', 'ppt', 'docx', 'xlsx' ,'pptx', 'mp4', 'rar'];
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                 $(this).val('');
                 $(".warningnya").html("Ekstensi file harus: "+fileExtension.join(', '));

@@ -12,7 +12,7 @@
 <!-- CSS/ -->
 
 <?php
-
+include "config.php";
 
 if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION['login']==0){
     echo "<script>alert('Kembalilah Kejalan yg benar!!!'); window.location = '../../index.php';</script>";
@@ -20,7 +20,29 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 else{
 
     ?>
-
+<?php
+  $update = (isset($_GET['action']) AND $_GET['action'] == 'update') ? true : false;
+  if ($update) {
+   $sql = $connection->query("SELECT * FROM materi WHERE kd_materi='$_GET[key]'");
+   $row = $sql->fetch_assoc();
+ }
+ if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   if ($update) {
+    $sql = "UPDATE kelas SET nama_kelas='$_POST[nama_kelas]',tingkat='$_POST[tingkat]',kd_jurusan='$_POST[kd_jurusan]' WHERE kd_kelas='$_GET[key]'";
+  } else {
+    $sql = "INSERT INTO kelas VALUES ('$_POST[kd_kelas]', '$_POST[nama_kelas]', '$_POST[tingkat]', '$_POST[kd_jurusan]')";
+  }
+  if ($connection->query($sql)) {
+    echo "<script>alert('Berhasil'); window.location = 'media.php?module=kelas'</script>";
+  } else {
+    echo "<script>alert('Gagal'); window.location = 'media.php?module=kelas'</script>";
+  }
+}
+if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
+  $connection->query("DELETE FROM kelas WHERE kd_kelas='$_GET[key]'");
+  echo "<script>alert('Berhasil'); window.location = 'media.php?module=kelas'</script>";
+}
+?>
 
     <div class="content-wrapper">
      <div class="container">
@@ -33,12 +55,12 @@ else{
         </div>
         <div class="row">
          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="panel panel-default">
+            <div class="panel panel-<?= ($update) ? "warning" : "info" ?>">
                 <div class="panel-heading">
-                   Upload Materi
+                 <?= ($update) ? "EDIT" : "TAMBAH" ?>  Upload Materi
                </div>
                <div class="panel-body text-center recent-users-sec">
-                <form role="form" name="fupmateri" method="POST" action="modul/mod_materi/simpan_materi.php" enctype="multipart/form-data">
+                <form role="form" name="fupmateri" method="POST" action="<?=$_SERVER['REQUEST_URI']?>" enctype="multipart/form-data">
                  <div class="form-group">
                     <label>Mata Pelajaran</label>
                     <select name="mapel" class="form-control" id="cbbmapel" data-guru="<?php echo $_SESSION['kode'] ?>">
@@ -51,8 +73,9 @@ else{
                         GROUP BY p.kd_mapel";
 
                         $datamapel=mysqli_query($connect,$qmapel);
-                        while ($mapel=mysqli_fetch_array($datamapel)){
-                            echo "<option value='$mapel[kd_mapel]'>$mapel[nama_mapel]</option>";
+                        while ($mapel=mysqli_fetch_array($datamapel)){?>
+                            <option value="<?=$mapel["kd_mapel"]?>" <?= (!$update) ?: (($mapel["kd_mapel"] != $mapel["kd_mapel"]) ?: 'selected="on"') ?>><?=$mapel["kd_mapel"]?></option>
+						<?php
                         }
 
                         ?>
@@ -64,15 +87,15 @@ else{
                 </div>
                 <div class="form-group">
                     <label>Pertemuan ke</label>
-                    <input class="form-control" type="text" name="pertemuan" required="" />
+                    <input class="form-control" type="text" name="pertemuan" required="" <?= (!$update) ?: 'value="'.$row["pertemuan"].'"' ?>/>
                 </div>
                 <div class="form-group">
                     <label>Judul</label>
-                    <input class="form-control" type="text" name="nama_materi" required="" />
+                    <input class="form-control" type="text" name="nama_materi" required="" <?= (!$update) ?: 'value="'.$row["nama_materi"].'"' ?>/>
                 </div>
                 <div class="form-group">
                     <label>Deskripsi</label>
-                    <textarea class="form-control" name="deskripsi" rows="3" required="" ></textarea>
+                    <textarea class="form-control" name="deskripsi" rows="3" required="" ><?= (!$update) ?: ''.$row["deskripsi"].'' ?></textarea>
                 </div>
                 <div class="form-group">
                     <label>File Atau Link</label>
@@ -153,7 +176,7 @@ else{
                             }
                             
                             echo "<td>$rmateri[tgl_up]</td>
-                            <td><a href='modul/mod_materi/hapus_materi.php?id=$rmateri[kd_materi]' class='btn btn-warning btn-xs' onclick='return confirm(\"Yakin Hapus?\")'>Hapus<a></td>
+                            <td> <a href='?module=materi&action=update&key=$rmateri[kd_materi]' class='btn btn-warning btn-xs'>Edit</a> | <a href='modul/mod_materi/hapus_materi.php?id=$rmateri[kd_materi]' class='btn btn-warning btn-xs' onclick='return confirm(\"Yakin Hapus?\")'>Hapus<a></td>
 
                             </tr>";
                             $n++;

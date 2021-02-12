@@ -30,14 +30,25 @@ else{
  if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if ($update) {
     $sql = "UPDATE tahun_ajar SET tahun_ajar='$_POST[tahun_ajar]',kd_semester='$_POST[kd_semester]' WHERE kd_tajar='$_GET[key]'";
-  } else {
-    $sql = "INSERT INTO tahun_ajar VALUES ('$_POST[kd_tajar]', '$_POST[tahun_ajar]', '$_POST[kd_semester]', 'N')";
-  }
-  if ($connection->query($sql)) {
+	if ($connection->query($sql)) {
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
   } else {
     echo "<script>alert('Gagal'); window.location = 'media.php?module=tahun'</script>";
   }
+  } else {
+	  for ($smt=1;$smt<=2;$smt++){
+		  $hsmt = $smt==1 ? "ganjil" : "genap";
+		  $kd = $_POST[tahun_ajar]."-".$hsmt;
+		  $sql = "INSERT INTO tahun_ajar VALUES ('$kd', '$_POST[tahun_ajar]', '$smt', 'N')";
+		  if ($connection->query($sql)) {
+    echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
+  } else {
+    echo "<script>alert('Gagal'); window.location = 'media.php?module=tahun'</script>";
+  }
+	  }
+    
+  }
+  
 }
 if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
   $connection->query("DELETE FROM tahun_ajar WHERE kd_tajar='$_GET[key]'");
@@ -129,21 +140,28 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
      <div class="panel-body text-center recent-users-sec">
       <form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" role="form">
 
-       <div class="form-group">
-        <label>ID</label>
-        <input class="form-control" name="kd_tajar"  type="text" <?= (!$update) ?: 'value="'.$row["kd_tajar"].'"' ?>/>
-      </div>
+       
 
 
       <div class="form-group">
         <label>Tahun Ajar </label>
-        <input class="form-control" name="tahun_ajar" placeholder="Masukkan Tahun Ajar" type="text" <?= (!$update) ?: 'value="'.$row["tahun_ajar"].'"' ?>/>
-      </div>
+		<select name="tahun_ajar" class="form-control">
+		<?php 
+			$tahun = date("Y");
+			for ($i=0;$i<=5;$i++){
+				$tahun1 = $tahun+$i;
+				$tahun2 =  $tahun+$i+1;
+				$tahun_ajaran = $tahun1."-".$tahun2;
+				?>
+					<option value="<?= $tahun_ajaran; ?>"><?= $tahun_ajaran; ?></option>						
+					
+				<?php 
+			}
+		?>
+		</select>
+        </div>
 
-      <div class="form-group">
-        <label>Semester </label>
-        <input class="form-control" name="kd_semester"  placeholder="Masukkan Semester" type="text" <?= (!$update) ?: 'value="'.$row["kd_semester"].'"' ?>/>
-      </div>
+     
 
 
       <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>

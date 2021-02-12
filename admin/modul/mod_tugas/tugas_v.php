@@ -213,7 +213,7 @@ else{
                         echo "<td>$jb </td>";
                         echo "<td>$jk </td>";
                         echo "<td>$jn </td>
-                        <td><a href='modul/mod_tugas/aksi.php?act=del&id=$rtugas[kd_tugas]'>Hapus</a> | <a href='?module=tugas&eid=$rtugas[kd_tugas]'>Edit</a> | <a href='?module=detailtugas&kd=$rtugas[kd_tugas]'>Penilaian</a></td>
+                        <td><a href='modul/mod_tugas/aksi.php?act=del&id=$rtugas[kd_tugas]'>Hapus</a> | <a href='?module=tugas&eid=$rtugas[kd_tugas]'>Edit</a> | <a href='?module=detailtugas&kd=$rtugas[kd_tugas]'>Penilaian</a>  </td>
                         </tr>";
                         ?>
                         <div class="modal fade" id="myModal<?php echo $rtugas['kd_tugas']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
