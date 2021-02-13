@@ -30,28 +30,29 @@ else{
  if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if ($update) {
     $sql = "UPDATE tahun_ajar SET tahun_ajar='$_POST[tahun_ajar]',kd_semester='$_POST[kd_semester]' WHERE kd_tajar='$_GET[key]'";
-	if ($connection->query($sql)) {
-    echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
+    if ($connection->query($sql)) {
+      echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
+    } else {
+      echo "<script>alert('Gagal'); window.location = 'media.php?module=tahun'</script>";
+    }
   } else {
-    echo "<script>alert('Gagal'); window.location = 'media.php?module=tahun'</script>";
+   for ($smt=1;$smt<=2;$smt++){
+    $hsmt = $smt==1 ? "ganjil" : "genap";
+    $kd = $_POST['tahun_ajar']."-".$hsmt;
+    $sql = "INSERT INTO tahun_ajar VALUES ('$kd', '$_POST[tahun_ajar]', '$smt', 'N')";
+    if ($connection->query($sql)) {
+      echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
+    } else {
+      echo "<script>alert('Gagal'); window.location = 'media.php?module=tahun'</script>";
+    }
   }
-  } else {
-	  for ($smt=1;$smt<=2;$smt++){
-		  $hsmt = $smt==1 ? "ganjil" : "genap";
-		  $kd = $_POST[tahun_ajar]."-".$hsmt;
-		  $sql = "INSERT INTO tahun_ajar VALUES ('$kd', '$_POST[tahun_ajar]', '$smt', 'N')";
-		  if ($connection->query($sql)) {
-    echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
-  } else {
-    echo "<script>alert('Gagal'); window.location = 'media.php?module=tahun'</script>";
-  }
-	  }
-    
-  }
-  
+
+}
+
 }
 if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
-  $connection->query("DELETE FROM tahun_ajar WHERE kd_tajar='$_GET[key]'");
+  $key = substr($_GET['key'], 0, 9);
+  $connection->query("DELETE FROM tahun_ajar WHERE tahun_ajar='$key'");
   echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
 }
 if (isset($_GET['action']) AND $_GET['action'] == 'aktif') {
@@ -109,12 +110,13 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
           $lokasifile=$temp.$fhps;
           if (file_exists($lokasifile)){
             unlink($lokasifile);
+            $h++;
           }
         }
       }
       $qup=mysqli_query($connect,"UPDATE kerja_tugas SET file_kerja='T' WHERE kd_kerja='$kd'");
       if ($qup) {
-        $h++;
+
       }
     }
   }
@@ -140,39 +142,48 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
      <div class="panel-body text-center recent-users-sec">
       <form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" role="form">
 
-       
 
 
-      <div class="form-group">
-        <label>Tahun Ajar </label>
-		<select name="tahun_ajar" class="form-control">
-		<?php 
-			$tahun = date("Y");
-			for ($i=0;$i<=5;$i++){
-				$tahun1 = $tahun+$i;
-				$tahun2 =  $tahun+$i+1;
-				$tahun_ajaran = $tahun1."-".$tahun2;
-				?>
-					<option value="<?= $tahun_ajaran; ?>"><?= $tahun_ajaran; ?></option>						
-					
-				<?php 
-			}
-		?>
-		</select>
+
+        <div class="form-group">
+          <label>Tahun Ajar </label>
+          <select name="tahun_ajar" class="form-control">
+            <?php 
+            $tahun = date("Y");
+            for ($i=0;$i<=5;$i++){
+              $tahun1 = $tahun+$i;
+              $tahun2 =  $tahun+$i+1;
+              $tahun_ajaran = $tahun1."-".$tahun2;
+
+              $qcek = mysqli_query($connect,"SELECT kd_tajar FROM tahun_ajar WHERE tahun_ajar='$tahun_ajaran'");
+              $ada = mysqli_num_rows($qcek);
+              if ($ada > 0) {
+
+              } else {
+
+                ?>
+                <option value="<?= $tahun_ajaran; ?>"><?= $tahun_ajaran; ?></option>						
+
+                <?php
+
+              } 
+            }
+            ?>
+          </select>
         </div>
 
-     
 
 
-      <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>
-      <?php if ($update): ?>
-        <a href="?module=akun" class="btn btn-info btn-block">Batal</a>
-      <?php endif; ?>
+
+        <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>
+        <?php if ($update): ?>
+          <a href="?module=akun" class="btn btn-info btn-block">Batal</a>
+        <?php endif; ?>
 
 
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </div>
 <div class="col-md-8 col-sm-8 col-xs-12">
   <div class="panel panel-success">
@@ -205,7 +216,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
               <td><?=$row['aktif']?></td>
               <td class="hidden-print">
                <div class="btn-group">
-                 <a href="?module=tahun&action=update&key=<?=$row['kd_tajar']?>" class="btn btn-warning btn-xs">Edit</a>
+                 <!-- <a href="?module=tahun&action=update&key=<?=$row['kd_tajar']?>" class="btn btn-warning btn-xs">Edit</a> -->
                  <a href="?module=tahun&action=delete&key=<?=$row['kd_tajar']?>" class="btn btn-danger btn-xs">Hapus</a>
                  <?php 
                  if ($row['aktif']=='Y'){

@@ -19,9 +19,10 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser']) AND $_SESSION[
 }
 else{
 
-  $qtajar = mysqli_query($connect,"SELECT kd_tajar,kd_semester FROM tahun_ajar WHERE aktif='Y'");
+  $qtajar = mysqli_query($connect,"SELECT * FROM tahun_ajar WHERE aktif='Y'");
   $r = mysqli_fetch_assoc($qtajar);
   $thn_ajar = $r['kd_tajar'];
+  $tahun = $r['tahun_ajar'];
   $semester = $r['kd_semester'];
 
   $update = (isset($_GET['action']) AND $_GET['action'] == 'update') ? true : false;
@@ -78,26 +79,26 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
 
     <div class="form-group">
       <label>Kelas </label>
-       <select class="form-control" name="kd_kelas" id="cbbkls">
+      <select class="form-control" name="kd_kelas" id="cbbkls">
         <option value="">--Pilih Kelas--</option>
         <?php $query3 = $connection->query("SELECT * FROM kelas ORDER BY tingkat"); while ($data3 = $query3->fetch_assoc()): ?>
         <option value="<?=$data3["kd_kelas"]?>" <?= (!$update) ? (!isset($_GET['kls']) ? : ($data3["kd_kelas"] != $_GET['kls'] ?: 'selected=""'))  : (($data3["kd_kelas"] != $data3["kd_kelas"]) ?: 'selected="on"') ?>><?=$data3["nama_kelas"]?></option>
       <?php endwhile; ?>
     </select>
-</div>
-<div class="form-group">
-  <label>Tahun Ajaran</label>
-  <input type="text" class="form-control" name="" value="<?= $thn_ajar; ?>" disabled="">
-  <input type="hidden" class="form-control" name="kd_tajar" value="<?= $thn_ajar; ?>">
-</div>
+  </div>
+  <div class="form-group">
+    <label>Tahun Ajaran</label>
+    <input type="text" class="form-control" name="" value="<?= $thn_ajar; ?>" disabled="">
+    <input type="hidden" class="form-control" name="kd_tajar" value="<?= $thn_ajar; ?>">
+  </div>
 
 
 
 
-<button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>
-<?php if ($update): ?>
-  <a href="?module=ortu" class="btn btn-info btn-block">Batal</a>
-<?php endif; ?>
+  <button type="submit" class="btn btn-<?= ($update) ? "warning" : "info" ?> btn-block">Simpan</button>
+  <?php if ($update): ?>
+    <a href="?module=ortu" class="btn btn-info btn-block">Batal</a>
+  <?php endif; ?>
 
 
 </form>
@@ -108,64 +109,115 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
   <div class="panel panel-success">
     <div class="panel-heading">
      <?php
-        echo isset($_GET['kls']) ? ("Kelas: ".$_GET['kls']) : "ROMBEL" ;
+     echo isset($_GET['kls']) ? ("Kelas: ".$_GET['kls']) : "ROMBEL" ;
      ?> | Tahun Ajaran <?= $thn_ajar; ?>
    </div>
    <div class="panel-body">
     <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-        <thead>
+      <?php $no = 1; 
+      $sql = "
+      SELECT * FROM rombel,kelas,tahun_ajar,siswa 
+      where rombel.kd_kelas=kelas.kd_kelas
+      and siswa.nis=rombel.nis
+      and rombel.kd_tajar=tahun_ajar.kd_tajar AND rombel.kd_tajar='$thn_ajar'";
+
+      if (isset($_GET['kls'])) {
+       $sql .= " AND rombel.kd_kelas='$_GET[kls]'";
+       $jum=mysqli_num_rows(mysqli_query($connect,$sql));
+       if ($jum==0) {
+
+        $tingkat = mysqli_query($connect,"SELECT tingkat FROM kelas WHERE kd_kelas='$_GET[kls]'");
+        $dtkt = mysqli_fetch_assoc($tingkat);
+        if ($dtkt['tingkat']=='X') {
+          if ($semester==2){
+            ?>
+
+            <form action="modul/mod_rombel/copy.php?kd_kelas=<?= $_GET['kls'] ?>&action=salindata" method="POST" role="form">
+              <div class="form-group">
+                <label>Salin data dari kelas: </label>
+                <select name="kelas">
+                  <?php 
+                  $kls = mysqli_query($connect,"SELECT * FROM kelas WHERE tingkat='$dtkt[tingkat]'");
+                  while ( $klas=mysqli_fetch_array($kls) ) {
+
+                    $qklas = "SELECT COUNT(rombel.nis) AS JML, kelas.nama_kelas,kelas.kd_kelas FROM rombel,kelas,tahun_ajar WHERE rombel.kd_kelas = kelas.kd_kelas AND rombel.kd_tajar = tahun_ajar.kd_tajar AND tahun_ajar.kd_semester='1' AND kelas.kd_kelas='$klas[kd_kelas]'";
+                    $dtklas = mysqli_fetch_array(mysqli_query($connect,$qklas));
+
+                    echo "<option value='$dtklas[kd_kelas]'>$dtklas[nama_kelas] - $dtklas[JML] siswa</option>";
+                  }
+                  ?>
+
+                </select>
+                <select name="tahun_ajar">
+                  <?php 
+                  $tajarseblum = $tahun."-ganjil";
+                  ?>
+                  <option value="<?= $tajarseblum; ?>">Tahun Ajaran: <?= $tajarseblum; ?></option>
+                </select>
+                <input type="submit" name="salin" value="Salin">
+              </div>
+            </form>
+
+            <?php
+          } else {
+            echo "upload manual";
+          }
+
+        } else { ?>
+          <form action="?module=rombel&action=salindata&key=<?=$_GET['kls']?>&tj=<?=$thn_ajar?>" method="POST" role="form">
+            <div class="form-group">
+              <label>Salin data dari kelas: </label>
+              <select name="kelas">
+                <option>kelas</option>
+              </select>
+              <select name="tahun_ajar">
+                <option>tahun ajaran</option>
+              </select>
+              <input type="submit" class="btn btn-sm btn-success" name="salin" value="Salin">
+            </div>
+          </form>
+
+          <?php
+        }
+        echo "<hr>";
+      }
+    }
+    ?>
+    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>NIS</th>
+          <th>Nama Siswa</th>
+          <th>Kelas</th>
+          <th>Tahun Ajaran</th>
+
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($query = $connection->query($sql)): ?>
+         <?php while($row = $query->fetch_assoc()): ?>
           <tr>
-            <th>#</th>
-            <th>NIS</th>
-            <th>Nama Siswa</th>
-            <th>Kelas</th>
-            <th>Tahun Ajaran</th>
+            <td></td>
+            <td><?=$row['nis']?></td>
+            <td><?=$row['nama']?></td>
+            <td><?=$row['nama_kelas']?></td>
+            <td><?=$row['kd_tajar']?></td>
 
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-         <?php $no = 1; 
-         $sql = "
-         SELECT * FROM rombel,kelas,tahun_ajar,siswa 
-         where rombel.kd_kelas=kelas.kd_kelas
-         and siswa.nis=rombel.nis
-         and rombel.kd_tajar=tahun_ajar.kd_tajar AND rombel.kd_tajar='$thn_ajar'";
+            <td class="hidden-print">
+             <div class="btn-group">
+               <a href="?module=rombel&action=update&key=<?=$row['nis']?>" class="btn btn-warning btn-xs">Edit</a>
+               <a href="?module=rombel&action=delete&key=<?=$row['nis']?>&kd_kelas=<?=$row['kd_kelas']?>" class="btn btn-danger btn-xs">Hapus</a>
+             </div>
+           </td>
 
-         if (isset($_GET['kls'])) {
-           $sql .= " AND rombel.kd_kelas='$_GET[kls]'";
-         }
-
-         $jum=mysqli_num_rows(mysqli_query($connect,$sql));
-         if ($jum==0) {
-           if ($semester==2){
-              echo "<a href='' class='btn btn-sm btn-info'>Copy dr Semester Ganjil</a>";
-           }
-         }
-         ?>
-         <?php if ($query = $connection->query($sql)): ?>
-           <?php while($row = $query->fetch_assoc()): ?>
-            <tr>
-              <td></td>
-              <td><?=$row['nis']?></td>
-              <td><?=$row['nama']?></td>
-              <td><?=$row['nama_kelas']?></td>
-              <td><?=$row['kd_tajar']?></td>
-              
-              <td class="hidden-print">
-               <div class="btn-group">
-                 <a href="?module=rombel&action=update&key=<?=$row['nis']?>" class="btn btn-warning btn-xs">Edit</a>
-                 <a href="?module=rombel&action=delete&key=<?=$row['nis']?>&kd_kelas=<?=$row['kd_kelas']?>" class="btn btn-danger btn-xs">Hapus</a>
-               </div>
-             </td>
-             
-           </tr>
-         <?php endwhile ?>
-       <?php endif ?>
-     </tbody>
-   </table>
- </div>
+         </tr>
+       <?php endwhile ?>
+     <?php endif ?>
+   </tbody>
+ </table>
+</div>
 </div>
 </div>
 </div>
