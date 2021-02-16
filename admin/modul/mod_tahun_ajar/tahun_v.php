@@ -67,6 +67,8 @@ if (isset($_GET['action']) AND $_GET['action'] == 'aktif') {
     echo "<script>alert('Berhasil'); window.location = 'media.php?module=tahun'</script>";
   }
 }
+
+
 if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
   $kd_tajar=$_GET['key'];
   $list = "";
@@ -77,50 +79,57 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
       $list = $list.",".$nis['nis'];
     }
   }
-  $list=substr($list, 1);
-  $siswa = explode(",", $list);
+  if ($list!=""){
+    $list=substr($list, 1);
+    $siswa = explode(",", $list);
 
-  $kdkerja = "";
-  foreach ($siswa as $swa) {
-    $qstatus = mysqli_query($connect,"UPDATE siswa, login 
-      SET siswa.status='Alumni', login.status='nonaktif'
-      WHERE siswa.username=login.username AND siswa.nis='$swa'");
-    
-    if ($qstatus){
-      $qkode = mysqli_query($connect,"SELECT kd_kerja FROM kerja_tugas WHERE nis='$swa' AND file_kerja != 'T'");
-      while ($kode=mysqli_fetch_array($qkode)){
-        $kdkerja = $kdkerja.",".$kode['kd_kerja'];
+    $kdkerja = "";
+    foreach ($siswa as $swa) {
+      $qstatus = mysqli_query($connect,"UPDATE siswa, login 
+        SET siswa.status='Alumni', login.status='nonaktif'
+        WHERE siswa.username=login.username AND siswa.nis='$swa'");
+
+      if ($qstatus){
+        $qkode = mysqli_query($connect,"SELECT kd_kerja FROM kerja_tugas WHERE nis='$swa' AND file_kerja != 'T'");
+        while ($kode=mysqli_fetch_array($qkode)){
+          $kdkerja = $kdkerja.",".$kode['kd_kerja'];
+        }
       }
     }
-  }
-  $kdkerja = substr($kdkerja, 1);
+    $h=0;
+    if ($kdkerja!=""){
+      $kdkerja = substr($kdkerja, 1);
+      $fkerja = explode(",", $kdkerja);
+      if (count($fkerja)>0){
+        foreach ($fkerja as $kd) {
+          $temp = "files/kerja_tugas/";
+          $cs=mysqli_query($connect,"SELECT file_kerja FROM kerja_tugas WHERE kd_kerja='$kd'");
+          $rcs=mysqli_fetch_array($cs);
 
-  $h=0;
-  $fkerja = explode(",", $kdkerja);
-  if (count($fkerja)>0){
-    foreach ($fkerja as $kd) {
-      $temp = "files/kerja_tugas/";
-      $cs=mysqli_query($connect,"SELECT file_kerja FROM kerja_tugas WHERE kd_kerja='$kd'");
-      $rcs=mysqli_fetch_array($cs);
+          if ($rcs['file_kerja']!='T'){
 
-      if ($rcs['file_kerja']!='T'){
-
-        $filenya=explode(",", $rcs['file_kerja']);
-        foreach ($filenya as $fhps) {
-          $lokasifile=$temp.$fhps;
-          if (file_exists($lokasifile)){
-            unlink($lokasifile);
-            $h++;
+            $filenya=explode(",", $rcs['file_kerja']);
+            foreach ($filenya as $fhps) {
+              $lokasifile=$temp.$fhps;
+              if (file_exists($lokasifile)){
+                unlink($lokasifile);
+                $h++;
+              }
+            }
+          }
+          $qup=mysqli_query($connect,"UPDATE kerja_tugas SET file_kerja='T' WHERE kd_kerja='$kd'");
+          if ($qup) {
+            echo "<script>alert('Berhasil menghapus $h file'); window.location = 'media.php?module=tahun'</script>";
           }
         }
       }
-      $qup=mysqli_query($connect,"UPDATE kerja_tugas SET file_kerja='T' WHERE kd_kerja='$kd'");
-      if ($qup) {
 
-      }
     }
+  } else {
+    echo "<script>alert('Tidak ada file untuk dihapus'); window.location = 'media.php?module=tahun'</script>";
   }
-  echo "<script>alert('Berhasil menghapus $h file'); window.location = 'media.php?module=tahun'</script>";
+
+  
 }
 ?>
 
@@ -150,7 +159,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
           <select name="tahun_ajar" class="form-control">
             <?php 
             $tahun = date("Y");
-            for ($i=0;$i<=5;$i++){
+            for ($i=-3;$i<=5;$i++){
               $tahun1 = $tahun+$i;
               $tahun2 =  $tahun+$i+1;
               $tahun_ajaran = $tahun1."-".$tahun2;
@@ -206,7 +215,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
         </thead>
         <tbody>
          <?php $no = 1; ?>
-         <?php if ($query = $connection->query("SELECT * FROM tahun_ajar")): ?>
+         <?php if ($query = $connection->query("SELECT * FROM tahun_ajar ORDER BY kd_tajar DESC")): ?>
            <?php while($row = $query->fetch_assoc()): ?>
             <tr>
               <td><?=$no++?></td>
