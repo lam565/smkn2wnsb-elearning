@@ -43,7 +43,7 @@ else{
   }
 }
 if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
-  $connection->query("DELETE FROM rombel WHERE nis='$_GET[key]' AND kd_kelas='$_GET[kd_kelas]'");
+  $connection->query("DELETE FROM rombel WHERE nis='$_GET[key]' AND kd_kelas='$_GET[kd_kelas]' AND kd_tajar='$thn_ajar'");
   echo "<script>alert('Berhasil'); window.location = 'media.php?module=rombel&kls=$_GET[kd_kelas]'</script>";
 }
 ?>
@@ -154,30 +154,91 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                   ?>
                   <option value="<?= $tajarseblum; ?>">Tahun Ajaran: <?= $tajarseblum; ?></option>
                 </select>
+                <input type="hidden" name="kelasnow" value="<?= $_GET['kls']; ?>">
+                <input type="hidden" name="tajarnow" value="<?= $thn_ajar; ?>">
                 <input type="submit" name="salin" value="Salin">
               </div>
             </form>
 
             <?php
           } else {
-            echo "upload manual";
+            echo "<p class='alert alert-warning'>Silahkan tambahkan siswa satu per satu.</p>";
           }
 
-        } else { ?>
-          <form action="?module=rombel&action=salindata&key=<?=$_GET['kls']?>&tj=<?=$thn_ajar?>" method="POST" role="form">
-            <div class="form-group">
-              <label>Salin data dari kelas: </label>
-              <select name="kelas">
-                <option>kelas</option>
-              </select>
-              <select name="tahun_ajar">
-                <option>tahun ajaran</option>
-              </select>
-              <input type="submit" class="btn btn-sm btn-success" name="salin" value="Salin">
-            </div>
-          </form>
+        } else { 
+          if ($semester==2){
+            ?>
 
-          <?php
+            <form action="modul/mod_rombel/copy.php?kd_kelas=<?= $_GET['kls'] ?>&action=salindata" method="POST" role="form">
+              <div class="form-group">
+                <label>Salin data dari kelas: </label>
+                <select name="kelas">
+                  <?php 
+                  $kls = mysqli_query($connect,"SELECT * FROM kelas WHERE tingkat='$dtkt[tingkat]'");
+                  while ( $klas=mysqli_fetch_array($kls) ) {
+
+                    $qklas = "SELECT COUNT(rombel.nis) AS JML, kelas.nama_kelas,kelas.kd_kelas FROM rombel,kelas,tahun_ajar WHERE rombel.kd_kelas = kelas.kd_kelas AND rombel.kd_tajar = tahun_ajar.kd_tajar AND tahun_ajar.kd_semester='1' AND kelas.kd_kelas='$klas[kd_kelas]'";
+                    $dtklas = mysqli_fetch_array(mysqli_query($connect,$qklas));
+
+                    echo "<option value='$dtklas[kd_kelas]'>$dtklas[nama_kelas] - $dtklas[JML] siswa</option>";
+                  }
+                  ?>
+
+                </select>
+                <select name="tahun_ajar">
+                  <?php 
+                  $tajarseblum = $tahun."-ganjil";
+                  ?>
+                  <option value="<?= $tajarseblum; ?>">Tahun Ajaran: <?= $tajarseblum; ?></option>
+                </select>
+                <input type="hidden" name="kelasnow" value="<?= $_GET['kls']; ?>">
+                <input type="hidden" name="tajarnow" value="<?= $thn_ajar; ?>">
+                <input type="submit" name="salin" value="Salin">
+              </div>
+            </form>
+
+            <?php
+          } else {
+            $dtkt['tingkat'] == 'XI' ? $tktsblm = "X" : $tktsblm = "XI";
+            ?>
+
+            <form action="modul/mod_rombel/copy.php?kd_kelas=<?= $_GET['kls'] ?>&action=salindata" method="POST" role="form">
+              <div class="form-group">
+                <label>Salin data dari kelas: </label>
+                <select name="kelas">
+                  <?php
+                  $tahuns1 = substr($tahun, 0,4)-1;
+                  $tahuns2 = substr($tahun, 5,4)-1;
+
+                  $tajarseblum = $tahuns1."-".$tahuns2;
+                  $tajargj = $tajarseblum."-ganjil";
+                  $tajargn = $tajarseblum."-genap"; 
+                  $kls = mysqli_query($connect,"SELECT * FROM kelas WHERE tingkat='$tktsblm'");
+                  while ( $klas=mysqli_fetch_array($kls) ) {
+
+                    $qklas = "SELECT '$tajargj' AS tajarnya, COUNT(rombel.nis) AS JML, kelas.nama_kelas,kelas.kd_kelas,rombel.kd_tajar FROM rombel,kelas,tahun_ajar WHERE rombel.kd_kelas = kelas.kd_kelas AND rombel.kd_tajar = tahun_ajar.kd_tajar AND tahun_ajar.kd_semester='1' AND kelas.kd_kelas='$klas[kd_kelas]' AND tahun_ajar.tahun_ajar = '$tajargj'";
+                    $dtklas = mysqli_fetch_array(mysqli_query($connect,$qklas));
+
+                    echo "<option value='$dtklas[kd_kelas]'>$dtklas[nama_kelas] ($dtklas[tajarnya]) - $dtklas[JML] siswa</option>";
+
+                    $qklas = "SELECT '$tajargn' AS tajarnya, COUNT(rombel.nis) AS JML, kelas.nama_kelas,kelas.kd_kelas,rombel.kd_tajar FROM rombel,kelas,tahun_ajar WHERE rombel.kd_kelas = kelas.kd_kelas AND rombel.kd_tajar = tahun_ajar.kd_tajar AND tahun_ajar.kd_semester='1' AND kelas.kd_kelas='$klas[kd_kelas]' AND tahun_ajar.tahun_ajar = '$tajargn'";
+                    $dtklas = mysqli_fetch_array(mysqli_query($connect,$qklas));
+
+                    echo "<option value='$dtklas[kd_kelas]'>$dtklas[nama_kelas] ($dtklas[tajarnya]) - $dtklas[JML] siswa</option>";
+
+                  }
+                  ?>
+
+                </select>
+                
+                <input type="hidden" name="tahun_ajar">
+                <input type="hidden" name="kelasnow" value="<?= $_GET['kls']; ?>">
+                <input type="hidden" name="tajarnow" value="<?= $thn_ajar; ?>">
+                <input type="submit" name="salin" value="Salin">
+              </div>
+            </form>
+            <?php
+          }
         }
         echo "<hr>";
       }
