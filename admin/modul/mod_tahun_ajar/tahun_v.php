@@ -124,7 +124,10 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delfile') {
         }
       }
 
-    }
+    } else {
+		echo "<script>alert('Tidak ada file untuk dihapus'); window.location = 'media.php?module=tahun'</script>";
+	}
+	
   } else {
     echo "<script>alert('Tidak ada file untuk dihapus'); window.location = 'media.php?module=tahun'</script>";
   }
