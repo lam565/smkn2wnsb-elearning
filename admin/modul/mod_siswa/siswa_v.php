@@ -108,13 +108,9 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
         <label>Jenis Kelamin</label>
         <select class="form-control" name="kelamin">
 			<option>--Pilih Jenis Kelamin--</option>
-          <?php $query5 = $connection->query("SELECT * FROM siswa group by kelamin"); while ($data5 = $query5->fetch_assoc()): ?>
-
-          <option value="<?=$data5["kelamin"]?>" <?= (!$update) ?: (($data5["kelamin"] != $data5["kelamin"]) ?: 'selected="on"') ?>><?=$data5["kelamin"]?></option>
-
-
-
-        <?php endwhile; ?>
+				<option value="L">--Laki - Laki--</option>
+				<option value="P">--Perempuan--</option>
+          
 
 
       </select>
@@ -133,17 +129,8 @@ if (isset($_GET['action']) AND $_GET['action'] == 'delete') {
                                             <label>Status </label>
                                             <select class="form-control" name="status">
 												<option>--Pilih Status--</option>
-												<?php $query5 = $connection->query("SELECT * FROM siswa group by status"); while ($data5 = $query5->fetch_assoc()): ?>
-												<?php if($data5["status"]=='Aktif'){ ?>
-												<option value="Aktif" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>Aktif</option>
-												<option value="NonAktif">NonAktif</option>
-												<?php } else { ?>
-												<option value="NonAktif" <?= (!$update) ?: (($data5["status"] != $data5["status"]) ?: 'selected="on"') ?>>NonAktif</option>
-												<option value="Aktif">Aktif</option>
-												<?php } ?>
-												
-												
-												<?php endwhile; ?>
+												<option value="Aktif">--Aktif--</option>
+												<option value="NonAktif">--Non Aktif--</option>
 											
 												
 											</select>
